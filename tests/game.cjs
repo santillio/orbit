@@ -5,14 +5,15 @@ function boot(store=new Map(),blocked=false,newPlayer=false){
  const nodes=new Map(),events=new Map(),gradient={addColorStop(){}},timers=new Map();let timerTime=0,nextTimer=1;
  const ctx=new Proxy({}, {get:(t,k)=>k.startsWith('create')?()=>gradient:()=>{},set:(t,k,v)=>(t[k]=v,true)});
  function node(id){if(!nodes.has(id))nodes.set(id,{hidden:false,style:{},dataset:{},_events:{},textContent:'',innerHTML:'',children:[],classList:{add(){},remove(){},toggle(){}},setAttribute(){},replaceChildren(){this.children=[]},append(n){this.children.push(n)},addEventListener(k,fn){this._events[k]=fn;events.set(String(id)+':'+k,fn)},getContext:()=>ctx});return nodes.get(id)}
- const sandbox={console,Math,performance:{now:()=>0},innerWidth:1280,innerHeight:800,devicePixelRatio:1,requestAnimationFrame(){},addEventListener(k,f){events.set('window:'+k,f)},setTimeout(fn,delay){const id=nextTimer++;timers.set(id,{fn,at:timerTime+delay});return id;},clearTimeout(id){timers.delete(id)},localStorage:{getItem(k){if(blocked)throw Error('Blocked');return store.get(k)||null},setItem(k,v){if(blocked)throw Error('Blocked');store.set(k,v)}},document:{hidden:false,getElementById:node,createElement:()=>({...node(Symbol()),children:[]}),querySelectorAll:()=>[],addEventListener(k,f){events.set('document:'+k,f)}}};
+ const sandbox={console,Math:Object.create(Math),performance:{now:()=>0},innerWidth:1280,innerHeight:800,devicePixelRatio:1,requestAnimationFrame(){},addEventListener(k,f){events.set('window:'+k,f)},setTimeout(fn,delay){const id=nextTimer++;timers.set(id,{fn,at:timerTime+delay});return id;},clearTimeout(id){timers.delete(id)},localStorage:{getItem(k){if(blocked)throw Error('Blocked');return store.get(k)||null},setItem(k,v){if(blocked)throw Error('Blocked');store.set(k,v)}},document:{hidden:false,getElementById:node,createElement:()=>({...node(Symbol()),children:[]}),querySelectorAll:()=>[],addEventListener(k,f){events.set('document:'+k,f)}}};
  sandbox.window=sandbox;sandbox.matchMedia=()=>({matches:false});
- const code=original.replace(/\}\)\(\);\s*$/,`${newPlayer?'':'profile.tutorialDone=true;'}globalThis.game={reset,update,draw,launch,aimAt,segmentCircle,togglePause,primaryAction,advanceOrbit,orbitSpeed,saveNow,packRun,validRun,resumeSaved,showMenu,startLevel,selectMode,showLevels,showAtlas,importProgress,systemForLevel,currentSystem,systemById,moveMap,jumpMap,moveAtlas,validDiscovery,sectorPosition,galaxyIndexForLevel,galaxyForLevel,browseGalaxy,showSectorInfo,renderGalaxyMap,visitSector,zoomGalaxy,centerGalaxy,completeTutorial,showSettings,resetProgress,restoreProgress,checkSaveEpoch,saveStorageKey,
- snapshot:()=>({state,previousState,mode,level,current,target,player,camera,score,jumps,combo,perfects,orbitBoost,orbitOffset,profile,savedRun,storageAvailable,runTime,particles,rings,shake,mapPage,atlasCursor,mapView,viewGalaxy,selectedSector,saveEpoch}),
+ const code=original.replace(/\}\)\(\);\s*$/,`${newPlayer?'':'profile.tutorialDone=true;'}globalThis.game={reset,update,draw,launch,aimAt,segmentCircle,togglePause,primaryAction,advanceOrbit,orbitSpeed,saveNow,packRun,validRun,resumeSaved,showMenu,startLevel,selectMode,showLevels,showAtlas,importProgress,systemForLevel,currentSystem,systemById,moveMap,jumpMap,moveAtlas,validDiscovery,sectorPosition,galaxyIndexForLevel,galaxyForLevel,browseGalaxy,showSectorInfo,renderGalaxyMap,visitSector,zoomGalaxy,centerGalaxy,completeTutorial,showSettings,resetProgress,restoreProgress,checkSaveEpoch,saveStorageKey,die,prepareEndlessPlanet,pickupPosition,bonusSector,inBonusSector,bonusBand,meteorPositions,meteorHit,meteorWindow,setOrbitPosition,
+ snapshot:()=>({state,previousState,mode,level,current,target,player,camera,score,jumps,combo,perfects,orbitBoost,orbitOffset,profile,savedRun,storageAvailable,runTime,particles,rings,shake,mapPage,atlasCursor,mapView,viewGalaxy,selectedSector,saveEpoch,endless}),
  setArrivalBoost(v){orbitBoost=v},
+ endlessAt(n){mode="endless";reset(true);jumps=n-1;current.index=n-1;target.index=n;current.r=current.baseR=90;current.body=32;current.duration=8;current.x=current.y=0;target.x=350;target.y=0;target.r=80;endless.nextLife=30;prepareEndlessPlanet();endless.shower=null;setOrbitPosition();},
  aim(){const h=Math.atan2(target.y-current.y,target.x-current.x),d=Math.hypot(target.x-current.x,target.y-current.y);player.a=h-player.dir*Math.acos((current.r+orbitOffset)/d);setOrbitPosition()},
  miss(){player.a=Math.atan2(target.y-current.y,target.x-current.x)+player.dir*Math.PI/2;setOrbitPosition()}};})();`);
- vm.createContext(sandbox);vm.runInContext(code,sandbox);return{g:sandbox.game,node,events,store,advanceTimers(ms){timerTime+=ms;for(const [id,t] of timers)if(t.at<=timerTime){timers.delete(id);t.fn();}}};
+ vm.createContext(sandbox);vm.runInContext(code,sandbox);return{g:sandbox.game,node,events,store,random(value){sandbox.Math.random=()=>value},advanceTimers(ms){timerTime+=ms;for(const [id,t] of timers)if(t.at<=timerTime){timers.delete(id);t.fn();}}};
 }
 function jump(g){g.aim();g.launch();for(let i=0;i<1000&&g.snapshot().state==='flight';i++)g.update(1/120);assert(['orbit','won'].includes(g.snapshot().state));}
 // A complete physical revolution is protected before gravity starts pulling.
@@ -137,6 +138,101 @@ const resetStore=new Map(),owner=boot(resetStore);owner.g.startLevel(1);for(let 
 assert.equal(owner.g.snapshot().state,'menu');assert.equal(owner.g.snapshot().profile.unlocked,1);assert.equal(owner.g.snapshot().profile.discovered.length,0);assert.equal(owner.g.snapshot().profile.tutorialDone,false);assert.equal(owner.g.snapshot().profile.records.expedition,0);assert(resetStore.has('orbit.backup.v2'));assert(owner.g.snapshot().saveEpoch>0);
 staleResetTab.g.saveNow();assert.equal(staleResetTab.g.snapshot().profile.unlocked,1);resetStore.set('orbit.progress.v2',priorPayload);resetStore.set('orbit.best.v1','999');const afterReset=boot(resetStore,false,true);assert.equal(afterReset.g.snapshot().profile.unlocked,1);assert.equal(afterReset.g.snapshot().profile.records.endless,0);assert.equal(afterReset.g.snapshot().profile.tutorialDone,false);
 owner.g.restoreProgress();assert.equal(owner.g.snapshot().profile.unlocked,2);assert(owner.g.snapshot().profile.records.expedition>0);assert(owner.g.snapshot().profile.tutorialDone);owner.g.resetProgress();assert.equal(JSON.parse(resetStore.get('orbit.backup.v2')).profile.unlocked,2);
+// Endless pickups require actual contact during shrink, never fill more than one slot,
+// and survive saving without letting a spent life reappear on the same planet.
+{
+const extras=boot();extras.g.endlessAt(29);assert(!extras.g.snapshot().endless.pickup);jump(extras.g);
+assert.equal(extras.g.snapshot().current.index+1,30);assert(extras.g.snapshot().endless.pickup);assert(!extras.g.snapshot().endless.life);
+for(const dir of [1,-1]){
+ const trial=boot();trial.g.endlessAt(30);trial.g.snapshot().player.dir=dir;
+ while(trial.g.snapshot().current.orbitTravel<Math.PI*2-.1){trial.g.update(1/144);assert(!trial.g.snapshot().endless.life);}
+ for(let i=0;i<1800&&!trial.g.snapshot().endless.life;i++)trial.g.update(1/144);
+ assert(trial.g.snapshot().endless.life,'The shrinking orbit must cross the pickup in either direction');assert(!trial.g.snapshot().endless.pickup);
+ trial.g.saveNow();const restored=boot(trial.store);restored.g.resumeSaved();restored.g.togglePause();assert(restored.g.snapshot().endless.life);
+ const before=restored.g.snapshot();restored.g.die('miss');let after=restored.g.snapshot();assert.equal(after.state,'orbit');assert(!after.endless.life);assert.equal(after.endless.nextLife,60);assert.equal(after.score,before.score);assert.equal(after.current.r,after.current.baseR);assert.equal(after.current.orbitTravel,0);assert.equal(after.combo,0);
+ restored.g.saveNow();const spent=boot(restored.store);spent.g.resumeSaved();spent.g.togglePause();assert(!spent.g.snapshot().endless.life);assert.equal(spent.g.snapshot().endless.nextLife,60);assert(!spent.g.snapshot().endless.pickup);
+ spent.g.prepareEndlessPlanet();assert(!spent.g.snapshot().endless.pickup);spent.g.die('meteor');assert.equal(spent.g.snapshot().state,'dying');
+}
+extras.g.snapshot().endless.life=true;extras.g.snapshot().endless.pickup=false;
+extras.g.snapshot().current.index=59;extras.g.prepareEndlessPlanet();assert(extras.g.snapshot().endless.life);assert(!extras.g.snapshot().endless.pickup);
+extras.g.snapshot().current.index=64;extras.g.die('gravity');assert.equal(extras.g.snapshot().endless.nextLife,95);assert.equal(extras.g.snapshot().state,'orbit');
+extras.g.snapshot().current.index=93;extras.g.prepareEndlessPlanet();assert(!extras.g.snapshot().endless.pickup);extras.g.snapshot().current.index=94;extras.g.prepareEndlessPlanet();assert(extras.g.snapshot().endless.pickup);
+const skipped=boot();skipped.g.endlessAt(30);skipped.g.aim();skipped.g.launch();assert(!skipped.g.snapshot().endless.pickup);assert.equal(skipped.g.snapshot().endless.nextLife,60);
+// A golden launch doubles the actual capture reward, including Perfect combo points.
+for(const n of [4,5,10,15]){
+ const gold=boot();gold.g.endlessAt(n);gold.g.aim();assert.equal(gold.g.bonusSector(),n%5===0);assert(!gold.g.inBonusSector());
+ gold.g.snapshot().current.orbitTravel=Math.PI*2;gold.g.snapshot().current.shrinkAge=4;gold.g.snapshot().current.r=gold.g.bonusBand().radius;gold.g.aim();const expected=n%5===0?2:1;assert.equal(gold.g.inBonusSector(),n%5===0);
+ gold.g.launch();assert.equal(gold.g.snapshot().endless.multiplier,expected);gold.g.saveNow();const goldReload=boot(gold.store);goldReload.g.resumeSaved();goldReload.g.togglePause();assert.equal(goldReload.g.snapshot().endless.multiplier,expected);
+ const start=goldReload.g.snapshot().score;for(let i=0;i<500&&goldReload.g.snapshot().state==='flight';i++)goldReload.g.update(1/120);
+ assert.equal(goldReload.g.snapshot().score-start,2*expected);assert.equal(goldReload.g.snapshot().endless.multiplier,1);
+}
+const outsideGold=boot();outsideGold.g.endlessAt(5);outsideGold.g.snapshot().current.shrinkAge=1;outsideGold.g.snapshot().current.r=outsideGold.g.bonusBand().outer+1;assert(!outsideGold.g.inBonusSector());
+const ordinaryGold=boot();ordinaryGold.g.endlessAt(5);ordinaryGold.g.snapshot().current.orbitTravel=Math.PI*2;ordinaryGold.g.snapshot().current.shrinkAge=4;ordinaryGold.g.snapshot().current.r=ordinaryGold.g.bonusBand().radius;ordinaryGold.g.aim();ordinaryGold.g.snapshot().player.a+=.1;ordinaryGold.g.setOrbitPosition();ordinaryGold.g.launch();for(let f=0;f<360&&ordinaryGold.g.snapshot().state==='flight';f++)ordinaryGold.g.update(1/120);assert.equal(ordinaryGold.g.snapshot().score,2);assert.equal(ordinaryGold.g.snapshot().perfects,0);
+// The gold zone is a stationary annulus halfway between the original orbit and
+// the planet surface. Eligibility depends on radius, not launch angle.
+for(const n of [4,5,10])for(const angle of [-Math.PI,-1.5,0,.8,Math.PI]){
+ const bandTest=boot();bandTest.g.endlessAt(n);const p=bandTest.g.snapshot().current,band=bandTest.g.bonusBand();
+ assert.equal(band.radius,(p.baseR+p.body)/2);assert(band.inner>p.body&&band.outer<p.baseR);
+ p.shrinkAge=4;bandTest.g.snapshot().player.a=angle;
+ for(const [r,inside] of [[p.baseR,false],[band.outer+.01,false],[band.outer,true],[band.radius,true],[band.inner,true],[band.inner-.01,false]]){
+  p.r=r;bandTest.g.setOrbitPosition();assert.equal(bandTest.g.inBonusSector(),inside&&n%5===0);
+ }
+ p.r=band.radius;p.shrinkAge=0;assert(!bandTest.g.inBonusSector());
+}
+// Only full revolutions during shrink earn +1. Count physical angular travel in
+// both directions, including arrival easing, and never multiply survival points.
+const fullTurn=Math.PI*2;
+for(const fps of [20,60,144])for(const dir of [1,-1])for(const boost of [0,4]){
+ const laps=boot();laps.g.endlessAt(1);laps.g.snapshot().player.dir=dir;laps.g.setArrivalBoost(boost);
+ while(laps.g.snapshot().state==='orbit'){
+  laps.g.update(1/fps);const s=laps.g.snapshot();
+  if(s.state==='orbit')assert.equal(s.score,Math.floor(Math.max(0,s.current.orbitTravel-fullTurn)/fullTurn+1e-9));
+  if(s.current.orbitTravel<=fullTurn)assert.equal(s.score,0);
+ }
+ assert.equal(laps.g.snapshot().score,2);assert.equal(laps.g.snapshot().profile.records.endless,2);
+}
+const partialLap=boot();partialLap.g.endlessAt(10);partialLap.g.snapshot().current.orbitTravel=fullTurn*1.75;partialLap.g.snapshot().current.shrinkAge=1.5;
+partialLap.g.advanceOrbit(fullTurn*.1/partialLap.g.orbitSpeed());assert.equal(partialLap.g.snapshot().score,0);partialLap.g.saveNow();
+const savedLap=boot(partialLap.store);savedLap.g.resumeSaved();savedLap.g.update(100);assert.equal(savedLap.g.snapshot().score,0);savedLap.g.togglePause();savedLap.g.advanceOrbit(fullTurn*.2/savedLap.g.orbitSpeed());assert.equal(savedLap.g.snapshot().score,1);assert.equal(savedLap.node('orbit-reward').textContent,'+1 ЗА ОБОРОТ');savedLap.g.saveNow();
+const creditedLap=boot(savedLap.store);creditedLap.g.resumeSaved();creditedLap.g.togglePause();creditedLap.g.advanceOrbit(fullTurn*.05/creditedLap.g.orbitSpeed());assert.equal(creditedLap.g.snapshot().score,1);assert.equal(creditedLap.g.snapshot().profile.records.endless,1);
+const manyLaps=boot();manyLaps.g.endlessAt(1000);manyLaps.g.snapshot().current.orbitTravel=fullTurn*2.95;manyLaps.g.snapshot().current.shrinkAge=.5;manyLaps.g.advanceOrbit(.05);assert.equal(manyLaps.g.snapshot().score,2);
+const impactLap=boot();impactLap.g.endlessAt(1);impactLap.g.snapshot().current.orbitTravel=fullTurn*2-.02;impactLap.g.snapshot().current.shrinkAge=impactLap.g.snapshot().current.duration-.001;impactLap.g.advanceOrbit(.05);assert.equal(impactLap.g.snapshot().state,'dying');assert.equal(impactLap.g.snapshot().score,0);
+const goldLap=boot();goldLap.g.endlessAt(5);goldLap.g.snapshot().current.orbitTravel=fullTurn*2-.01;goldLap.g.snapshot().current.shrinkAge=4;goldLap.g.snapshot().current.r=goldLap.g.bonusBand().radius;assert(goldLap.g.inBonusSector());goldLap.g.advanceOrbit(.02);assert.equal(goldLap.g.snapshot().score,1);assert.equal(goldLap.g.snapshot().endless.multiplier,1);
+const expeditionLaps=boot();expeditionLaps.g.startLevel(1);expeditionLaps.g.advanceOrbit(fullTurn*2.2/expeditionLaps.g.orbitSpeed());assert.equal(expeditionLaps.g.snapshot().state,'orbit');assert.equal(expeditionLaps.g.snapshot().score,0);
+console.log('PASS: fixed radial x2 annulus, all launch angles and both boundaries; full shrink revolutions at 20–144 FPS, arrival easing, partial-turn reload, records, multiple turns per frame, impact clipping, and expedition isolation.');
+for(const fps of [20,60,144])for(const n of [30,150,1000]){
+ const fast=boot();fast.g.endlessAt(n);fast.g.snapshot().endless.nextLife=n;fast.g.prepareEndlessPlanet();fast.g.snapshot().endless.shower=null;
+ for(let f=0;f<fps*12&&!fast.g.snapshot().endless.life;f++)fast.g.update(1/fps);
+ assert(fast.g.snapshot().endless.life,`Pickup was skipped at planet ${n}, ${fps} FPS`);
+}
+// The shower never starts before planet 31 or in an expedition, is frozen by pause,
+// and exposes a real safe flight window at every tested phase, speed and frame rate.
+const rain=boot();rain.g.endlessAt(30);for(let i=0;i<80;i++){rain.g.prepareEndlessPlanet();assert.equal(rain.g.snapshot().endless.shower,null);}
+rain.g.endlessAt(31);rain.random(0);rain.g.prepareEndlessPlanet();assert(rain.g.snapshot().endless.shower);rain.g.prepareEndlessPlanet();assert.equal(rain.g.snapshot().endless.shower,null);rain.random(.99);rain.g.prepareEndlessPlanet();assert.equal(rain.g.snapshot().endless.shower,null);rain.g.snapshot().endless.shower={elapsed:0,phase:600};rain.g.saveNow();const rainReload=boot(rain.store);rainReload.g.resumeSaved();assert.equal(rainReload.g.snapshot().endless.shower.phase,600);rainReload.g.update(1);assert.equal(rainReload.g.snapshot().endless.shower.elapsed,0);rainReload.g.togglePause();rainReload.g.update(.1);assert(rainReload.g.snapshot().endless.shower.elapsed>0);
+const stone=rain.g.meteorPositions(0)[0];assert.equal(stone.u,0);assert.equal(rain.g.meteorHit(stone.x-40,stone.y,stone.x+40,stone.y,0,.1)!==null,true);
+// A meteor is swept relative to the ball, so it cannot tunnel through at low FPS.
+rain.g.snapshot().player.x=stone.x-25;rain.g.snapshot().player.y=stone.y;rain.g.snapshot().player.vx=530;rain.g.snapshot().player.vy=0;rain.g.launch();
+rain.g.snapshot().endless.shower={elapsed:0,phase:600};rain.g.snapshot().player.x=stone.x-25;rain.g.snapshot().player.y=stone.y;rain.g.snapshot().player.vx=530;rain.g.snapshot().player.vy=0;rain.g.update(.05);assert.equal(rain.g.snapshot().state,'dying');
+let safeWindows=0;
+for(const n of [31,75,200,1000])for(const fps of [20,60,144])for(const phase of [0,200,400,600,800,1000]){
+ let safe=false;
+ for(let wait=0;wait<6;wait+=.15){
+  const test=boot();test.g.endlessAt(n);test.g.snapshot().endless.shower={elapsed:0,phase};for(let f=0;f<Math.round(wait*fps);f++)test.g.update(1/fps);test.g.aim();test.g.launch();
+  for(let f=0;f<fps*3&&test.g.snapshot().state==='flight';f++)test.g.update(1/fps);
+  if(test.g.snapshot().state==='orbit'&&test.g.snapshot().jumps===n){safe=true;safeWindows++;break;}
+ }assert(safe,`No flight window at planet ${n}, ${fps} FPS, phase ${phase}`);
+}
+const cleanExpedition=boot();cleanExpedition.g.startLevel(1);cleanExpedition.g.snapshot().endless.life=true;cleanExpedition.g.die('miss');assert.equal(cleanExpedition.g.snapshot().state,'dying');assert.equal(cleanExpedition.node('endless-status').hidden,true);
+const oldEndless=boot();oldEndless.g.endlessAt(12);const legacyRun=JSON.parse(JSON.stringify(oldEndless.g.packRun()));delete legacyRun.endless;oldEndless.g.importProgress({version:2,profile:oldEndless.g.snapshot().profile,run:legacyRun});oldEndless.g.resumeSaved();assert(!oldEndless.g.snapshot().endless.life);
+const malformed=JSON.parse(JSON.stringify(oldEndless.g.packRun()));malformed.endless.life=true;malformed.endless.pickup=true;assert(!oldEndless.g.validRun(malformed));
+// The suggested opening accounts for flight time. Every announced launch here clears the stream.
+let announced=0;
+for(const dir of [1,-1])for(const phase of Array.from({length:24},(_,i)=>i*50)){
+ const guided=boot();guided.g.endlessAt(75);guided.g.snapshot().player.dir=dir;guided.g.snapshot().endless.shower={elapsed:0,phase};
+ if(!guided.g.meteorWindow())continue;announced++;guided.g.aim();guided.g.launch();for(let f=0;f<300&&guided.g.snapshot().state==='flight';f++)guided.g.update(1/120);assert.equal(guided.g.snapshot().jumps,75);
+}assert(announced>6);
+console.log(`PASS: endless pickup contact in both directions, one-slot lives, 30-planet cooldown, revival and save migration; golden launch scoring and reload; meteor collisions, pause, save/reload and ${safeWindows} playable weather windows.`);
+}
 // Retain the exact-tangent regression across rotated and translated segments.
 for(let i=0;i<20000;i++){
  const a=i*.7919,r=80,ux=Math.cos(a),uy=Math.sin(a),nx=-uy,ny=ux,p={x:350+i*.5,y:-55-i*.1,r};

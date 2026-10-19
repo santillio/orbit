@@ -36,6 +36,9 @@ body{touch-action:manipulation}canvas{touch-action:none}.overlay{align-items:saf
 .icon[hidden]{display:none}.sector-info{max-height:calc(100dvh - 160px);overflow:auto}
 @media(min-width:1000px){.first-flight{left:36px;transform:none;width:350px}}
 .galaxy-nav{display:flex;align-items:center;gap:9px}.galaxy-nav button{border:0;background:transparent;color:#a4ffce;font-size:24px;padding:0 3px;line-height:1}.galaxy-nav button:disabled{opacity:.22;cursor:default}.galaxy-nav span{max-width:270px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.map-sector.locked::before{opacity:.5}@media(max-width:600px){.galaxy-nav{gap:4px}.galaxy-nav span{max-width:170px;letter-spacing:1px}.galaxy-nav button{font-size:21px}}
+.endless-status{position:absolute;left:50%;bottom:max(49px,7vh);transform:translateX(-50%);padding:6px 10px;border-radius:9px;background:#080d17c9;text-align:center;pointer-events:none;width:min(620px,88vw);font-size:10px;line-height:1.7;letter-spacing:1px;color:#e4c6a1;margin:3px auto 0;text-wrap:balance}.endless-status:empty{display:none}@media(max-width:600px){.endless-status{font-size:9px;letter-spacing:.5px}}
+.toast{top:auto;bottom:max(80px,12vh);padding:0 22px}.toast strong{font-size:20px;letter-spacing:2.5px}.toast span{max-width:620px;margin:8px auto 0;line-height:1.6;font-size:10px;letter-spacing:1px}@media(max-width:600px){.toast{bottom:max(112px,16vh)}.toast strong{font-size:16px;letter-spacing:1.5px}.toast span{font-size:9px}}
+.orbit-reward{font-size:11px;letter-spacing:1px;color:#a4ffce;min-height:16px;margin-top:6px;opacity:0;transform:translateY(5px);transition:opacity .15s,transform .15s}.orbit-reward.show{opacity:1;transform:translateY(0)}@media(prefers-reduced-motion:reduce){.orbit-reward{transition:none}}
 </style>
 </head>
 <body>
@@ -44,7 +47,7 @@ body{touch-action:manipulation}canvas{touch-action:none}.overlay{align-items:saf
  <div class="brand"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><ellipse cx="20" cy="20" rx="18" ry="9" transform="rotate(-38 20 20)" stroke="currentColor"/><circle cx="20" cy="20" r="5" fill="currentColor"/><circle cx="32" cy="10" r="2.6" fill="#effff6"/></svg><div><div class="wordmark">ORBIT</div><div class="edition">ОДИН ПРЫЖОК ДО БЕСКОНЕЧНОСТИ</div></div></div>
  <div class="tools"><div class="record"><span class="label">Рекорд</span><strong id="best">0</strong></div><button class="icon" id="sound" title="Звук (M)" aria-label="Включить звук" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 9h4l5-4v14l-5-4H4z"/><path id="sound-wave" d="m17 9 5 6m0-6-5 6"/></svg></button><button class="icon" id="settings-button" aria-label="Настройки" title="Настройки"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m9 3-1 3-3 1 1 3-2 2 2 2-1 3 3 1 1 3h6l1-3 3-1-1-3 2-2-2-2 1-3-3-1-1-3z"/><circle cx="12" cy="12" r="3"/></svg></button><button class="icon" id="pause" title="Пауза (P / Esc)" aria-label="Пауза"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h3v14H7zm7 0h3v14h-3z"/></svg></button></div>
 </header>
-<div class="scoreboard" id="scoreboard" hidden><div id="score" class="score">0</div><div class="score-tag">ОЧКИ</div><div class="route-label" id="route-label"></div><div class="route-dots" id="route-dots"></div><div id="combo" class="combo"></div></div>
+<div class="scoreboard" id="scoreboard" hidden><div id="score" class="score">0</div><div class="score-tag">ОЧКИ</div><div class="route-label" id="route-label"></div><div class="route-dots" id="route-dots"></div><div id="combo" class="combo"></div><div id="orbit-reward" class="orbit-reward" aria-hidden="true"></div></div><div id="endless-status" class="endless-status" hidden aria-live="polite"></div>
 <div class="toast" id="toast" role="status"><strong id="toast-title"></strong><span id="toast-sub"></span></div>
 <footer class="bottom"><div class="status"><i class="dot"></i><span id="sector">СЕКТОР 001</span></div><div class="keys" id="keys"><span><kbd>SPACE</kbd><b> / TAP</b> ПРЫЖОК</span><span class="desktop-key"><kbd>P</kbd>ПАУЗА</span><span class="desktop-key"><kbd>R</kbd>ЗАНОВО</span></div></footer>
 <section class="overlay galaxy-home" id="menu" aria-label="Карта галактики">
@@ -183,6 +186,8 @@ let entryTransition=null;
 let current,target,player,camera={x:0,y:0,z:1},planets=[],particles=[],rings=[],trail=[];
 let score=0,jumps=0,combo=0,maxCombo=0,perfects=0,flightTime=0,perfectPending=false,slow=0,orbitBoost=0,orbitOffset=0,toastLife=0,shake=0,deathTime=0;
 let best=0,startBest=0,soundOn=false,audio=null,sequence=0;
+let endless={life:false,nextLife:30,pickup:false,multiplier:1,shower:null};
+let orbitRewardLife=0;
 let viewGalaxy=0;
 let mapView={x:0,y:0,z:1},mapDrag=null,selectedSector=null,sectorNodes=[],sceneUIState='',sectorHideTimer=null;
 function sectorPosition(n){const t=(localSector(n)-1)/(SYSTEMS_PER_GALAXY-1);return spiralPoint(t);}
@@ -199,7 +204,7 @@ function expeditionActionLabel(){return savedRun?.mode==='expedition'||profile.u
 function syncSceneUI(){
  if(sceneUIState===state)return;sceneUIState=state;
  const mapScene=['menu','levels','atlas','settings'].includes(state);document.body?.classList.toggle('map-scene',mapScene);
- $('pause').hidden=mapScene||state==='briefing';$('settings-button').hidden=state!=='menu';$('keys').hidden=true;
+ $('pause').hidden=mapScene||state==='briefing';$('settings-button').hidden=state!=='menu';$('keys').hidden=true;syncEndlessHUD();
 }
 function renderGalaxyMap(){
  const root=$('galaxy-sectors');root.replaceChildren();sectorNodes=[];const frontier=expeditionSector(),galaxy=GALAXIES[viewGalaxy];
@@ -361,6 +366,7 @@ function mergeProfiles(currentProfile,incomingProfile){
 }
 function normalizeRun(r){
  if(!r||typeof r!=='object')return r;
+ if(r.endless===undefined)r.endless={life:false,nextLife:Math.max(30,Math.ceil(((r.jumps||0)+2)/30)*30),pickup:false,multiplier:1,shower:null};
  if(r.mode==='expedition'&&r.catalogVersion===undefined&&Number.isInteger(r.level)&&r.level>0){r.systemId=LEGACY_SYSTEM_IDS[(r.level-1)%3];r.catalogVersion=CATALOG_VERSION;r.legacyRoute=true;}
  if(r.catalogVersion===3){r.catalogVersion=CATALOG_VERSION;r.legacyRoute=r.systemId!==systemForLevel(r.level)?.id;}
  if(r.phase==='flight'&&r.current){r.current.dead=false;r.current.departed=true;}
@@ -378,6 +384,10 @@ function normalizeRun(r){
 function validRun(r){
  if(!r||!['orbit','flight'].includes(r.phase)||!['endless','expedition'].includes(r.mode)||!Number.isInteger(r.level)||r.level<1||r.level>profile.unlocked)return false;
  if(!Number.isInteger(r.jumps)||!finite(r.jumps,0,1e6)||!finite(r.score,0,1e12)||!finite(r.combo,0,r.jumps)||!finite(r.maxCombo,0,r.jumps)||!finite(r.perfects,0,r.jumps))return false;
+ if(r.endless!==undefined){const e=r.endless;if(!e||typeof e.life!=='boolean'||typeof e.pickup!=='boolean'||!Number.isInteger(e.nextLife)||!finite(e.nextLife,30,1000031)||![1,2].includes(e.multiplier)||e.life&&e.pickup)return false;
+  if(e.shower!==null&&(!e.shower||!finite(e.shower.elapsed,0,200)||!finite(e.shower.phase,0,1200)))return false;
+  if(e.pickup&&(r.mode!=='endless'||r.current?.index+1!==e.nextLife)||e.multiplier===2&&(r.mode!=='endless'||r.phase!=='flight'||(r.current?.index+1)%5!==0))return false;
+ }
  for(const key of ['flightTime','slow','orbitBoost','orbitOffset','runTime'])if(!finite(r[key],key==='orbitOffset'?-200:0,key==='runTime'?1e8:200))return false;
  if(r.mode==='expedition'&&(!runSystem(r)||r.systemId!==systemForLevel(r.level)?.id&&!(r.legacyRoute===true&&!!systemById(r.systemId))))return false;
  for(const [key,p] of [['current',r.current],['target',r.target]]){
@@ -404,7 +414,7 @@ function loadProgress(){
 function packPlanet(p){const out={};for(const key of ['x','y','index','body','r','baseR','hue','tilt','ring','dead','departed','entryId','skin','kind','age','duration','orbitTravel','shrinkAge'])if(p[key]!==undefined)out[key]=p[key];return out;}
 function packRun(){
  const phase=state==='paused'?previousState:state==='briefing'?'orbit':state;if(!['orbit','flight'].includes(phase))return null;
- return {catalogVersion:CATALOG_VERSION,systemId:currentSystem().id,legacyRoute:currentSystem().id!==systemForLevel(level)?.id,mode,level,phase,score,jumps,combo,maxCombo,perfects,flightTime,perfectPending,slow,orbitBoost,orbitOffset,runTime,current:packPlanet(current),target:packPlanet(target),player:{...player},camera:{...camera}};
+ return {catalogVersion:CATALOG_VERSION,systemId:currentSystem().id,legacyRoute:currentSystem().id!==systemForLevel(level)?.id,mode,level,phase,score,jumps,combo,maxCombo,perfects,flightTime,perfectPending,slow,orbitBoost,orbitOffset,runTime,endless:JSON.parse(JSON.stringify(endless)),current:packPlanet(current),target:packPlanet(target),player:{...player},camera:{...camera}};
 }
 function saveNow(captureRun=true){
  try{if(checkSaveEpoch())return;}catch(_){}
@@ -460,6 +470,8 @@ function startChosen(){startAudio();if(savedRun?.mode==='expedition')resumeSaved
 function resumeSaved(animate=false){
  if(!validRun(savedRun)){savedRun=null;saveNow(false);syncMenu();return;}
  const r=savedRun;mode=r.mode;level=r.level;activeSystemId=r.systemId;score=r.score;jumps=r.jumps;combo=r.combo;maxCombo=r.maxCombo;perfects=r.perfects;flightTime=r.flightTime;perfectPending=r.perfectPending===true;slow=r.slow;orbitBoost=r.orbitBoost;orbitOffset=r.orbitOffset;runTime=r.runTime;
+ endless=JSON.parse(JSON.stringify(r.endless||{life:false,nextLife:Math.max(30,Math.ceil((jumps+2)/30)*30),pickup:false,multiplier:1,shower:null}));
+ orbitRewardLife=0;$('orbit-reward').classList.remove('show');
  current={...r.current};current.img=texture(current);target={...r.target};target.img=texture(target);planets=[current,target];player={...r.player};particles=[];rings=[];trail=[];
  camera=r.camera&&finite(r.camera.x,-1e9)&&finite(r.camera.y,-1e9)&&finite(r.camera.z,.28,2)?{...r.camera}:desiredCamera();
  profile.mode=mode;best=profile.records[mode];startBest=best;previousState=r.phase;state='paused';lastTime=performance.now();closeOverlays();$('paused').hidden=false;$('scoreboard').hidden=false;$('toast').classList.remove('show');syncHUD();if(animate)beginEntry(r.phase);
@@ -486,6 +498,8 @@ function renderAtlas(){
 }
 
 function reset(start=false){
+ endless={life:false,nextLife:30,pickup:false,multiplier:1,shower:null};
+ orbitRewardLife=0;$('orbit-reward').classList.remove('show');
  activeSystemId=null;entryTransition=null;score=jumps=combo=maxCombo=perfects=0;flightTime=slow=orbitBoost=orbitOffset=toastLife=shake=deathTime=runTime=saveClock=0;perfectPending=false;sequence++;
  current=makePlanet(0,0,0);target=makePlanet(350,-55,1);planets=[current,target];
  player={x:0,y:0,a:Math.PI*.88,dir:1,vx:0,vy:0};setOrbitPosition();particles=[];rings=[];trail=[];best=profile.records[mode];startBest=best;
@@ -499,21 +513,82 @@ function syncHUD(){
  $('sector').textContent=mode==='expedition'?`${galaxyForLevel(level).name.toUpperCase()} · СЕКТОР ${localSector(level)} / 77`:`СЕКТОР ${String(jumps+1).padStart(3,'0')}`;
  $('route-label').textContent=mode==='expedition'?`${galaxyForLevel(level).name} · ${localSector(level)}/77 · ${currentSystem().name} · ${jumps} / ${currentSystem().route.length-1} прыжков`:'БЕСКОНЕЧНЫЙ ПОЛЁТ';
  $('route-dots').innerHTML=mode==='expedition'?currentSystem().route.map((_,i)=>`<i class="${i<=jumps?'done':''}"></i>`).join(''):'';
+ syncEndlessHUD();
+}
+function syncEndlessHUD(){
+ const node=$('endless-status');node.hidden=mode!=='endless'||!['orbit','flight','entering'].includes(state);if(mode!=='endless')return;
+ const shower=endless.shower,open=shower&&meteorWindow();
+ const text=[endless.life?'✦ ЗАПАСНАЯ ПОПЫТКА':endless.pickup?'✦ ПОДБЕРИ ПОПЫТКУ НАД ПЛАНЕТОЙ':'',endless.multiplier===2?'×2 ЗА ПРЫЖОК':bonusSector()?(inBonusSector()?'В КОЛЬЦЕ · СТАРТ ×2':'КОЛЬЦО ×2 · НА ПОЛПУТИ СЖАТИЯ'):'',shower?(open?'МЕТЕОРЫ · ОКНО ДЛЯ СТАРТА':'МЕТЕОРЫ · ЖДИ ПРОСВЕТ'):''].filter(Boolean).join(' · ');
+ if(node.textContent!==text)node.textContent=text;
+}
+function bonusSector(){return mode==='endless'&&(current.index+1)%5===0;}
+function bonusBand(p=current){const gap=p.baseR-p.body;return{inner:p.body+gap*.4,outer:p.body+gap*.6,radius:p.body+gap*.5};}
+function inBonusSector(){const band=bonusBand(),r=current.r+orbitOffset;return bonusSector()&&current.shrinkAge>0&&r>=band.inner-1e-7&&r<=band.outer+1e-7;}
+function addScore(points){score+=points;if(score>best){best=score;profile.records[mode]=best;}$('score').textContent=score;$('best').textContent=best;}
+function awardOrbitPoints(points){
+ if(points<=0)return;addScore(points);orbitRewardLife=.85;
+ $('orbit-reward').textContent=`+${points} ЗА ОБОРОТ`;$('orbit-reward').classList.add('show');
+}
+function prepareEndlessPlanet(){
+ if(mode!=='endless')return;
+ const n=current.index+1;endless.multiplier=1;
+ if(!endless.life&&n>=endless.nextLife){endless.nextLife=n;endless.pickup=true;showToast('ЗАПАСНАЯ ПОПЫТКА','ПОДБЕРИ СИМВОЛ НАД ПЛАНЕТОЙ');}
+ else endless.pickup=false;
+ const previousShower=!!endless.shower;
+ endless.shower=n>30&&!previousShower&&Math.random()<.30?{elapsed:0,phase:rand(0,1200)}:null;
+}
+function pickupPosition(){return{x:current.x,y:current.y-(current.body+(current.baseR-current.body)*.60)};}
+function checkEndlessPickup(oldAngle,oldRadius,travel){
+ if(mode!=='endless'||!endless.pickup||endless.life||current.shrinkAge<=0)return;
+ // Sweep the shrinking spiral in short chords, including at high orbit speeds.
+ const item=pickupPosition(),steps=Math.max(1,Math.ceil(Math.abs(travel)/.08)),radius=current.r+orbitOffset,padding=PLAYER_RADIUS/camera.z+8;
+ let x=current.x+Math.cos(oldAngle)*oldRadius,y=current.y+Math.sin(oldAngle)*oldRadius;
+ for(let i=1;i<=steps;i++){const t=i/steps,a=oldAngle+travel*player.dir*t,r=oldRadius+(radius-oldRadius)*t,nx=current.x+Math.cos(a)*r,ny=current.y+Math.sin(a)*r;
+  if(segmentCircle(x,y,nx,ny,{...item,r:padding})!==null){endless.life=true;endless.pickup=false;showToast('ПОПЫТКА ПОДОБРАНА','✦ ОДНО СПАСЕНИЕ В ЗАПАСЕ');tone(520,1040,.22,'sine');syncHUD();saveNow();break;}x=nx;y=ny;
+ }
+}
+function meteorPositions(elapsed){
+ if(mode!=='endless'||!endless.shower)return[];
+ const dx=target.x-current.x,dy=target.y-current.y,d=Math.hypot(dx,dy),tx=dx/d,ty=dy/d,nx=-ty,ny=tx,cx=current.x+dx*.52,cy=current.y+dy*.52;
+ return Array.from({length:10},(_,i)=>{const u=((endless.shower.phase+elapsed*200+i*48)%1200)-600;return{x:cx+nx*u,y:cy+ny*u,u,r:9+(i%3)*2,tx,ty};});
+}
+function meteorHit(x0,y0,x1,y1,start,dt){
+ const before=meteorPositions(start),after=meteorPositions(start+dt);let first=null;
+ for(let i=0;i<before.length;i++){const a=before[i],b=after[i];if(Math.abs(a.u-b.u)>600)continue;
+  const t=segmentCircle(x0,y0,x1-(b.x-a.x),y1-(b.y-a.y),a,PLAYER_RADIUS/camera.z);
+  if(t!==null&&(first===null||t<first))first=t;
+ }return first;
+}
+function meteorWindow(){
+ if(!endless.shower)return false;
+ // Announce an opening for the arrival time at the stream, not just this instant.
+ const d=Math.hypot(target.x-current.x,target.y-current.y),r=current.r+orbitOffset,speed=390+Math.min(jumps*4,140),lead=Math.max(0,(d*.52-r*r/d)/(speed*Math.sqrt(Math.max(.01,1-(r/d)**2))));
+ return meteorPositions(endless.shower.elapsed+lead).every(p=>Math.abs(p.u)>current.baseR+70);
 }
 function setOrbitPosition(){const r=current.r+orbitOffset;player.x=current.x+Math.cos(player.a)*r;player.y=current.y+Math.sin(player.a)*r;}
 // Add 10% of the starting angular speed per planet, without exponential growth.
 function orbitSpeed(){return 1.58*(1+jumps*.10)*(mode==='expedition'?(1+Math.min((level-1)*.035,.7))*(currentSystem().speedScale||1):1);}
 function advanceOrbit(dt){
+ const oldAngle=player.a,oldRadius=current.r+orbitOffset;
  const decay=Math.exp(-14*dt),travel=orbitSpeed()*dt+orbitBoost*(1-decay)/14;
+ let orbitPoints=0;
  if(state==='orbit'){
   current.age+=dt;const before=current.orbitTravel;current.orbitTravel+=travel;
   // Count actual travel, including arrival easing. Shrinking cannot precede a full turn.
   const activeFraction=travel>0?clamp((current.orbitTravel-Math.max(TAU,before))/travel,0,1):0;
+  if(mode==='endless'&&activeFraction>0){
+   // Only complete turns after the initial grace turn earn points. Clip the
+   // final step to the remaining lifetime so a turn after impact cannot score.
+   const activeDt=dt*activeFraction,liveTravel=travel*activeFraction*Math.min(1,(current.duration-current.shrinkAge)/activeDt),previousTravel=Math.max(0,before-TAU);
+   orbitPoints=Math.floor((previousTravel+liveTravel)/TAU+1e-9)-Math.floor(previousTravel/TAU+1e-9);
+  }
   current.shrinkAge=Math.min(current.duration,current.shrinkAge+dt*activeFraction);
   const surface=current.body+PLAYER_RADIUS/camera.z;
   current.r=current.baseR-(current.baseR-surface)*clamp(current.shrinkAge/current.duration,0,1);
  }
  player.a+=travel*player.dir;orbitBoost*=decay;orbitOffset*=decay;setOrbitPosition();
+ if(orbitPoints>0)awardOrbitPoints(orbitPoints);
+ if(state==='orbit')checkEndlessPickup(oldAngle,oldRadius,travel);
  if(state==='orbit'&&current.shrinkAge>=current.duration)die('gravity');
 }
 function aimAt(a){
@@ -525,9 +600,12 @@ function launch(){
  if(state!=='orbit')return;
  const aim=aimAt(player.a),speed=390+Math.min(jumps*4,140);
  perfectPending=aim.along>0&&aim.miss<target.r*.20;
+ endless.multiplier=inBonusSector()?2:1;
+ if(mode==='endless'&&endless.pickup){endless.pickup=false;endless.nextLife=current.index+31;}
  player.vx=aim.dx*speed;player.vy=aim.dy*speed;flightTime=0;state='flight';
  current.departed=true;
- tone(280,440,.09,'sine');saveNow();
+ if(endless.multiplier===2)showToast('ЗОЛОТОЙ СТАРТ ×2','ПОЙМАЙ ОРБИТУ И УДВОЙ НАГРАДУ');
+ syncEndlessHUD();tone(280,440,.09,'sine');saveNow();
 }
 // Sweep the whole visible ball. A small numeric tolerance keeps exact grazes stable.
 function segmentCircle(x0,y0,x1,y1,p,padding=0){
@@ -550,15 +628,27 @@ function capture(){
  orbitBoost=Math.max(0,Math.hypot(player.vx,player.vy)/(current.r+orbitOffset)-orbitSpeed());
  if(perfectPending){combo++;perfects++;maxCombo=Math.max(maxCombo,combo);bonus=2+Math.min(combo-1,4);slow=reduced?0:.52;showToast('PERFECT LAUNCH',`+${bonus} ОЧКА${combo>1?' · КОМБО ×'+combo:' · ТОЧНО В ЦЕНТР'}`);tone(660,990,.23,'sine');}
  else{combo=0;showToast('ОРБИТА ПОЙМАНА','+1 ОЧКО');tone(390,580,.12,'sine');}
- score+=bonus;if(score>best){best=score;profile.records[mode]=best;}
+ if(mode==='endless'&&endless.multiplier===2){bonus*=2;showToast(perfectPending?'PERFECT ×2':'ОРБИТА ПОЙМАНА ×2',`+${bonus} ОЧКОВ · ЗОЛОТОЙ СТАРТ`);}
+ addScore(bonus);
  rings.push({x:p.x,y:p.y,r:p.r,life:.6,max:.6,color:perfectPending?'#a4ffce':'#b6d8ff'});
  discover(current);
  if(mode==='expedition'&&jumps===currentSystem().route.length-1){completeLevel();return;}
  target=nextPlanet(current);planets=planets.filter(p=>p.index>=current.index-1);planets.push(target);state='orbit';perfectPending=false;
+ prepareEndlessPlanet();
  syncHUD();saveNow();
 }
 function explode(x,y,hue,count,radius=10){for(let i=0;i<count;i++){const a=rand(0,TAU),speed=rand(25,170),life=rand(.45,1.25);particles.push({x:x+Math.cos(a)*rand(0,radius),y:y+Math.sin(a)*rand(0,radius),vx:Math.cos(a)*speed,vy:Math.sin(a)*speed,r:rand(1,4),life,max:life,color:`hsl(${hue+rand(-15,25)},65%,${rand(55,85)}%)`});}}
-function die(reason='miss'){if(!['orbit','flight'].includes(state))return;state='dying';deathReason=reason;deathTime=0;savedRun=null;saveNow(false);explode(player.x,player.y,170,35);shake=reduced?0:7;tone(150,35,.4,'sawtooth');}
+function die(reason='miss'){
+ if(!['orbit','flight'].includes(state))return;
+ if(mode==='endless'&&endless.life){
+  endless.life=false;endless.pickup=false;endless.nextLife=current.index+31;endless.multiplier=1;
+  current.departed=false;current.dead=false;current.r=current.baseR;current.age=current.orbitTravel=current.shrinkAge=0;
+  orbitBoost=orbitOffset=flightTime=slow=0;combo=0;perfectPending=false;player.vx=player.vy=0;
+  player.a=Math.atan2(target.y-current.y,target.x-current.x)+player.dir*Math.PI*.75;setOrbitPosition();trail=[];state='orbit';
+  showToast('СИГНАЛ ВОССТАНОВЛЕН','✦ ПОПЫТКА ИСПОЛЬЗОВАНА · СЛЕДУЮЩАЯ ЧЕРЕЗ 30 ПЛАНЕТ');tone(330,660,.3,'sine');syncHUD();saveNow();return;
+ }
+ state='dying';deathReason=reason;deathTime=0;savedRun=null;saveNow(false);explode(player.x,player.y,170,35);shake=reduced?0:7;tone(150,35,.4,'sawtooth');
+}
 function finish(){state='dead';closeOverlays();$('end').hidden=false;$('death-reason').textContent=deathReason==='gravity'?'Гравитация взяла своё':'Сигнал потерян';$('final-score').textContent=score;$('jumps').textContent=jumps;$('perfects').textContent=perfects;$('max-combo').textContent='×'+maxCombo;$('new-record').textContent=score>startBest?'НОВЫЙ РЕКОРД ✦':'';$('scoreboard').hidden=true;}
 function completeLevel(){
  const s=currentSystem(),stars=1+(perfects>=Math.ceil(jumps*.5)?1:0)+(perfects===jumps?1:0),old=profile.completed[level];
@@ -625,19 +715,24 @@ function update(realDt){
  if(['menu','levels','atlas','settings'].includes(state)){time+=realDt;return;}
  const slowPhase=clamp(1-slow/.52,0,1);
  time+=realDt;const dt=realDt*(1-.28*Math.sin(Math.PI*slowPhase)**2);slow=Math.max(0,slow-realDt);
+ const meteorStart=endless.shower?.elapsed||0;
+ if(mode==='endless'&&endless.shower&&['orbit','flight'].includes(state))endless.shower.elapsed+=dt;
  if(state==='orbit'||state==='flight')runTime+=dt;
  if(toastLife>0){toastLife-=realDt;if(toastLife<=0)$('toast').classList.remove('show');}
+ if(orbitRewardLife>0){orbitRewardLife=Math.max(0,orbitRewardLife-realDt);if(orbitRewardLife===0)$('orbit-reward').classList.remove('show');}
  if(state==='orbit'){advanceOrbit(dt);}
  else if(state==='flight'){
   const nx=player.x+player.vx*dt,ny=player.y+player.vy*dt,t=segmentCircle(player.x,player.y,nx,ny,target,(PLAYER_RADIUS+.5)/camera.z);flightTime+=dt;
-  if(t!==null){player.x+=(nx-player.x)*t;player.y+=(ny-player.y)*t;capture();if(state==='orbit')advanceOrbit(dt*(1-t));}
+  const hit=meteorHit(player.x,player.y,nx,ny,meteorStart,dt);
+  if(hit!==null&&(t===null||hit<t)){player.x+=(nx-player.x)*hit;player.y+=(ny-player.y)*hit;die('meteor');}
+  else if(t!==null){player.x+=(nx-player.x)*t;player.y+=(ny-player.y)*t;capture();if(state==='orbit')advanceOrbit(dt*(1-t));}
   else{player.x=nx;player.y=ny;const tx=target.x-player.x,ty=target.y-player.y;if(tx*player.vx+ty*player.vy<-(target.r+35)*Math.hypot(player.vx,player.vy)||flightTime>3.3)die();}
  }else if(state==='dying'){deathTime+=realDt;if(deathTime>.75)finish();}
  if(['orbit','flight','menu'].includes(state)){trail.push({x:player.x,y:player.y});if(trail.length>48)trail.shift();}
  for(const p of particles){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=Math.exp(-1.3*dt);p.vy*=Math.exp(-1.3*dt);p.life-=dt;}particles=particles.filter(p=>p.life>0);
  for(const r of rings){r.r+=dt*120;r.life-=dt;}rings=rings.filter(r=>r.life>0);shake*=Math.exp(-7*realDt);
  const goal=desiredCamera(),ease=1-Math.exp(-3.2*realDt);camera.x+=(goal.x-camera.x)*ease;camera.y+=(goal.y-camera.y)*ease;camera.z+=(goal.z-camera.z)*ease;
- if(state==='orbit'||state==='flight'){saveClock+=realDt;if(saveClock>=.75){saveClock=0;saveNow();}}
+ if(state==='orbit'||state==='flight'){syncEndlessHUD();saveClock+=realDt;if(saveClock>=.75){saveClock=0;saveNow();}}
 }
 function circle(x,y,r,color,width=1){ctx.beginPath();ctx.arc(x,y,r,0,TAU);if(width){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.stroke();}else{ctx.fillStyle=color;ctx.fill();}}
 // Real systems and fictional expedition sectors share a schematic Milky Way map.
@@ -710,12 +805,34 @@ function drawPlanet(p){
  if(p.ring)planetRings(p);
  ctx.drawImage(p.img,p.x-p.body*1.08,p.y-p.body*1.08,p.body*2.16,p.body*2.16);
  if(p.ring)planetRings(p,true);
+ if(active&&bonusSector()){
+  const band=bonusBand(p),ready=inBonusSector();ctx.beginPath();ctx.arc(p.x,p.y,band.outer,0,TAU);ctx.arc(p.x,p.y,band.inner,TAU,0,true);ctx.fillStyle=ready?'#ffcf7545':'#ffcf751c';ctx.fill();
+  circle(p.x,p.y,band.inner,ready?'#ffe0a0bb':'#ffcf7555',1/camera.z);circle(p.x,p.y,band.outer,ready?'#ffe0a0bb':'#ffcf7555',1/camera.z);
+  ctx.font=`600 ${11/camera.z}px "Segoe UI",sans-serif`;ctx.textAlign='left';ctx.fillStyle=ready?'#ffdf99':'#b69c6c';ctx.fillText('×2',p.x+band.outer+8/camera.z,p.y+4/camera.z);
+ }
+ if(active&&mode==='endless'&&endless.pickup){
+  const item=pickupPosition(),r=8;ctx.shadowColor='#bca4ff';ctx.shadowBlur=18;ctx.beginPath();ctx.moveTo(item.x,item.y-r);ctx.lineTo(item.x+r,item.y);ctx.lineTo(item.x,item.y+r);ctx.lineTo(item.x-r,item.y);ctx.closePath();ctx.fillStyle='#dac8ff';ctx.fill();ctx.shadowBlur=0;
+  circle(item.x,item.y,13+Math.sin(time*3)*2,'#c4a7ff66',1/camera.z);ctx.font=`${10/camera.z}px "Segoe UI",sans-serif`;ctx.textAlign='center';ctx.fillStyle='#ddceff';ctx.fillText('+1',item.x,item.y-21/camera.z);
+ }
  if(active&&(state==='orbit'||state==='briefing')){
   const heading=Math.atan2(target.y-p.y,target.x-p.x),dist=Math.hypot(target.x-p.x,target.y-p.y),a=heading-player.dir*Math.acos((p.r+orbitOffset)/dist),win=Math.asin(target.r/dist)*.90,perfect=Math.asin(target.r*.2/dist);
   ctx.lineCap='round';ctx.beginPath();ctx.arc(p.x,p.y,p.r,a-win,a+win);ctx.strokeStyle='#a4ffce55';ctx.lineWidth=4/camera.z;ctx.stroke();ctx.beginPath();ctx.arc(p.x,p.y,p.r,a-perfect,a+perfect);ctx.strokeStyle='#bdffdb';ctx.lineWidth=5/camera.z;ctx.stroke();ctx.lineCap='butt';
  }
  ctx.textAlign='center';ctx.font=`${9/camera.z}px "Segoe UI",sans-serif`;ctx.fillStyle=isTarget?'#b8d6cc':'#7e94ae';ctx.fillText(`${entry?entry.name:names[p.index%names.length]} / ${String(p.index+1).padStart(3,'0')}`,p.x,p.y+p.r+23/camera.z);
  if(isTarget){ctx.font=`${8/camera.z}px "Segoe UI",sans-serif`;ctx.fillStyle='#8ca69d';ctx.fillText(entry?.kind==='star'?'ЦЕЛЬ · ЗВЕЗДА':'СЛЕДУЮЩАЯ',p.x,p.y-p.r-17/camera.z);}
+}
+function drawMeteors(){
+ if(mode!=='endless'||!endless.shower)return;
+ const rocks=meteorPositions(endless.shower.elapsed);
+ // A faint crossing line reveals the hazard before launch; rocks leave a wide repeating gap.
+ const dx=target.x-current.x,dy=target.y-current.y,d=Math.hypot(dx,dy),cx=current.x+dx*.52,cy=current.y+dy*.52;
+ ctx.setLineDash([3/camera.z,9/camera.z]);ctx.beginPath();ctx.moveTo(cx+dy/d*240,cy-dx/d*240);ctx.lineTo(cx-dy/d*240,cy+dx/d*240);ctx.strokeStyle=meteorWindow()?'#a4ffce55':'#ffae7628';ctx.lineWidth=1/camera.z;ctx.stroke();ctx.setLineDash([]);
+ for(const p of rocks){
+  const alpha=ctx.globalAlpha,limit=Math.max(current.baseR,target.r)+55;ctx.globalAlpha=alpha*clamp((limit-Math.abs(p.u))/40,0,1);
+  ctx.beginPath();ctx.moveTo(p.x+p.ty*36,p.y-p.tx*36);ctx.lineTo(p.x,p.y);ctx.strokeStyle='#f6a36d66';ctx.lineWidth=p.r*.7;ctx.lineCap='round';ctx.stroke();ctx.lineCap='butt';
+  ctx.beginPath();for(let i=0;i<7;i++){const angle=i*TAU/7,r=p.r*(i%2?.85:1);const x=p.x+Math.cos(angle)*r,y=p.y+Math.sin(angle)*r;i?ctx.lineTo(x,y):ctx.moveTo(x,y);}ctx.closePath();ctx.fillStyle='#b17b5b';ctx.fill();ctx.strokeStyle='#ffd0a2';ctx.lineWidth=1/camera.z;ctx.stroke();circle(p.x-2,p.y-2,p.r*.23,'#e5b18b',0);
+  ctx.globalAlpha=alpha;
+ }
 }
 function draw(){
  syncSceneUI();ctx.setTransform(DPR,0,0,DPR,0,0);background();
@@ -727,6 +844,7 @@ function draw(){
  const sx=reduced?0:(Math.random()-.5)*shake,sy=reduced?0:(Math.random()-.5)*shake;
  ctx.translate(W*.5+sx,H*(H<580?.57:.56)+sy);ctx.scale(camera.z,camera.z);ctx.translate(-camera.x,-camera.y);
  for(const p of planets)drawPlanet(p);
+ drawMeteors();
  for(const r of rings){ctx.globalAlpha=worldAlpha*r.life/r.max*.6;circle(r.x,r.y,r.r,r.color,1.3/camera.z);}ctx.globalAlpha=worldAlpha;
  for(const p of particles){ctx.globalAlpha=worldAlpha*p.life/p.max;circle(p.x,p.y,p.r,p.color,0);}ctx.globalAlpha=worldAlpha;
  if(trail.length>1){for(let i=1;i<trail.length;i++){ctx.beginPath();ctx.moveTo(trail[i-1].x,trail[i-1].y);ctx.lineTo(trail[i].x,trail[i].y);ctx.strokeStyle=`rgba(185,255,222,${i/trail.length*.34})`;ctx.lineWidth=(i/trail.length)*3/camera.z;ctx.stroke();}}

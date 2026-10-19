@@ -10,6 +10,9 @@ the next planet's orbit. After one full revolution, gravity shrinks the orbit
 toward the planet. Launch before reaching the surface. A miss or a gravity
 collision ends the attempt.
 
+In Endless, a collected spare attempt can rescue one failed flight or gravity
+collision without losing the run's score.
+
 ## Game modes
 
 - **Expedition:** explore 13 galaxies with 77 systems each, for 1,001 distinct
@@ -94,6 +97,37 @@ replaying or resuming later does not add persistent tutorial text to gameplay.
 A regular capture earns 1 point. A Perfect Launch earns 2 points, and consecutive
 perfect captures increase the reward up to 6 points. A regular capture resets the combo.
 
+## Endless encounters
+
+- **Spare attempt:** a violet diamond appears above planet 30. It is a physical
+  pickup inside the initial orbit: wait for shrinking and cross it with the ball.
+  Only one spare can be held. Failure automatically consumes it and returns the
+  ball to the last planet with a fresh orbit; score remains, Perfect combo resets.
+  The next pickup appears 30 planets after the spare is spent. If a pickup is left
+  behind, the next opportunity is 30 planets later. Holding a spare suppresses new
+  pickups, so they never stack.
+- **Golden ring:** every fifth planet has a fixed gold annulus halfway between
+  its original orbit and surface, spanning 40–60% of that radial gap. Launch while
+  the ball is inside this band, at any angle, then catch the next planet to double
+  that jump's points, including any Perfect combo reward. Merely crossing the
+  band does not award points. The ordinary mint aim window remains visible.
+- **Shrinking-orbit points:** each full physical revolution after the initial
+  grace revolution earns 1 point. Partial turns carry through saves and pauses;
+  loading never awards the same turn twice. Arrival easing and either rotation
+  direction count correctly. These points are separate from the launch reward
+  and stay at +1 even inside the gold ring. No points are awarded for travel after
+  a gravity collision. A spare attempt starts a fresh grace turn on revival.
+- **Meteor showers:** from planet 31, eligible transfers have a 30% chance of a
+  visible moving meteor stream. Showers never occur on consecutive transfers.
+  A wide repeating gap gives time to launch and reach the next orbit. Rocks have
+  swept collisions with the moving ball; both weather and motion pause together.
+  A held spare also rescues a meteor collision. These events do not occur in
+  Expedition.
+
+Pickups, the spare slot, its cooldown, pending doubled points, and active meteor
+positions are included in automatic saves and exported backups. Older saves
+resume without granting an unearned spare or rerolling a saved encounter.
+
 ## Progress and backups
 
 Progress is stored in the current browser and origin using `localStorage`.
@@ -156,6 +190,13 @@ completion flag, reversible resets and stale-tab protection, campaign completion
 through added real and sampled fictional systems, the final
 level boundary, atlas discovery, save import validation, old-cycle migration,
 intact planet departure, unavailable storage, and tangent capture accuracy.
+It also checks shrinking-orbit pickup contact at 20–144 FPS, one-slot spare
+attempts and cooldowns, revival and old-save migration, regular and Perfect
+double-score launches, meteor collisions, pause/reload, safe weather windows,
+and the launch-opening forecast in both orbit directions.
+The radial gold band is checked at every launch angle and both boundaries.
+Shrinking-turn scores are checked across frame rates, partial-turn saves,
+multiple turns in one frame, impact boundaries, and separate Expedition scoring.
 
 ## GitHub Pages
 
