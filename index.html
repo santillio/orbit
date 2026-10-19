@@ -49,7 +49,7 @@ const TAU=Math.PI*2, clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), rand=(a,b)=>a+Mat
 const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 let W=innerWidth,H=innerHeight,DPR=1,state='menu',previousState='orbit',lastTime=0,time=0;
 let current,target,player,camera={x:0,y:0,z:1},planets=[],particles=[],rings=[],trail=[];
-let score=0,jumps=0,combo=0,maxCombo=0,perfects=0,flightTime=0,perfectPending=false,slow=0,toastLife=0,shake=0,deathTime=0;
+let score=0,jumps=0,combo=0,maxCombo=0,perfects=0,flightTime=0,perfectPending=false,slow=0,orbitBoost=0,toastLife=0,shake=0,deathTime=0;
 let best=0,startBest=0,soundOn=false,audio=null,sequence=0;
 try{best=Math.max(0,Number(localStorage.getItem('orbit.best.v1'))||0);}catch(_){}
 $('best').textContent=best;
@@ -69,7 +69,7 @@ const names=['NOVA','LYRA','KEPLER','VEGA','ATLAS','MIRA','CETUS','AURORA','LUME
 function makePlanet(x,y,index){const p={x,y,index,body:rand(28,43),r:Math.max(58,86-Math.min(index,50)*.5+rand(-7,7)),hue:(166+index*43+rand(-15,15))%360,tilt:rand(-.6,.6),ring:index%4===2,dead:false};p.img=texture(p);return p;}
 function nextPlanet(p){const d=rand(300,380)+Math.min(jumps*3,90),angle=rand(-.65,.65);return makePlanet(p.x+Math.cos(angle)*d,p.y+Math.sin(angle)*d,p.index+1);}
 function reset(start=false){
- score=jumps=combo=maxCombo=perfects=0;flightTime=slow=toastLife=shake=deathTime=0;perfectPending=false;sequence++;
+ score=jumps=combo=maxCombo=perfects=0;flightTime=slow=orbitBoost=toastLife=shake=deathTime=0;perfectPending=false;sequence++;
  current=makePlanet(0,0,0);target=makePlanet(350,-55,1);planets=[current,target];
  player={x:0,y:0,a:Math.PI*.88,dir:1,vx:0,vy:0};setOrbitPosition();particles=[];rings=[];trail=[];startBest=best;
  camera={x:145,y:-20,z:desiredCamera().z};state=start?'orbit':'menu';
@@ -82,7 +82,13 @@ function syncHUD(){
  $('hint').innerHTML=jumps===0?'Поймай направление. <em>Пробел / нажатие</em> — прыжок.':'Мятная дуга — окно запуска. <em>Узкая яркая отметка — Perfect.</em>';
 }
 function setOrbitPosition(){player.x=current.x+Math.cos(player.a)*current.r;player.y=current.y+Math.sin(player.a)*current.r;}
-function orbitSpeed(){return 1.58+Math.min(jumps*.025,.65);}
+// Add 10% of the starting angular speed per planet, without exponential growth.
+function orbitSpeed(){return 1.58*(1+jumps*.10);}
+function advanceOrbit(dt){
+ const decay=Math.exp(-14*dt);
+ player.a+=(orbitSpeed()*dt+orbitBoost*(1-decay)/14)*player.dir;
+ orbitBoost*=decay;setOrbitPosition();
+}
 function aimAt(a){
  const px=current.x+Math.cos(a)*current.r,py=current.y+Math.sin(a)*current.r;
  const dx=-Math.sin(a)*player.dir,dy=Math.cos(a)*player.dir,tx=target.x-px,ty=target.y-py;
@@ -106,11 +112,13 @@ function segmentCircle(x0,y0,x1,y1,p){
 function capture(){
  const p=target,rx=player.x-p.x,ry=player.y-p.y;player.dir=rx*player.vy-ry*player.vx>=0?1:-1;player.a=Math.atan2(ry,rx);current=p;setOrbitPosition();
  jumps++;let bonus=1;
+ // Carry arrival speed into the orbit and ease into its cruising speed.
+ orbitBoost=Math.max(0,Math.hypot(player.vx,player.vy)/current.r-orbitSpeed());
  if(perfectPending){combo++;perfects++;maxCombo=Math.max(maxCombo,combo);bonus=2+Math.min(combo-1,4);slow=reduced?0:.52;showToast('PERFECT LAUNCH',`+${bonus} ОЧКА${combo>1?' · КОМБО ×'+combo:' · ТОЧНО В ЦЕНТР'}`);tone(660,990,.23,'sine');}
  else{combo=0;showToast('ОРБИТА ПОЙМАНА','+1 ОЧКО');tone(390,580,.12,'sine');}
  score+=bonus;if(score>best){best=score;try{localStorage.setItem('orbit.best.v1',String(best));}catch(_){}}
  rings.push({x:p.x,y:p.y,r:p.r,life:.6,max:.6,color:perfectPending?'#a4ffce':'#b6d8ff'});
- target=nextPlanet(current);planets=planets.filter(p=>p.index>=current.index-1);planets.push(target);state='orbit';perfectPending=false;trail=[];
+ target=nextPlanet(current);planets=planets.filter(p=>p.index>=current.index-1);planets.push(target);state='orbit';perfectPending=false;
  $('hint').hidden=false;syncHUD();
 }
 function explode(x,y,hue,count,radius=10){for(let i=0;i<count;i++){const a=rand(0,TAU),speed=rand(25,170),life=rand(.45,1.25);particles.push({x:x+Math.cos(a)*rand(0,radius),y:y+Math.sin(a)*rand(0,radius),vx:Math.cos(a)*speed,vy:Math.sin(a)*speed,r:rand(1,4),life,max:life,color:`hsl(${hue+rand(-15,25)},65%,${rand(55,85)}%)`});}}
@@ -142,12 +150,13 @@ function desiredCamera(){
 }
 function update(realDt){
  if(state==='paused')return;
- time+=realDt;const dt=realDt*(slow>0?.36:1);slow=Math.max(0,slow-realDt);
+ const slowPhase=clamp(1-slow/.52,0,1);
+ time+=realDt;const dt=realDt*(1-.28*Math.sin(Math.PI*slowPhase)**2);slow=Math.max(0,slow-realDt);
  if(toastLife>0){toastLife-=realDt;if(toastLife<=0)$('toast').classList.remove('show');}
- if(state==='orbit'||state==='menu'){player.a+=orbitSpeed()*player.dir*dt;setOrbitPosition();}
+ if(state==='orbit'||state==='menu'){advanceOrbit(dt);}
  else if(state==='flight'){
   const nx=player.x+player.vx*dt,ny=player.y+player.vy*dt,t=segmentCircle(player.x,player.y,nx,ny,target);flightTime+=dt;
-  if(t!==null){player.x+=(nx-player.x)*t;player.y+=(ny-player.y)*t;capture();}
+  if(t!==null){player.x+=(nx-player.x)*t;player.y+=(ny-player.y)*t;capture();advanceOrbit(dt*(1-t));}
   else{player.x=nx;player.y=ny;const tx=target.x-player.x,ty=target.y-player.y;if(tx*player.vx+ty*player.vy<-(target.r+35)*Math.hypot(player.vx,player.vy)||flightTime>3.3)die();}
  }else if(state==='dying'){deathTime+=realDt;if(deathTime>.75)finish();}
  if(['orbit','flight','menu'].includes(state)){trail.push({x:player.x,y:player.y});if(trail.length>48)trail.shift();}
