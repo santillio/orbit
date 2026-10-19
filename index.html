@@ -24,73 +24,500 @@ button:focus-visible{outline:2px solid var(--mint);outline-offset:5px}button:act
 @media(max-width:600px) and (max-height:740px){.card{padding:22px}.card h1{font-size:38px;margin-bottom:9px}.eyebrow{font-size:9px;margin-bottom:12px}.intro{font-size:12px;line-height:1.5;margin-bottom:16px}.rules{padding-top:14px;gap:12px}.rule-text{font-size:10px;line-height:1.5}.rule-num{font-size:9px;letter-spacing:.3px}.start-hint{margin:10px 0 16px}.primary{padding:14px 20px}}
 @media(max-height:580px){.overlay{padding:75px 20px 45px;align-items:safe center}.card{padding:18px 24px;max-width:540px}.card h1{font-size:34px;margin-bottom:8px}.eyebrow{margin-bottom:10px}.intro{margin-bottom:12px;font-size:12px}.rules{display:none}.start-hint{margin:8px 0 12px}.scoreboard{top:75px}.score{font-size:42px}.orbit-hint{bottom:53px}.bottom{bottom:18px}.result{font-size:44px}.stats{padding:12px 0;margin-top:12px}.card h2{font-size:26px}.result-label{margin-bottom:12px}}
 @media(prefers-reduced-motion:reduce){.card{animation:none}.toast{transition:none}}
+body{touch-action:manipulation}canvas{touch-action:none}.overlay{align-items:safe center;touch-action:pan-y}.card{max-height:calc(100dvh - 150px);overflow:auto;scrollbar-width:thin;scrollbar-color:#354b5b transparent}.home-card{width:min(600px,100%);padding:25px 28px}.home-card h1{font-size:44px;margin-bottom:8px}.home-card .eyebrow{margin-bottom:10px}.home-card .intro{font-size:13px;margin-bottom:18px;max-width:450px}.mode-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:10px;margin-bottom:14px}.mode-button{padding:14px;text-align:left;background:#0a1321;border:1px solid var(--line);color:var(--ink);border-radius:12px}.mode-button strong{display:block;font-size:14px;font-weight:500;margin:6px 0}.mode-button span{font-size:10px;color:#94a6bd;line-height:1.5;display:block}.mode-button small{font-size:9px;letter-spacing:2px;color:#91a7bc}.mode-button.selected{border-color:#a4ffce90;background:#1b352d66}.mode-button.selected small{color:var(--mint)}.menu-row{display:flex;gap:9px}.menu-row .secondary{font-size:11px;padding:11px 8px}.save-note{font-size:10px;color:#8399ae;line-height:1.6;margin:13px 0 0}.save-note.bad{color:#ffbf9d}.saved-run{border:1px solid #a4ffce3d;background:#18342c50;padding:10px 12px;border-radius:12px;margin-bottom:13px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:12px}.saved-run[hidden]{display:none}.saved-run strong{font-weight:500;font-size:12px;display:block}.saved-run span{font-size:10px;color:#a0b4ad;display:block;margin-top:5px}.saved-run button{white-space:nowrap;flex-shrink:0;background:var(--mint);border:0;color:#10271c;border-radius:8px;padding:10px 13px;font-size:11px}.home-card .rules{padding-top:14px;margin-top:18px}.home-card .rule-text{font-size:10px}.home-card .rule-num{font-size:9px}.sheet{width:min(800px,100%);text-align:left;padding:26px}.sheet-head{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:20px}.sheet-head h2{font-size:28px;margin:0}.close-button{border:1px solid var(--line);border-radius:50%;color:#becfe0;background:#152231;width:34px;height:34px;flex-shrink:0}.sheet .eyebrow{margin-bottom:8px}.sheet p{font-size:12px;line-height:1.7;color:#a7b9cb}.level-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.level-card{padding:16px;min-height:148px;text-align:left;border:1px solid var(--line);border-radius:14px;background:#0b1623;color:var(--ink)}.level-card:hover:not(:disabled){border-color:var(--mint)}.level-card:disabled{cursor:default;opacity:.65}.level-card .number{font-size:9px;letter-spacing:2px;color:var(--mint)}.level-card strong{display:block;font-weight:500;font-size:17px;margin:13px 0 8px}.level-card span{font-size:10px;color:#9eafc1;line-height:1.5}.level-card .level-stars{display:block;color:var(--mint);margin-top:14px;letter-spacing:3px;font-size:12px}.atlas-tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}.atlas-tabs button{border:1px solid var(--line);color:#aabed0;background:#0a1521;border-radius:8px;padding:9px 14px;font-size:11px}.atlas-tabs button.active{border-color:#a4ffce99;color:var(--mint)}.atlas-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.atlas-entry{border:1px solid var(--line);border-radius:14px;padding:18px;background:#0c1723}.atlas-entry h3{font-size:16px;font-weight:500;margin:9px 0}.atlas-entry p{font-size:11px;margin:8px 0}.atlas-entry small{font-size:9px;letter-spacing:1px;color:#9cb5c6}.atlas-entry.locked{opacity:.5}.atlas-entry a{font-size:10px;color:var(--mint);text-decoration:none}.atlas-symbol{height:26px;width:26px;border-radius:50%;background:var(--planet);box-shadow:inset -7px -5px 10px #0007,0 0 23px #b1d3fa12}.atlas-foot{font-size:10px!important;color:#74899e!important}.orbit-hint{bottom:85px;font-size:11px}.route-label{font-size:10px;letter-spacing:1px;color:#9fb9b4;max-width:80vw;margin:10px auto 0}.route-dots{display:flex;justify-content:center;gap:5px;margin-top:9px}.route-dots i{width:5px;height:5px;border-radius:50%;background:#58726155}.route-dots i.done{background:var(--mint)}.win-stars{font-size:28px;color:var(--mint);letter-spacing:9px;margin:15px 0}.save-tools{display:flex;justify-content:center;gap:15px;margin-top:9px}.text-button{font:inherit;border:0;padding:2px;background:none;color:#8399ae;font-size:9px;text-decoration:underline;text-underline-offset:3px}a:focus-visible{outline:2px solid var(--mint)}
+@media(max-width:600px){.home-card{padding:22px}.home-card h1{font-size:37px}.mode-button{padding:11px}.mode-button strong{font-size:13px}.mode-button span{font-size:9px}.sheet{padding:20px}.sheet-head h2{font-size:23px}.level-grid{grid-template-columns:1fr 1fr}.atlas-grid{grid-template-columns:1fr}.card{max-height:calc(100dvh - 155px)}.orbit-hint{bottom:72px}.home-card .rules{margin-top:14px}.saved-run{padding:10px}.route-label{font-size:9px}.route-dots{margin-top:7px}.level-card{padding:13px;min-height:135px}}
+@media(max-height:580px){.card{max-height:calc(100dvh - 110px)}.home-card{width:min(680px,100%)}.home-card h1{font-size:30px}.home-card .intro{display:none}.mode-grid{margin:10px 0}.mode-button{padding:9px 12px}.menu-row{margin:0}.save-note{margin-top:8px}.save-tools{margin-top:4px}.orbit-hint{bottom:53px}.scoreboard{top:68px}.score{font-size:35px}.score-tag{display:none}.combo{margin-top:5px;height:12px}.route-label{margin-top:5px}.route-dots{display:none}.toast{top:26%}.level-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.mode-button small{font-size:8px;letter-spacing:.8px;white-space:nowrap}}
+.home-card{background:linear-gradient(145deg,#101e2b33,#0b1421b3);backdrop-filter:blur(1px)}
+@media(min-width:1000px) and (min-height:581px){#menu{justify-content:flex-start;padding-left:7vw}.home-card{width:510px}}
+.catalog-nav,.catalog-jump{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin:0 0 14px;font-size:10px;color:#9fb4c5}.catalog-nav[hidden]{display:none}.catalog-nav span{flex:1;min-width:90px;text-align:center;line-height:1.5}.catalog-nav button,.catalog-jump button{border:1px solid var(--line);background:#152231;color:#c7dacf;border-radius:8px;padding:9px 11px;font-size:10px}.catalog-nav button:disabled{opacity:.3;cursor:default}.catalog-jump{justify-content:flex-end}.catalog-jump input{width:100px;min-width:0;padding:8px;background:#0a1421;color:var(--ink);border:1px solid var(--line);border-radius:8px;font:inherit}.catalog-jump input:focus-visible{outline:2px solid var(--mint)}
+#menu{display:block;padding:0;background:none;overflow:hidden;pointer-events:none}#menu[hidden]{display:none}.galaxy-home button,.galaxy-home .sector-info{pointer-events:auto}.map-scene .bottom{display:none}.menu-links{position:absolute;top:110px;left:36px;display:flex;gap:10px}.menu-links button,.map-tools button{background:#0a142288;border:1px solid #afcbd326;border-radius:9px;color:#b6c9d3;padding:10px 17px;font-size:11px;backdrop-filter:blur(8px)}.menu-links button:hover,.map-tools button:hover{border-color:#a4ffce80;color:#eafff1}.galaxy-caption{position:absolute;bottom:40px;left:36px;display:flex;flex-direction:column;gap:9px}.galaxy-caption span{font-size:10px;letter-spacing:3px;color:#bcced1}.galaxy-caption small{font-size:10px;color:#6f889a}.endless-launch{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);border:1px solid #b8d2df35;border-radius:40px;background:#0d1a27cc;color:#b9cbd1;padding:15px 25px;white-space:nowrap;font-size:12px;backdrop-filter:blur(10px)}.endless-launch:active{transform:translate(-50%,1px)}.endless-launch:hover{border-color:#a4ffce80;color:#d5ffe7}.endless-launch span{margin-left:16px;color:#9fffc7}.map-tools{position:absolute;right:36px;bottom:34px;display:flex;gap:6px}.map-tools button{width:37px;height:37px;padding:0;font-size:18px}.galaxy-sectors{position:absolute;inset:0;pointer-events:none}.map-sector{position:absolute;width:24px;height:24px;margin:-12px;border:0;background:transparent;border-radius:50%;padding:0;color:#b3d4ca;pointer-events:auto!important;cursor:pointer}.map-sector::before{content:'';position:absolute;inset:8px;border-radius:50%;background:#93bdb1;box-shadow:0 0 10px #9fffc73a;border:1px solid #c7f1df55}.map-sector.completed::after{content:'';position:absolute;inset:3px;border-radius:50%;border:1px solid #a4ffce52}.map-sector.locked::before{background:#718494;opacity:.35;box-shadow:none;inset:10px}.map-sector.current{width:46px;height:46px;margin:-23px;z-index:2}.map-sector.current::before{inset:17px;background:#bdffdc;box-shadow:0 0 18px #a4ffceb0,0 0 45px #a4ffce66}.map-sector.current::after{content:'';position:absolute;inset:5px;border:1px solid #a4ffce80;border-radius:50%;box-shadow:0 0 20px #a4ffce20;animation:sector-pulse 2.4s ease-in-out infinite}.map-sector:hover::before,.map-sector:focus-visible::before{background:#e4fff0;box-shadow:0 0 20px #bcffdc}.map-sector:focus-visible{outline-offset:2px}.sector-label{position:absolute;top:12px;left:52px;text-align:left;white-space:nowrap;pointer-events:auto;line-height:1.5;text-shadow:0 2px 15px #000}.sector-label b{display:block;font-size:14px;font-weight:500;color:#edf9f3}.sector-label em{display:block;font-size:10px;font-style:normal;color:#a4ffce;margin-top:5px}.map-sector.label-left .sector-label{left:auto;right:52px;text-align:right}.sector-info{position:absolute;width:min(320px,calc(100vw - 32px));padding:23px;border:1px solid #a4ffce38;border-radius:17px;background:#0b1827ef;box-shadow:0 20px 65px #0006;backdrop-filter:blur(18px);z-index:5}.sector-info[hidden]{display:none}.sector-info small,.first-flight small{font-size:9px;letter-spacing:1.5px;color:#a4ffce}.sector-info h2{font-size:21px;font-weight:400;margin:13px 0 11px;padding-right:20px}.sector-info p{font-size:11px;line-height:1.75;color:#b2c2d0;margin:0}.info-close{position:absolute;right:11px;top:10px;background:none;border:0;color:#859eaa;font-size:23px}.sector-facts{font-size:10px;color:#92b2ad;margin:17px 0;line-height:1.7}.sector-visit{border:1px solid #a4ffce58;border-radius:9px;background:#a4ffce15;color:#c6f5db;padding:11px 14px;width:100%;font-size:11px}.sector-visit:disabled{opacity:.4;cursor:default}.settings-card{max-width:450px}.settings-card .save-note{font-size:11px;margin-bottom:15px}.settings-actions{display:grid;gap:8px}.settings-actions .secondary{margin:0}.settings-actions [hidden]{display:none}.first-flight{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);width:min(440px,calc(100vw - 32px));padding:22px 25px;border:1px solid #a4ffce46;border-radius:17px;background:#0a1727f2;box-shadow:0 20px 65px #0006;z-index:4}.first-flight[hidden]{display:none}.first-flight h2{font-weight:400;font-size:24px;margin:12px 0}.first-flight p{font-size:12px;line-height:1.7;color:#adbfcd}.first-flight strong{font-weight:500;color:#dbf8e9}.first-flight .primary{padding:12px;margin-top:6px}.keys[hidden]{display:none}@keyframes sector-pulse{50%{transform:scale(1.2);opacity:.5}}@media(prefers-reduced-motion:reduce){.map-sector.current::after{animation:none}}@media(max-width:600px){.menu-links{left:20px;top:87px}.menu-links button{padding:9px 14px}.galaxy-caption{left:20px;bottom:102px}.galaxy-caption span{font-size:9px;letter-spacing:2px}.galaxy-caption small{font-size:9px}.endless-launch{bottom:27px;font-size:11px;padding:14px 22px}.map-tools{right:20px;bottom:95px}.map-tools button{width:32px;height:32px}.sector-label b{font-size:12px}.sector-label em{font-size:9px}.first-flight{padding:17px 20px;bottom:18px}.first-flight h2{font-size:21px;margin:9px 0}.first-flight p{font-size:11px;margin:10px 0}.first-flight small{font-size:8px}}@media(max-height:580px){.menu-links{top:76px}.endless-launch{bottom:18px;padding:11px 21px}.map-tools{bottom:18px}.galaxy-caption{bottom:23px}.first-flight{left:auto;right:20px;transform:none;bottom:20px;width:330px;padding:15px 18px}.first-flight h2{font-size:20px}.first-flight p{font-size:10px;margin:8px 0}.first-flight small{font-size:8px}}
+
+.icon[hidden]{display:none}.sector-info{max-height:calc(100dvh - 160px);overflow:auto}
+@media(min-width:1000px){.first-flight{left:36px;transform:none;width:350px}}
+.galaxy-nav{display:flex;align-items:center;gap:9px}.galaxy-nav button{border:0;background:transparent;color:#a4ffce;font-size:24px;padding:0 3px;line-height:1}.galaxy-nav button:disabled{opacity:.22;cursor:default}.galaxy-nav span{max-width:270px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.map-sector.locked::before{opacity:.5}@media(max-width:600px){.galaxy-nav{gap:4px}.galaxy-nav span{max-width:170px;letter-spacing:1px}.galaxy-nav button{font-size:21px}}
 </style>
 </head>
 <body>
 <canvas id="space" tabindex="0" aria-label="Игровое поле ORBIT. Пробел или нажатие запускает шарик по касательной."></canvas>
 <header class="top">
  <div class="brand"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><ellipse cx="20" cy="20" rx="18" ry="9" transform="rotate(-38 20 20)" stroke="currentColor"/><circle cx="20" cy="20" r="5" fill="currentColor"/><circle cx="32" cy="10" r="2.6" fill="#effff6"/></svg><div><div class="wordmark">ORBIT</div><div class="edition">ОДИН ПРЫЖОК ДО БЕСКОНЕЧНОСТИ</div></div></div>
- <div class="tools"><div class="record"><span class="label">Рекорд</span><strong id="best">0</strong></div><button class="icon" id="sound" title="Звук (M)" aria-label="Включить звук" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 9h4l5-4v14l-5-4H4z"/><path id="sound-wave" d="m17 9 5 6m0-6-5 6"/></svg></button><button class="icon" id="pause" title="Пауза (P / Esc)" aria-label="Пауза"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h3v14H7zm7 0h3v14h-3z"/></svg></button></div>
+ <div class="tools"><div class="record"><span class="label">Рекорд</span><strong id="best">0</strong></div><button class="icon" id="sound" title="Звук (M)" aria-label="Включить звук" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 9h4l5-4v14l-5-4H4z"/><path id="sound-wave" d="m17 9 5 6m0-6-5 6"/></svg></button><button class="icon" id="settings-button" aria-label="Настройки" title="Настройки"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m9 3-1 3-3 1 1 3-2 2 2 2-1 3 3 1 1 3h6l1-3 3-1-1-3 2-2-2-2 1-3-3-1-1-3z"/><circle cx="12" cy="12" r="3"/></svg></button><button class="icon" id="pause" title="Пауза (P / Esc)" aria-label="Пауза"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h3v14H7zm7 0h3v14h-3z"/></svg></button></div>
 </header>
-<div class="scoreboard" id="scoreboard" hidden><div id="score" class="score">0</div><div class="score-tag">ОЧКИ</div><div id="combo" class="combo"></div></div>
+<div class="scoreboard" id="scoreboard" hidden><div id="score" class="score">0</div><div class="score-tag">ОЧКИ</div><div class="route-label" id="route-label"></div><div class="route-dots" id="route-dots"></div><div id="combo" class="combo"></div></div>
 <div class="toast" id="toast" role="status"><strong id="toast-title"></strong><span id="toast-sub"></span></div>
-<div class="orbit-hint" id="hint" hidden>Поймай направление. <em>Пробел / нажатие</em> — прыжок.</div>
-<footer class="bottom"><div class="status"><i class="dot"></i><span id="sector">СЕКТОР 001</span></div><div class="keys"><span><kbd>SPACE</kbd><b> / TAP</b> ПРЫЖОК</span><span class="desktop-key"><kbd>P</kbd>ПАУЗА</span><span class="desktop-key"><kbd>R</kbd>ЗАНОВО</span></div></footer>
-<section class="overlay" id="menu">
- <div class="card"><div class="eyebrow">МИКРОАРКАДА · БЕСКОНЕЧНЫЙ КОСМОС</div><h1>ORBIT</h1><p class="intro">Всё решает один момент.<br>Покинь орбиту. Поймай следующую.<br>Продержись ещё один прыжок.</p><button class="primary" id="start">Начать полёт ↗</button><div class="start-hint">Пробел, клик или касание экрана</div><div class="rules"><div><div class="rule-num">01 / ПОЙМАЙ МОМЕНТ</div><div class="rule-text">Шарик летит <strong>по касательной</strong>. Мятная дуга подсказывает окно запуска. Промах — конец полёта.</div></div><div><div class="rule-num">02 / ПОПАДИ В ЦЕНТР</div><div class="rule-text">Точная траектория — <strong>Perfect Launch</strong>, бонус и слоумо. Собирай идеальные прыжки в комбо.</div></div></div></div>
+<footer class="bottom"><div class="status"><i class="dot"></i><span id="sector">СЕКТОР 001</span></div><div class="keys" id="keys"><span><kbd>SPACE</kbd><b> / TAP</b> ПРЫЖОК</span><span class="desktop-key"><kbd>P</kbd>ПАУЗА</span><span class="desktop-key"><kbd>R</kbd>ЗАНОВО</span></div></footer>
+<section class="overlay galaxy-home" id="menu" aria-label="Карта галактики">
+ <nav class="menu-links" aria-label="Экспедиция"><button id="open-levels">Системы</button><button id="open-atlas">Атлас</button></nav>
+ <div id="galaxy-sectors" class="galaxy-sectors" role="group" aria-label="Секторы экспедиции"></div>
+ <aside id="sector-info" class="sector-info" hidden aria-label="Описание сектора"><button class="info-close" id="close-sector" aria-label="Закрыть описание сектора">×</button><small id="sector-info-status"></small><h2 id="sector-info-title"></h2><p id="sector-info-description"></p><div class="sector-facts" id="sector-info-facts"></div><button id="sector-visit" class="sector-visit">В полёт ↗</button></aside>
+ <div class="galaxy-caption"><div class="galaxy-nav"><button id="galaxy-prev" aria-label="Предыдущая галактика">‹</button><span id="galaxy-name">МЛЕЧНЫЙ ПУТЬ</span><button id="galaxy-next" aria-label="Следующая галактика">›</button></div><small id="galaxy-count">77 систем</small></div>
+ <button class="endless-launch" id="endless-flight">Бесконечный полёт <span>↗</span></button>
+ <div class="map-tools" aria-label="Масштаб карты"><button id="map-out" aria-label="Отдалить карту">−</button><button id="map-center" aria-label="К текущему сектору">◎</button><button id="map-in" aria-label="Приблизить карту">+</button></div>
 </section>
-<section class="overlay" id="end" hidden><div class="card"><div class="eyebrow">СИГНАЛ ПОТЕРЯН</div><h2>Ещё одну орбиту?</h2><div class="result" id="final-score">0</div><div class="result-label">ОЧКИ ЗА ПОЛЁТ</div><div class="new-record" id="new-record"></div><div class="stats"><div><strong id="jumps">0</strong><span>ПРЫЖКОВ</span></div><div><strong id="perfects">0</strong><span>PERFECT</span></div><div><strong id="max-combo">×0</strong><span>МАКС. КОМБО</span></div></div><button class="primary" id="retry">Попробовать ещё ↗</button><div class="start-hint" style="margin-bottom:0">Пробел / нажатие / R — новый полёт</div></div></section>
-<section class="overlay" id="paused" hidden><div class="card"><div class="eyebrow">КОСМОС ПОДОЖДЁТ</div><h2>На орбите тишина</h2><p class="intro">Вдохни. Следующая планета рядом.</p><button class="primary" id="resume">Продолжить полёт</button><button class="secondary" id="restart">Начать заново</button><div class="start-hint" style="margin-bottom:0">P / Esc / пробел — продолжить</div></div></section>
+<section class="overlay" id="settings" hidden><div class="card sheet settings-card"><div class="sheet-head"><h2>Настройки</h2><button class="close-button" id="close-settings" aria-label="Закрыть настройки">×</button></div><p class="save-note" id="save-note"></p><div class="settings-actions"><button class="secondary" id="export-save">Экспорт сохранения</button><button class="secondary" id="import-save">Импорт сохранения</button><button class="secondary" id="reset-progress">Начать с нуля</button><button class="secondary" id="restore-progress" hidden>Вернуть сохранение до сброса</button></div><p class="atlas-foot">При сбросе предыдущая экспедиция остаётся в резервной копии в этом браузере.</p><input id="save-file" type="file" accept="application/json,.json" hidden></div></section>
+<section id="tutorial" class="first-flight" hidden aria-label="Первый полёт"><small>СОЛНЕЧНАЯ СИСТЕМА / ПЕРВЫЙ ПОЛЁТ</small><h2>Поймай направление</h2><p><strong>Пробел или касание</strong> — прыжок по касательной. Попади в орбиту следующей планеты.</p><p>Мятная дуга — окно запуска, яркая отметка — <strong>Perfect</strong>. Первый оборот безопасен, затем гравитация тянет к поверхности.</p><button class="primary" id="tutorial-start">В полёт ↗</button></section>
+
+<section class="overlay" id="end" hidden><div class="card"><h2 id="death-reason">Сигнал потерян</h2><div class="result" id="final-score">0</div><div class="result-label">ОЧКИ ЗА ПОЛЁТ</div><div class="new-record" id="new-record"></div><div class="stats"><div><strong id="jumps">0</strong><span>ПРЫЖКОВ</span></div><div><strong id="perfects">0</strong><span>PERFECT</span></div><div><strong id="max-combo">×0</strong><span>МАКС. КОМБО</span></div></div><button class="primary" id="retry">Повторить</button><button class="secondary" id="end-menu">В меню</button><div class="start-hint" style="margin-bottom:0">Пробел / R — новая попытка</div></div></section>
+<section class="overlay" id="paused" hidden><div class="card"><div class="eyebrow">КОСМОС ПОДОЖДЁТ</div><h2>На орбите тишина</h2><p class="intro" id="pause-note">Полёт сохранён. Гравитация тоже на паузе.</p><button class="primary" id="resume">Продолжить полёт</button><button class="secondary" id="restart">Начать попытку заново</button><button class="secondary" id="pause-menu">Сохранить и выйти в меню</button><div class="start-hint" style="margin-bottom:0">P / Esc / пробел — продолжить</div></div></section>
+<section class="overlay" id="levels" hidden><div class="card sheet"><div class="sheet-head"><div><div class="eyebrow" id="levels-galaxy">ЭКСПЕДИЦИЯ / МЛЕЧНЫЙ ПУТЬ</div><h2>От края — к звезде</h2></div><button class="close-button" id="close-levels" aria-label="Закрыть карту систем">×</button></div><p>Пройди все планеты по порядку и достигни звезды. После проигрыша начинаешь систему заново; открытые уровни остаются.</p><div class="catalog-nav"><button id="levels-prev" aria-label="Предыдущие системы">←</button><span id="levels-page"></span><button id="levels-next" aria-label="Следующие системы">→</button><button id="levels-current">К прогрессу</button></div><div class="catalog-jump"><label for="level-jump">Номер системы</label><input id="level-jump" type="number" min="1" max="1001" step="1" value="1"><button id="level-go">Перейти</button></div><div class="level-grid" id="level-grid"></div><p class="atlas-foot">13 галактик по 77 систем. Начало: Солнечная система → Проксима Центавра → Звезда Барнарда → Ross 128. Далее маршрут по выбранным известным системам и вымышленным секторам идёт спиралью к центру. Положения на карте и межгалактические перелёты — игровые.</p></div></section>
+<section class="overlay" id="atlas" hidden><div class="card sheet"><div class="sheet-head"><div><div class="eyebrow" id="atlas-count">КОСМИЧЕСКИЙ АТЛАС</div><h2>Каждый прыжок — открытие</h2></div><button class="close-button" id="close-atlas" aria-label="Закрыть атлас">×</button></div><div class="atlas-tabs"><button data-atlas="galaxies" class="active">Галактики</button><button data-atlas="systems">Системы</button><button data-atlas="planets">Миры</button></div><div class="catalog-nav" id="atlas-nav" hidden><button id="atlas-prev" aria-label="Назад по атласу">←</button><span id="atlas-page"></span><button id="atlas-next" aria-label="Вперёд по атласу">→</button><button id="atlas-current">К прогрессу</button></div><div class="atlas-grid" id="atlas-grid"></div><p class="atlas-foot">Реальные системы: факты NASA, ESA и ESO. Вымышленные системы — художественные миры ORBIT. Внешний вид экзопланет условный. Карточки миров открываются при посещении.</p></div></section>
+<section class="overlay" id="won" hidden><div class="card"><div class="eyebrow">ЗВЕЗДА ДОСТИГНУТА</div><h2 id="win-title">Система пройдена</h2><div class="win-stars" id="win-stars">★ ★ ★</div><p class="intro" id="win-description"></p><div class="stats"><div><strong id="win-score">0</strong><span>ОЧКОВ</span></div><div><strong id="win-perfects">0</strong><span>PERFECT</span></div></div><button class="primary" id="next-level">Следующая система ↗</button><button class="secondary" id="win-menu">В меню и атлас</button></div></section>
 <script>
 (() => {
 'use strict';
 const $=id=>document.getElementById(id), canvas=$('space'), ctx=canvas.getContext('2d');
-const TAU=Math.PI*2, clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), rand=(a,b)=>a+Math.random()*(b-a);
+const TAU=Math.PI*2, PLAYER_RADIUS=5, clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), rand=(a,b)=>a+Math.random()*(b-a);
 const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const SAVE_KEY='orbit.progress.v2',EPOCH_KEY='orbit.saveEpoch.v1',BACKUP_KEY='orbit.backup.v2';
+let saveEpoch=0;
+const SOURCES={solar:'https://science.nasa.gov/solar-system/planets/',trappist:'https://science.nasa.gov/asset/webb/trappist-1-system-orbit-comparison/',kepler:'https://science.nasa.gov/universe/exoplanets/discovery-of-eight-planets-makes-alien-system-the-first-to-tie-with-our-solar-system/'};
+const world=(id,name,hue,kind,description)=>({id,name,hue,kind,description});
+const SYSTEMS=[
+ {id:'solar',name:'Солнечная система',description:'Наш дом в Млечном Пути: восемь планет вокруг Солнца. Начни у Нептуна и пройди к центральной звезде.',source:SOURCES.solar,route:[
+  world('neptune','Нептун',222,'ice','Самая далёкая из восьми планет Солнечной системы. Вместе с Ураном относится к ледяным гигантам.'),
+  world('uranus','Уран',176,'ice','Седьмая планета от Солнца. Ледяной гигант, расположенный между Сатурном и Нептуном.'),
+  world('saturn','Сатурн',40,'ring','Шестая планета от Солнца и газовый гигант. Вторая по размеру планета нашей системы.'),
+  world('jupiter','Юпитер',25,'gas','Пятая планета от Солнца. Самая большая планета Солнечной системы.'),
+  world('mars','Марс',12,'rock','Четвёртая планета от Солнца. Один из четырёх внутренних миров с твёрдой поверхностью.'),
+  world('earth','Земля',195,'rock','Наш дом. Третья планета от Солнца и пятая по размеру планета системы.'),
+  world('venus','Венера',42,'rock','Вторая планета от Солнца. По размеру немного меньше Земли.'),
+  world('mercury','Меркурий',28,'rock','Ближайшая к Солнцу и самая маленькая из восьми планет Солнечной системы.'),
+  world('sun','Солнце',43,'star','Центральная звезда нашей планетной системы. Здесь завершается первый маршрут экспедиции.')
+ ]},
+ {id:'trappist',name:'TRAPPIST-1',description:'Компактная система с семью планетами. Все их орбиты расположены ближе к своей звезде, чем орбита Меркурия к Солнцу.',source:SOURCES.trappist,route:[
+  world('h','TRAPPIST-1 h',217,'rock','Самая внешняя из семи известных планет системы. Её орбита находится за обитаемой зоной звезды.'),
+  world('g','TRAPPIST-1 g',174,'rock','Шестая планета от звезды. Её орбита расположена в обитаемой зоне: это не означает, что жизнь или вода уже обнаружены.'),
+  world('f','TRAPPIST-1 f',167,'rock','Пятая планета от звезды. Её орбита также находится в обитаемой зоне системы.'),
+  world('e','TRAPPIST-1 e',191,'rock','Четвёртая планета от звезды. Входит в тройку миров e, f и g, орбиты которых лежат в обитаемой зоне.'),
+  world('d','TRAPPIST-1 d',27,'rock','Третья планета от звезды. Её орбита проходит ближе к звезде, чем внутренняя граница обитаемой зоны.'),
+  world('c','TRAPPIST-1 c',20,'rock','Вторая планета от звезды. Её орбита проходит ближе к звезде, чем внутренняя граница обитаемой зоны.'),
+  world('b','TRAPPIST-1 b',8,'rock','Ближайшая к звезде из семи известных планет этой компактной системы.'),
+  world('star','TRAPPIST-1',16,'star','Звезда, вокруг которой обращаются семь планет с обозначениями от b до h.')
+ ]},
+ {id:'kepler',name:'Kepler-90',description:'У этой звезды известно восемь планет. Обнаружение Kepler-90 i довело их число до восьми; её нашли с помощью машинного обучения.',source:SOURCES.kepler,route:[
+  ...['h','g','f','e','d','i','c','b'].map((id,i)=>world(id,`Kepler-90 ${id}`,35+i*26,i<2?'gas':'rock',`На маршруте от звезды это планета №${8-i}. Буквы в названиях отражают порядок открытий, а не расстояние до звезды.`)),
+  world('star','Kepler-90',45,'star','Центральная звезда системы с восемью известными планетами. Их орбиты образуют компактную систему.')
+ ],orderSource:'https://baas.aas.org/pub/2020n6i309p01/release/1'}
+];
+SYSTEMS.push(
+ realSystem('kepler11','Kepler-11',['g','f','e','d','c','b'],'Реальная система с шестью известными планетами на тесных орбитах. Маршрут: g → f → e → d → c → b → звезда.','https://www.nasa.gov/news-release/nasa-finds-earth-size-planet-candidates-in-habitable-zone-six-planet-system/'),
+ realSystem('kepler62','Kepler-62',['f','e','d','c','b'],'Реальная система с пятью известными планетами. Две внешние, e и f, обращаются в обитаемой зоне; это не означает, что на них обнаружена жизнь.','https://science.nasa.gov/photojournal/kepler-62-and-the-solar-system/',30),
+ realSystem('kepler186','Kepler-186',['f','e','d','c','b'],'Реальная система с пятью известными планетами вокруг красного карлика. Маршрут начинается у внешней планеты f.','https://science.nasa.gov/photojournal/kepler-186-and-the-solar-system/',15),
+ realSystem('toi178','TOI-178',['g','f','e','d','c','b'],'Реальная система с шестью известными планетами. Пять внешних планет связаны цепочкой орбитальных резонансов.','https://www.eso.org/public/news/eso2102/',29),
+ realSystem('hd110067','HD 110067',['g','f','e','d','c','b'],'Реальная система из шести известных планет, меньших Нептуна. Их орбиты образуют резонансную цепочку.','https://www.esa.int/Science_Exploration/Space_Science/Cheops/ESA_s_Cheops_helps_unlock_rare_six-planet_system',31)
+);
+for(const system of SYSTEMS)system.fictional=false;
+function realSystem(id,name,order,description,source,starHue=43){
+ return{id,name,description,source,fictional:false,route:[...order.map((letter,i)=>world(letter,name+' '+letter,(215+i*31)%360,['kepler11','toi178','hd110067'].includes(id)&&letter!=='b'?'gas':'rock',`Планета ${name} ${letter}. Маршрут проходит от внешних орбит к звезде. Внешний вид и размеры адаптированы для игры; это не фотография планеты.`)),world('star',name,starHue,'star',`Центральная звезда системы ${name}. Финальная цель этого маршрута.`)]};
+}
+const CATALOG_LIMIT=1001,CATALOG_VERSION=4,PAGE_SIZE=11;
+const generatedSystems=new Map();
+const BIOMES=[
+ {name:'Ледяной мир',kind:'frozen',hue:204,description:'Лёд покрывает трещины и тёмные равнины. На ночной стороне светятся слабые полярные сияния.'},
+ {name:'Океанический мир',kind:'ocean',hue:195,description:'Океан разделён цепями островов; облачные вихри скрывают очертания суши.'},
+ {name:'Вулканический мир',kind:'lava',hue:12,description:'Застывшие лавовые поля рассечены раскалёнными разломами.'},
+ {name:'Пустынный мир',kind:'rock',hue:32,description:'Песчаные равнины обрамляют древние кратеры и тёмные горные гряды.'},
+ {name:'Облачный мир',kind:'gas',hue:75,description:'Плотные облачные пояса образуют медленные вихри в верхних слоях атмосферы.'},
+ {name:'Кольцевой гигант',kind:'ring',hue:39,description:'Светлые полосы атмосферы окружены широкими кольцами из пыли и льда.'},
+ {name:'Кристаллический мир',kind:'crystal',hue:267,description:'Кристаллические хребты отражают свет звезды фиолетовыми и голубыми бликами.'},
+ {name:'Сумеречный мир',kind:'rock',hue:227,description:'Серые кратеры и тёмные плато почти сливаются на ночной стороне.'}
+];
+const STAR_TYPES=[{name:'красный карлик',hue:15},{name:'оранжевый карлик',hue:29},{name:'жёлтая звезда',hue:44},{name:'белая звезда',hue:210},{name:'голубая звезда',hue:221}];
+const SYSTEM_NAMES=['Астра','Эйдос','Нимбус','Кайрос','Иллион','Селена','Оникс','Эхо','Таласса','Меридиан','Люмен','Искра','Гелион','Нокс','Эридан','Аурелия','Тирея','Сапфир','Веспер','Альцион','Нефрит','Аркадия','Веллум','Ориэль','Кассия','Мнема','Иридий','Фарос','Зефир','Лантана','Астер','Лакуна'];
+const WORLD_NAMES=['Соль','Вейра','Мирра','Орис','Тэя','Крона','Туман','Лира','Нерея','Арда','Церна','Иней','Руна','Эмбер','Тессера','Эос','Леда','Виста','Грань','Риф'];
+function generatedSystem(n){
+ if(generatedSystems.has(n))return generatedSystems.get(n);
+ const random=seeded('orbit-catalog-v1/'+n),pick=a=>a[Math.floor(random()*a.length)],count=4+Math.floor(random()*7),serial=n-8;
+ const theme=pick(BIOMES),star=pick(STAR_TYPES),name=pick(SYSTEM_NAMES)+' / NX-'+String(serial).padStart(5,'0'),route=[];
+ for(let i=0;i<count;i++){
+  const biome=i===0&&random()<.65?BIOMES[0]:i>=count-2&&random()<.55?BIOMES[2]:random()<.45?theme:pick(BIOMES);
+  route.push({...world('p'+(count-i),pick(WORLD_NAMES)+' '+(count-i),(biome.hue+Math.floor(random()*19)-9+360)%360,biome.kind,`Вымышленный мир системы ${name}. ${biome.description}`),biome:biome.name});
+ }
+ route.push(world('star',name,star.hue,'star',`Вымышленная ${star.name}. Здесь заканчивается маршрут через ${count} планет системы ${name}.`));
+ const s={id:'fiction-'+n,name,fictional:true,starType:star.name,theme:theme.name,description:`Вымышленная система. ${star.name[0].toUpperCase()+star.name.slice(1)}, ${count} планет. Основной характер сектора: ${theme.name.toLowerCase()}. Маршрут проходит от внешнего мира ${route[0].name} к звезде.`,route,
+  spacing:300+random()*70,spread:.4+random()*.4,orbitScale:.92+random()*.13,gravityScale:.91+random()*.18,speedScale:.94+random()*.12,sectorAngle:random()*TAU,sectorRadius:.19+random()*.19};
+ generatedSystems.set(n,s);if(generatedSystems.size>96)generatedSystems.delete(generatedSystems.keys().next().value);return s;
+}
+function systemForLevel(n){if(!Number.isInteger(n)||n<1||n>CATALOG_LIMIT)return null;return SYSTEMS[n-1]||generatedSystem(n-SYSTEMS.length+8);}
+function systemById(id){
+ const real=SYSTEMS.find(s=>s.id===id);if(real)return real;
+ if(typeof id!=='string'||!/^fiction-[1-9]\d{0,3}$/.test(id))return null;
+ const n=Number(id.slice(8));return n>8&&n<=1000?generatedSystem(n):null;
+}
+function runSystem(r){return r?.catalogVersion===CATALOG_VERSION?systemById(r.systemId):null;}
+function currentSystem(){return systemById(activeSystemId)||systemForLevel(level);}
+function validDiscovery(key){
+ if(typeof key!=='string'||key.length>100)return false;const parts=key.split('/');if(parts.length!==2)return false;
+ const sys=systemById(parts[0]);return !!sys&&sys.route.some(w=>w.id===parts[1]);
+}
+function catalogLabel(s){return s.fictional?'ВЫМЫШЛЕННАЯ':'';}
+function numberLabel(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ');}
+
+const LEGACY_SYSTEM_IDS=['solar','trappist','kepler','kepler11','kepler62','kepler186','toi178','hd110067'];
+SYSTEMS.push(
+ realSystem('proxima','Проксима Центавра',['b','d'],'Ближайшая к Солнцу звезда, примерно в 4,2 светового года. Маршрут по подтверждённым планетам b и d ведёт к красному карлику.','https://science.nasa.gov/exoplanet-catalog/proxima-centauri-d/',15),
+ realSystem('barnard','Звезда Барнарда',['e','c','b','d'],'Красный карлик примерно в 6 световых годах от Солнца. В каталоге четыре небольшие планеты; от внешней к внутренней они идут в порядке e, c, b, d.','https://exoplanetarchive.ipac.caltech.edu/overview/Barnard%20b',16),
+ realSystem('ross128','Ross 128',['b'],'Близкий красный карлик примерно в 11 световых годах. Маршрут проходит через планету Ross 128 b к звезде.','https://science.nasa.gov/universe/exoplanets/discovery-alert-eso-finds-second-closest-earth-size-planet-in-habitable-zone/',17)
+);
+const NEARBY_ORDER=['solar','proxima','barnard','ross128','trappist','hd110067','toi178','kepler186','kepler62','kepler11','kepler'];
+SYSTEMS.sort((a,b)=>NEARBY_ORDER.indexOf(a.id)-NEARBY_ORDER.indexOf(b.id));
+const SYSTEMS_PER_GALAXY=77,GALAXY_COUNT=13;
+const galaxyIndexForLevel=n=>clamp(Math.floor((n-1)/SYSTEMS_PER_GALAXY),0,GALAXY_COUNT-1);
+const localSector=n=>(n-1)%SYSTEMS_PER_GALAXY+1;
+const galaxyStart=i=>i*SYSTEMS_PER_GALAXY+1;
+const GALAXIES=[
+ {id:'milky-way',name:'Млечный Путь',description:'Наша спиральная галактика с перемычкой. Экспедиция начинается в Солнечной системе, проходит через выбранные близкие системы, затем по вымышленным секторам движется к центру. Спираль — игровая схема.',source:'https://science.nasa.gov/universe/galaxies/types/',hue:211,arms:4},
+ {id:'andromeda',name:'Андромеда / M31',description:'Соседняя крупная галактика, примерно в 2,5 миллиона световых лет от нас. Все 77 игровых систем этого маршрута вымышлены; здесь нет утверждения об обнаружении конкретных экзопланет.',source:'https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-31/',hue:225,arms:2},
+ ...['Аврора','Предел Эха','Аметист','Северный Венец','Тихая Волна','Астерион','Сады Нокса','Лазурная Бездна','Золотая Река','Серебряный Порог','Последний Рассвет'].map((name,i)=>({id:'imagined-galaxy-'+(i+1),name,fictional:true,hue:[173,260,280,202,182,34,254,215,43,191,12][i],arms:2+i%3,description:`Вымышленная галактика ORBIT. В её рукавах проложен маршрут из 77 систем: от внешнего сектора к центральному узлу. Каждый виток спирали приближает экспедицию к ядру.`}))
+];
+function galaxyForLevel(n){return GALAXIES[galaxyIndexForLevel(n)];}
+
+const freshProfile=()=>({unlocked:1,completed:{},discovered:[],records:{endless:0,expedition:0},mode:'expedition',sound:false,tutorialDone:false});
+let profile=freshProfile(),savedRun=null,storageAvailable=true,saveMessage='',mode='expedition',level=1,atlasTab='galaxies',saveClock=0,runTime=0,deathReason='miss';
+let activeSystemId=null,mapPage=0,atlasCursor=1;
+const worldKey=(s,w)=>`${s.id}/${w.id}`;
+
 let W=innerWidth,H=innerHeight,DPR=1,state='menu',previousState='orbit',lastTime=0,time=0;
+let entryTransition=null;
 let current,target,player,camera={x:0,y:0,z:1},planets=[],particles=[],rings=[],trail=[];
-let score=0,jumps=0,combo=0,maxCombo=0,perfects=0,flightTime=0,perfectPending=false,slow=0,orbitBoost=0,toastLife=0,shake=0,deathTime=0;
+let score=0,jumps=0,combo=0,maxCombo=0,perfects=0,flightTime=0,perfectPending=false,slow=0,orbitBoost=0,orbitOffset=0,toastLife=0,shake=0,deathTime=0;
 let best=0,startBest=0,soundOn=false,audio=null,sequence=0;
+let viewGalaxy=0;
+let mapView={x:0,y:0,z:1},mapDrag=null,selectedSector=null,sectorNodes=[],sceneUIState='',sectorHideTimer=null;
+function sectorPosition(n){const t=(localSector(n)-1)/(SYSTEMS_PER_GALAXY-1);return spiralPoint(t);}
+function spiralPoint(t){const angle=-.56+TAU*3*t,radius=.445-.4*t;return{x:.5+Math.cos(angle)*radius,y:.5+Math.sin(angle)*radius*.66};}
+function galaxyLayout(){
+ const frontier=expeditionSector(),p=sectorPosition(galaxyIndexForLevel(frontier.level)===viewGalaxy?frontier.level:galaxyStart(viewGalaxy)),width=W<600?W*.96:Math.min(W*.94,H*1.65),height=width*1000/1400;
+ const baseX=clamp(W*.5,55-(p.x-.5)*width,W-55-(p.x-.5)*width),baseY=clamp(H*.48,155-(p.y-.5)*height,H-195-(p.y-.5)*height);
+ return{baseX:baseX+mapView.x,baseY:baseY+mapView.y,width:width*mapView.z,height:height*mapView.z};
+}
+function sectorScreen(n,layout=galaxyLayout()){const p=sectorPosition(n);return{x:layout.baseX+(p.x-.5)*layout.width,y:layout.baseY+(p.y-.5)*layout.height};}
+function galaxySectorNumbers(){return Array.from({length:SYSTEMS_PER_GALAXY},(_,i)=>galaxyStart(viewGalaxy)+i);}
+function browseGalaxy(step){viewGalaxy=clamp(viewGalaxy+step,0,GALAXY_COUNT-1);mapView={x:0,y:0,z:1};hideSectorInfo();renderGalaxyMap();}
+function expeditionActionLabel(){return savedRun?.mode==='expedition'||profile.unlocked>1||Object.keys(profile.completed).length>0||profile.discovered.length>0?'Продолжить экспедицию ↗':'Начать экспедицию ↗';}
+function syncSceneUI(){
+ if(sceneUIState===state)return;sceneUIState=state;
+ const mapScene=['menu','levels','atlas','settings'].includes(state);document.body?.classList.toggle('map-scene',mapScene);
+ $('pause').hidden=mapScene||state==='briefing';$('settings-button').hidden=state!=='menu';$('keys').hidden=true;
+}
+function renderGalaxyMap(){
+ const root=$('galaxy-sectors');root.replaceChildren();sectorNodes=[];const frontier=expeditionSector(),galaxy=GALAXIES[viewGalaxy];
+ $('galaxy-name').textContent=galaxy.name.toUpperCase();$('galaxy-count').textContent=`77 систем · галактика ${viewGalaxy+1} / ${GALAXY_COUNT}`;$('galaxy-prev').disabled=viewGalaxy===0;$('galaxy-next').disabled=viewGalaxy===GALAXY_COUNT-1;
+ for(const n of galaxySectorNumbers()){
+  const done=profile.completed[n],isCurrent=n===frontier.level,sys=isCurrent?frontier.system:systemForLevel(n),b=document.createElement('button');
+  b.className='map-sector '+(isCurrent?'current':done?'completed':n<=profile.unlocked?'available':'locked');b.setAttribute('aria-label',`Сектор ${localSector(n)}: ${sys.name}. ${isCurrent?'Текущий':done?'Пройден':n<=profile.unlocked?'Доступен':'Закрыт'}`);b.dataset.level=String(n);
+  if(isCurrent){b.setAttribute('aria-current','location');b.innerHTML=`<span class="sector-label"><b>${frontier.system.name}</b><em>${expeditionActionLabel()}</em></span>`;}
+  b.addEventListener('pointerenter',()=>showSectorInfo(n));b.addEventListener('pointerleave',scheduleSectorHide);b.addEventListener('focus',()=>showSectorInfo(n));b.addEventListener('blur',leaveSectorFocus);b.addEventListener('click',()=>{if(isCurrent)visitSector(n);else showSectorInfo(n);});root.append(b);sectorNodes.push({n,node:b});
+ }
+ positionGalaxyMap();
+}
+function positionGalaxyMap(){
+ const layout=galaxyLayout();for(const {n,node} of sectorNodes){const p=sectorScreen(n,layout);node.style.left=p.x+'px';node.style.top=p.y+'px';node.hidden=p.x<15||p.x>W-15||p.y<80||p.y>H-85;node.classList.toggle('label-left',p.x>W*.6);}
+ if(selectedSector!==null)positionSectorInfo(selectedSector);
+}
+function positionSectorInfo(n){const p=sectorScreen(n),width=Math.min(320,W-32),x=p.x>W*.55?p.x-width-28:p.x+28;const panel=$('sector-info');panel.style.left=clamp(x,16,W-width-16)+'px';panel.style.top=clamp(p.y-85,128,Math.max(128,H-350))+'px';}
+function showSectorInfo(n){
+ if(state!=='menu')return;cancelSectorHide();selectedSector=n;const done=profile.completed[n],frontier=expeditionSector(),isCurrent=n===frontier.level,s=isCurrent?frontier.system:systemForLevel(n);
+ $('sector-info-status').textContent=[`${galaxyForLevel(n).name} / СЕКТОР ${localSector(n)} ИЗ 77`,isCurrent?'ТЕКУЩИЙ':done?'ПРОЙДЕН':n<=profile.unlocked?'ДОСТУПЕН':'ЗАКРЫТ',catalogLabel(s)].filter(Boolean).join(' · ');
+ $('sector-info-title').textContent=isCurrent?frontier.system.name:s.name;$('sector-info-description').textContent=(isCurrent?frontier.system:s).description;
+ $('sector-info-facts').textContent=`${localSector(n)===77?'ЦЕНТР ГАЛАКТИКИ · ':''}${s.route.length-1} планет · ${done?'★'.repeat(done.stars)+' · лучший полёт: '+done.score+' очков':s.route[0].name+' → '+s.route.at(-1).name}`;
+ $('sector-visit').textContent=n>profile.unlocked?'Система закрыта':isCurrent?expeditionActionLabel():done?'Повторить систему ↗':'Начать экспедицию ↗';$('sector-visit').disabled=n>profile.unlocked;
+ $('sector-info').hidden=false;positionSectorInfo(n);
+}
+function cancelSectorHide(){if(sectorHideTimer!==null){clearTimeout(sectorHideTimer);sectorHideTimer=null;}}
+function scheduleSectorHide(e){if(e?.pointerType==='touch')return;cancelSectorHide();sectorHideTimer=setTimeout(hideSectorInfo,180);}
+function leaveSectorFocus(e){if(e.relatedTarget?.closest?.('.map-sector, #sector-info'))cancelSectorHide();else scheduleSectorHide();}
+function hideSectorInfo(){cancelSectorHide();selectedSector=null;$('sector-info').hidden=true;}
+function visitSector(n){if(n>profile.unlocked)return;hideSectorInfo();startAudio();if(savedRun?.mode==='expedition'&&savedRun.level===n)resumeSaved(true);else startLevel(n,true);}
+function zoomGalaxy(factor,x=W*.5,y=H*.48){const before=mapView.z,next=clamp(before*factor,1,5),layout=galaxyLayout();if(next===before)return;mapView.x+=(x-layout.baseX)*(1-next/before);mapView.y+=(y-layout.baseY)*(1-next/before);mapView.z=next;hideSectorInfo();positionGalaxyMap();}
+function centerGalaxy(){viewGalaxy=galaxyIndexForLevel(expeditionSector().level);mapView={x:0,y:0,z:1};hideSectorInfo();positionGalaxyMap();}
+function maybeTutorial(){
+ if(state!=='orbit'||mode!=='expedition'||level!==1||jumps!==0||profile.tutorialDone)return;
+ state='briefing';const heading=Math.atan2(target.y-current.y,target.x-current.x),distance=Math.hypot(target.x-current.x,target.y-current.y);player.a=heading-player.dir*Math.acos(current.r/distance);setOrbitPosition();$('tutorial').hidden=false;syncSceneUI();
+}
+function completeTutorial(){if(state!=='briefing')return;profile.tutorialDone=true;state='orbit';$('tutorial').hidden=true;lastTime=performance.now();syncSceneUI();saveNow();}
+function saveStorageKey(){return saveEpoch?SAVE_KEY+'.epoch.'+saveEpoch:SAVE_KEY;}
+function checkSaveEpoch(){
+ const epoch=Number(localStorage.getItem(EPOCH_KEY))||0;if(epoch===saveEpoch)return false;
+ profile=freshProfile();savedRun=null;best=0;loadProgress();mode=profile.mode;level=1;soundOn=profile.sound;reset(false);syncSoundButton();return true;
+}
+function showSettings(){if(state!=='menu')return;closeOverlays();state='settings';$('settings').hidden=false;try{$('restore-progress').hidden=!localStorage.getItem(BACKUP_KEY);}catch(_){$('restore-progress').hidden=true;}syncSaveNote();syncSceneUI();}
+function resetProgress(){
+ saveNow();try{
+  if(!localStorage.getItem(BACKUP_KEY))localStorage.setItem(BACKUP_KEY,JSON.stringify({version:2,profile,run:savedRun}));
+  const epoch=Math.max(saveEpoch+1,Date.now());const nextProfile=freshProfile();localStorage.setItem(SAVE_KEY+'.epoch.'+epoch,JSON.stringify({version:2,profile:nextProfile,run:null}));localStorage.setItem(EPOCH_KEY,String(epoch));localStorage.setItem('orbit.best.v1','0');
+  saveEpoch=epoch;profile=nextProfile;savedRun=null;mode='expedition';level=1;best=0;soundOn=false;saveMessage='';mapView={x:0,y:0,z:1};reset(false);syncSoundButton();
+ }catch(_){saveMessage='Не удалось сбросить сохранение: браузер запретил запись.';syncSaveNote();}
+}
+function restoreProgress(){try{const raw=localStorage.getItem(BACKUP_KEY);if(raw)importProgress(JSON.parse(raw));}catch(_){saveMessage='Не удалось восстановить резервную копию.';syncSaveNote();}}
+$('close-sector').addEventListener('click',hideSectorInfo);$('sector-visit').addEventListener('click',()=>{if(selectedSector!==null)visitSector(selectedSector);});
+$('sector-info').addEventListener('pointerenter',cancelSectorHide);$('sector-info').addEventListener('pointerleave',scheduleSectorHide);$('sector-info').addEventListener('focusin',cancelSectorHide);$('sector-info').addEventListener('focusout',leaveSectorFocus);
+$('endless-flight').addEventListener('click',()=>{startAudio();if(savedRun?.mode==='endless')resumeSaved(true);else{selectMode('endless');reset(true);}});
+$('galaxy-prev').addEventListener('click',()=>browseGalaxy(-1));$('galaxy-next').addEventListener('click',()=>browseGalaxy(1));
+$('map-in').addEventListener('click',()=>zoomGalaxy(1.35));$('map-out').addEventListener('click',()=>zoomGalaxy(1/1.35));$('map-center').addEventListener('click',centerGalaxy);
+$('settings-button').addEventListener('click',showSettings);$('close-settings').addEventListener('click',showMenu);$('reset-progress').addEventListener('click',resetProgress);$('restore-progress').addEventListener('click',restoreProgress);$('tutorial-start').addEventListener('click',completeTutorial);
+canvas.addEventListener('wheel',e=>{if(state!=='menu')return;e.preventDefault();zoomGalaxy(Math.exp(-e.deltaY*.0015),e.clientX,e.clientY);},{passive:false});
+canvas.addEventListener('pointermove',e=>{if(!mapDrag||state!=='menu')return;mapView.x+=e.clientX-mapDrag.x;mapView.y+=e.clientY-mapDrag.y;mapDrag={x:e.clientX,y:e.clientY};positionGalaxyMap();});
+for(const type of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(type,()=>{mapDrag=null;});
+addEventListener('storage',e=>{if(e.key===EPOCH_KEY)try{checkSaveEpoch();}catch(_){}});
+
 try{best=Math.max(0,Number(localStorage.getItem('orbit.best.v1'))||0);}catch(_){}
+loadProgress();mode=profile.mode;soundOn=profile.sound;best=profile.records[mode];
 $('best').textContent=best;
 const stars=Array.from({length:220},()=>({x:Math.random(),y:Math.random(),r:rand(.45,1.4),a:rand(.15,.75),depth:rand(.025,.14)}));
-function resize(){W=innerWidth;H=innerHeight;DPR=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(W*DPR);canvas.height=Math.round(H*DPR);}
+function resize(){W=innerWidth;H=innerHeight;DPR=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(W*DPR);canvas.height=Math.round(H*DPR);positionGalaxyMap();}
 addEventListener('resize',resize);resize();
+const textureCache=new Map();
+function seeded(seed){let n=2166136261;for(const c of String(seed))n=Math.imul(n^c.charCodeAt(0),16777619);return()=>{n+=0x6D2B79F5;let t=n;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296;};}
 function texture(p){
- const c=document.createElement('canvas');c.width=c.height=160;const g=c.getContext('2d');
- g.save();g.beginPath();g.arc(80,80,74,0,TAU);g.clip();
- const fill=g.createRadialGradient(49,43,2,92,100,110);fill.addColorStop(0,`hsl(${p.hue},60%,72%)`);fill.addColorStop(.48,`hsl(${p.hue},43%,42%)`);fill.addColorStop(1,`hsl(${p.hue},52%,10%)`);g.fillStyle=fill;g.fillRect(0,0,160,160);
- g.translate(80,80);g.rotate(p.tilt);
- for(let i=0;i<9;i++){g.beginPath();g.ellipse(rand(-20,20),-65+i*17,105,rand(5,13),.1,0,TAU);g.fillStyle=`hsla(${p.hue+rand(-18,18)},60%,${rand(45,85)}%,${rand(.03,.14)})`;g.fill();}
- for(let i=0;i<14;i++){const x=rand(-65,65),y=rand(-65,65),r=rand(2,10);g.beginPath();g.arc(x,y,r,0,TAU);g.fillStyle='#07101a15';g.fill();g.beginPath();g.arc(x-1,y-1,r,Math.PI,TAU);g.strokeStyle='#ffffff0c';g.lineWidth=1;g.stroke();}
- g.restore();return c;
+ const key=typeof p.skin==='string'?p.skin:`procedural/${p.index}/${Math.round(p.hue)}/${p.ring}`;
+ if(textureCache.has(key))return textureCache.get(key);
+ const c=document.createElement('canvas');c.width=c.height=320;const g=c.getContext('2d');g.scale(2,2);
+ const random=seeded(key),r=(a,b)=>a+random()*(b-a),id=key.split('/')[1],solar=key.startsWith('solar/'),star=p.kind==='star';
+ const disk=(x,y,rx,ry,color,angle=0)=>{g.beginPath();g.ellipse(x,y,rx,ry,angle,0,TAU);g.fillStyle=color;g.fill();};
+ const palettes={neptune:['#438dc7','#2464b3','#172c76'],uranus:['#c3e3df','#8bbec6','#4a7b92'],saturn:['#eddfb4','#c3aa7d','#796c53'],jupiter:['#e8d9c5','#b98b6b','#60534d'],mars:['#d18b62','#a85537','#502c27'],earth:['#327eae','#16568a','#082c50'],venus:['#ecdaa7','#c4a269','#79613f'],mercury:['#b0aaa0','#817c76','#383b40'],sun:['#fff0a3','#ffb62d','#e26410']};
+ const colors=solar&&palettes[id]?palettes[id]:star?[`hsl(${p.hue},85%,85%)`,`hsl(${p.hue},80%,60%)`,`hsl(${p.hue},65%,35%)`]:[`hsl(${p.hue},30%,65%)`,`hsl(${p.hue},28%,43%)`,`hsl(${p.hue},25%,22%)`];
+ g.save();g.beginPath();g.arc(80,80,74,0,TAU);g.clip();g.fillStyle=colors[1];g.fillRect(0,0,160,160);
+ const gas=p.kind==='gas'||p.kind==='ice'||p.ring||solar&&['neptune','uranus','jupiter','venus'].includes(id);
+ if(gas){
+  g.save();g.translate(80,80);g.rotate(id==='uranus'?1.22:-.12);
+  const subtle=id==='uranus'?.06:id==='neptune'?.10:.29;
+  for(let y=-80;y<80;y+=r(1.2,3.2)){
+   g.beginPath();g.moveTo(-85,y);for(let x=-85;x<=85;x+=5)g.lineTo(x,y+Math.sin(x*.075+y*.2)*r(.3,2.2));g.lineTo(85,y+5);g.lineTo(-85,y+5);g.closePath();g.fillStyle=random()>.47?colors[0]:colors[2];g.globalAlpha=r(subtle*.3,subtle);g.fill();
+  }
+  g.globalAlpha=1;
+  if(id==='jupiter'&&solar){disk(30,24,20,10,'#9c503a',-.08);disk(29,23,15,6,'#ba7050');disk(27,22,9,3,'#c58b68');}
+  if(id==='neptune'&&solar){disk(21,15,14,5,'#194583',-.15);disk(-17,-23,23,1.3,'#b4d3ec75',-.08);disk(18,29,20,.8,'#b4d3ec65');}
+  if(id==='venus'&&solar){for(let i=0;i<10;i++)disk(r(-40,40),r(-65,65),r(35,90),r(1,3),'#f7e4bb25',-.16);}
+  g.restore();
+ }else if(solar&&id==='earth'){
+  // Curved silhouettes of Africa, Europe, Asia and the Americas under cloud cover.
+  const land=(points,color)=>{g.beginPath();g.moveTo(...points[0]);for(let i=1;i<points.length;i++)g.lineTo(...points[i]);g.closePath();g.fillStyle=color;g.fill();};
+  land([[77,55],[85,48],[93,50],[99,58],[109,63],[108,73],[117,82],[110,91],[107,109],[99,125],[92,116],[88,98],[77,83],[72,68]],'#8d9b69');
+  land([[78,53],[74,42],[83,32],[91,34],[95,26],[110,30],[119,39],[135,42],[149,54],[143,68],[132,70],[125,82],[118,74],[108,58],[98,57],[92,47]],'#729579');
+  land([[17,32],[31,25],[45,31],[59,38],[55,49],[44,53],[39,66],[31,64],[25,51],[14,49]],'#6e9674');
+  land([[39,68],[50,69],[62,80],[65,92],[55,108],[48,124],[43,113],[46,96],[38,83]],'#648e69');
+  land([[122,109],[137,103],[146,111],[141,123],[127,123]],'#b1a173');
+  disk(83,7,44,10,'#e5f1ea');disk(66,155,43,12,'#edf1e9');
+  for(let i=0;i<32;i++)disk(r(10,150),r(13,147),r(6,24),r(.7,2.3),'#f4f7ed95',-.35);
+ }else if(p.kind==='ocean'){
+  g.fillStyle='#1b648b';g.fillRect(0,0,160,160);
+  for(let i=0;i<45;i++)disk(r(14,146),r(12,148),r(2,15),r(1,8),'#7f9f76',r(-1,1));
+  for(let i=0;i<24;i++)disk(r(10,150),r(13,147),r(9,25),r(.7,2.8),'#eef7f0a0',-.3);
+ }else if(p.kind==='frozen'){
+  g.fillStyle='#9ebac4';g.fillRect(0,0,160,160);
+  for(let i=0;i<45;i++){g.beginPath();let x=r(0,160),y=r(0,160);g.moveTo(x,y);for(let j=0;j<5;j++){x+=r(-14,14);y+=r(2,12);g.lineTo(x,y);}g.strokeStyle=i%2?'#dce9ed99':'#446d8380';g.lineWidth=r(.3,1.3);g.stroke();}
+ }else if(p.kind==='lava'){
+  g.fillStyle='#423235';g.fillRect(0,0,160,160);
+  for(let i=0;i<30;i++){g.beginPath();let x=r(0,160),y=r(0,160);g.moveTo(x,y);for(let j=0;j<5;j++){x+=r(-15,15);y+=r(3,17);g.lineTo(x,y);}g.strokeStyle=i%3?'#e9702a':'#ffc06a';g.lineWidth=r(.4,1.7);g.stroke();}
+ }else if(p.kind==='crystal'){
+  for(let i=0;i<90;i++){const x=r(0,160),y=r(0,160),size=r(2,13);g.beginPath();g.moveTo(x,y-size);g.lineTo(x+size*.6,y);g.lineTo(x,y+size);g.lineTo(x-size*.6,y);g.closePath();g.fillStyle=i%2?'#b7c7e54d':'#42265d60';g.fill();g.strokeStyle='#d9c9ff40';g.lineWidth=.4;g.stroke();}
+ }else if(star){
+  for(let i=0;i<2600;i++){const x=r(5,155),y=r(5,155);disk(x,y,r(.25,1.8),r(.25,1.3),random()>.35?colors[0]:colors[2]);g.globalAlpha=r(.08,.35);}g.globalAlpha=1;
+  for(let i=0;i<6;i++)disk(r(30,130),r(25,135),r(1,3),r(1,2),colors[2]);
+ }else{
+  g.globalAlpha=.20;for(let i=0;i<250;i++)disk(r(0,160),r(0,160),r(2,22),r(1,13),random()>.5?colors[0]:colors[2],r(-1,1));g.globalAlpha=1;
+  // Solid surfaces receive relief rather than gas-giant bands.
+  for(let i=0;i<(id==='mercury'?100:40);i++){
+   const x=r(8,152),y=r(8,152),size=r(.8,id==='mercury'?6:4);
+   disk(x,y,size,size*.8,'#171e262b');g.beginPath();g.ellipse(x-.4,y-.6,size,size*.8,0,Math.PI*.85,TAU* .92);g.strokeStyle='#e4d9c43b';g.lineWidth=.65;g.stroke();
+  }
+  if(id==='mars'&&solar){disk(81,10,24,6,'#e5dfcc');disk(61,94,20,8,'#65413455',-.5);disk(100,69,27,3,'#653b2c55',-.15);}
+ }
+ // Fine surface grain stays cached, so capture never generates frame-by-frame noise.
+ for(let i=0;i<1800;i++){g.globalAlpha=r(.015,.09);g.fillStyle=random()>.5?'#fff':'#000';g.fillRect(r(0,160),r(0,160),r(.3,1.2),r(.3,1.1));}g.globalAlpha=1;
+ const shade=g.createRadialGradient(44,38,5,91,92,99);shade.addColorStop(0,star?'#fff8c738':'#ffffff2b');shade.addColorStop(.46,'#00000000');shade.addColorStop(.75,star?'#5e160018':'#02091755');shade.addColorStop(1,star?'#7d1b0040':'#020511ee');g.fillStyle=shade;g.fillRect(0,0,160,160);
+ if(solar&&['earth','neptune','uranus','venus'].includes(id)){g.beginPath();g.arc(80,80,73,0,TAU);g.strokeStyle=id==='earth'?'#8ed9ff8c':'#e3f2fc42';g.lineWidth=1.2;g.stroke();}
+ g.restore();textureCache.set(key,c);if(textureCache.size>40)textureCache.delete(textureCache.keys().next().value);return c;
 }
+function planetRings(p,front=false){
+ ctx.save();ctx.translate(p.x,p.y);ctx.rotate(-.32);
+ for(let i=0;i<13;i++){
+  const radius=p.body*(1.24+i*.048);ctx.beginPath();ctx.ellipse(0,0,radius,radius*.28,0,front?0:Math.PI,front?Math.PI:TAU);
+  ctx.strokeStyle=i===5?'#2a2c3099':`rgba(210,195,156,${front?.60:.33})`;ctx.lineWidth=p.body*.044;ctx.stroke();
+ }ctx.restore();
+}
+
 const names=['NOVA','LYRA','KEPLER','VEGA','ATLAS','MIRA','CETUS','AURORA','LUMEN','OSIRIS'];
-function makePlanet(x,y,index){const p={x,y,index,body:rand(28,43),r:Math.max(58,86-Math.min(index,50)*.5+rand(-7,7)),hue:(166+index*43+rand(-15,15))%360,tilt:rand(-.6,.6),ring:index%4===2,dead:false};p.img=texture(p);return p;}
-function nextPlanet(p){const d=rand(300,380)+Math.min(jumps*3,90),angle=rand(-.65,.65);return makePlanet(p.x+Math.cos(angle)*d,p.y+Math.sin(angle)*d,p.index+1);}
+function finite(n,min=0,max=1e9){return typeof n==='number'&&Number.isFinite(n)&&n>=min&&n<=max;}
+function cleanProfile(raw){
+ const p=freshProfile();if(!raw||typeof raw!=='object')return p;
+ if(Number.isInteger(raw.unlocked))p.unlocked=clamp(raw.unlocked,1,CATALOG_LIMIT);
+ for(const m of ['endless','expedition'])if(finite(raw.records?.[m],0,1e12))p.records[m]=raw.records[m];
+ if(['expedition','endless'].includes(raw.mode))p.mode=raw.mode;p.sound=raw.sound===true;
+ p.discovered=Array.isArray(raw.discovered)?[...new Set(raw.discovered.filter(validDiscovery))]:[];
+ p.tutorialDone=typeof raw.tutorialDone==='boolean'?raw.tutorialDone:p.unlocked>1||p.discovered.length>0;
+ if(raw.completed&&typeof raw.completed==='object')for(const [key,v] of Object.entries(raw.completed)){
+  if(/^[1-9]\d{0,6}$/.test(key)&&Number(key)<=CATALOG_LIMIT&&v&&finite(v.score,0,1e12)&&Number.isInteger(v.stars)&&v.stars>=1&&v.stars<=3)p.completed[key]={score:v.score,stars:v.stars};
+ }
+ return p;
+}
+function mergeProfiles(currentProfile,incomingProfile){
+ const merged=cleanProfile(currentProfile);merged.unlocked=Math.max(merged.unlocked,incomingProfile.unlocked);merged.discovered=[...new Set([...merged.discovered,...incomingProfile.discovered])];merged.tutorialDone=merged.tutorialDone||incomingProfile.tutorialDone;
+ for(const m of ['endless','expedition'])merged.records[m]=Math.max(merged.records[m],incomingProfile.records[m]);
+ for(const [key,v] of Object.entries(incomingProfile.completed)){const old=merged.completed[key];merged.completed[key]={score:Math.max(v.score,old?.score||0),stars:Math.max(v.stars,old?.stars||0)};}
+ return merged;
+}
+function normalizeRun(r){
+ if(!r||typeof r!=='object')return r;
+ if(r.mode==='expedition'&&r.catalogVersion===undefined&&Number.isInteger(r.level)&&r.level>0){r.systemId=LEGACY_SYSTEM_IDS[(r.level-1)%3];r.catalogVersion=CATALOG_VERSION;r.legacyRoute=true;}
+ if(r.catalogVersion===3){r.catalogVersion=CATALOG_VERSION;r.legacyRoute=r.systemId!==systemForLevel(r.level)?.id;}
+ if(r.phase==='flight'&&r.current){r.current.dead=false;r.current.departed=true;}
+ for(const key of ['current','target']){
+  const p=r[key];if(!p||typeof p!=='object')continue;
+  if(p.orbitTravel===undefined)p.orbitTravel=key==='current'?Math.min(TAU,(p.age||0)*1.58*(1+(r.jumps||0)*.1)*(r.mode==='expedition'?1+Math.min(((r.level||1)-1)*.035,.7):1)):0;
+  if(p.shrinkAge===undefined){const z=finite(r.camera?.z,.28,2)?r.camera.z:1,surface=p.body+PLAYER_RADIUS/z;
+   p.shrinkAge=p.baseR>surface?clamp((p.baseR-p.r)/(p.baseR-surface),0,1)*p.duration:0;
+   if(p.shrinkAge>0)p.orbitTravel=Math.max(TAU,p.orbitTravel);
+  }
+  if(r.mode==='expedition'){const sys=runSystem(r),w=sys?.route[p.index];if(w){p.skin=sys.id+'/'+w.id;p.kind=w.kind;}}
+ }
+ return r;
+}
+function validRun(r){
+ if(!r||!['orbit','flight'].includes(r.phase)||!['endless','expedition'].includes(r.mode)||!Number.isInteger(r.level)||r.level<1||r.level>profile.unlocked)return false;
+ if(!Number.isInteger(r.jumps)||!finite(r.jumps,0,1e6)||!finite(r.score,0,1e12)||!finite(r.combo,0,r.jumps)||!finite(r.maxCombo,0,r.jumps)||!finite(r.perfects,0,r.jumps))return false;
+ for(const key of ['flightTime','slow','orbitBoost','orbitOffset','runTime'])if(!finite(r[key],key==='orbitOffset'?-200:0,key==='runTime'?1e8:200))return false;
+ if(r.mode==='expedition'&&(!runSystem(r)||r.systemId!==systemForLevel(r.level)?.id&&!(r.legacyRoute===true&&!!systemById(r.systemId))))return false;
+ for(const [key,p] of [['current',r.current],['target',r.target]]){
+  if(!p||!finite(p.x,-1e9)||!finite(p.y,-1e9)||!Number.isInteger(p.index)||!finite(p.body,10,80)||!finite(p.r,p.body,200)||!finite(p.baseR,p.r,200)||!finite(p.hue,0,360)||!finite(p.tilt,-7,7)||!finite(p.age,0,30)||!finite(p.duration,5,20))return false;
+  if(!finite(p.orbitTravel,0,1e9)||!finite(p.shrinkAge,0,p.duration))return false;
+  if(r.mode==='expedition'&&runSystem(r).route[p.index]?.id!==p.entryId)return false;
+ }
+ if(r.current.index!==r.jumps||r.target.index!==r.current.index+1||r.target.dead||r.phase==='orbit'&&r.current.dead)return false;
+ if(r.mode==='expedition'&&r.current.index>=runSystem(r).route.length-1)return false;
+ if(!r.player||![1,-1].includes(r.player.dir))return false;
+ for(const key of ['x','y','a','vx','vy'])if(!finite(r.player[key],-1e9))return false;
+ return r.phase!=='orbit'||r.current.shrinkAge<r.current.duration;
+}
+function loadProgress(){
+ profile.records.endless=finite(best,0,1e12)?best:0;
+ let raw;try{const epoch=Number(localStorage.getItem(EPOCH_KEY));saveEpoch=finite(epoch,0,1e15)?epoch:0;if(saveEpoch)profile.records.endless=0;raw=localStorage.getItem(saveStorageKey());}catch(_){storageAvailable=false;return;}
+ if(!raw)return;
+ try{
+  const data=JSON.parse(raw);if(data.version!==2)throw Error('Unsupported save');
+  const legacy=profile.records.endless;profile=cleanProfile(data.profile);profile.records.endless=Math.max(legacy,profile.records.endless);
+  normalizeRun(data.run);if(validRun(data.run))savedRun=data.run;
+ }catch(_){saveMessage='Не удалось прочитать сохранение. Можно восстановить его из экспортированного файла.';}
+}
+function packPlanet(p){const out={};for(const key of ['x','y','index','body','r','baseR','hue','tilt','ring','dead','departed','entryId','skin','kind','age','duration','orbitTravel','shrinkAge'])if(p[key]!==undefined)out[key]=p[key];return out;}
+function packRun(){
+ const phase=state==='paused'?previousState:state==='briefing'?'orbit':state;if(!['orbit','flight'].includes(phase))return null;
+ return {catalogVersion:CATALOG_VERSION,systemId:currentSystem().id,legacyRoute:currentSystem().id!==systemForLevel(level)?.id,mode,level,phase,score,jumps,combo,maxCombo,perfects,flightTime,perfectPending,slow,orbitBoost,orbitOffset,runTime,current:packPlanet(current),target:packPlanet(target),player:{...player},camera:{...camera}};
+}
+function saveNow(captureRun=true){
+ try{if(checkSaveEpoch())return;}catch(_){}
+ if(captureRun&&['orbit','flight','paused','briefing'].includes(state))savedRun=packRun();
+ profile.sound=soundOn;
+ try{
+  const stored=localStorage.getItem(saveStorageKey());if(stored)try{const other=JSON.parse(stored);if(other.version===2)profile=mergeProfiles(profile,cleanProfile(other.profile));}catch(_){}
+  localStorage.setItem(saveStorageKey(),JSON.stringify({version:2,profile,run:savedRun}));localStorage.setItem('orbit.best.v1',String(profile.records.endless));storageAvailable=true;
+ }
+ catch(_){storageAvailable=false;}
+ best=profile.records[mode];$('best').textContent=best;
+ syncSaveNote();
+}
+function syncSaveNote(){
+ $('save-note').textContent=saveMessage|| (storageAvailable?'Автосохранение в этом браузере · для переноса используй экспорт':'Браузер не разрешил сохранение · экспортируй прогресс перед выходом');
+ $('save-note').classList.toggle('bad',!storageAvailable||saveMessage.startsWith('Не удалось'));
+ $('pause-note').textContent=storageAvailable?'Полёт сохранён. Гравитация тоже на паузе.':'Гравитация на паузе. Для сохранения выйди в меню и экспортируй прогресс.';
+}
+function discover(p){if(mode!=='expedition')return;const s=currentSystem(),w=s.route[p.index];if(w){const key=worldKey(s,w);if(!profile.discovered.includes(key))profile.discovered.push(key);}}
+function planetDuration(){const scale=mode==='expedition'?(currentSystem().gravityScale||1):1;return clamp(Math.max(6.2,10.5-Math.min(jumps*.10,2.5)-(mode==='expedition'?Math.min((level-1)*.16,1.8):0))*scale,5.5,12);}
+function makePlanet(x,y,index){
+ const p={x,y,index,body:rand(28,43),r:Math.max(62,90-Math.min(index,50)*.45+rand(-5,5)),hue:(166+index*43+rand(-15,15))%360,tilt:rand(-.6,.6),ring:index%4===2,dead:false,age:0,orbitTravel:0,shrinkAge:0,duration:planetDuration()};
+ if(mode==='expedition'){
+  const entry=currentSystem().route[index];p.entryId=entry.id;p.skin=currentSystem().id+'/'+entry.id;p.kind=entry.kind;p.hue=entry.hue;p.ring=entry.kind==='ring';
+  p.body=entry.kind==='star'?43:entry.kind==='gas'||entry.kind==='ring'?39:entry.kind==='ice'?33:27;
+  p.r=entry.kind==='star'?98:Math.max(75,92-index*.9-Math.min((level-1)*.5,8));
+  if(currentSystem().fictional)p.r=clamp(p.r*currentSystem().orbitScale,p.body+28,110);
+ }
+ p.baseR=p.r;p.img=texture(p);return p;
+}
+function nextPlanet(p){const sys=mode==='expedition'?currentSystem():null,d=rand((sys?.spacing||340)-40,(sys?.spacing||340)+40)+Math.min(jumps*3,90)+(mode==='expedition'?Math.min((level-1)*3,45):0),spread=sys?.spread||.65,angle=rand(-spread,spread);return makePlanet(p.x+Math.cos(angle)*d,p.y+Math.sin(angle)*d,p.index+1);}
+function closeOverlays(){for(const id of ['menu','end','paused','levels','atlas','won','settings','tutorial'])$(id).hidden=true;}
+function syncMenu(){viewGalaxy=galaxyIndexForLevel(expeditionSector().level);hideSectorInfo();renderGalaxyMap();syncSaveNote();syncSceneUI();if(state==='menu')$('best').textContent=profile.records.expedition;}
+function selectMode(m){mode=m;profile.mode=m;best=profile.records[mode];$('best').textContent=best;saveNow(false);syncMenu();}
+function showMenu(){if(['orbit','flight','paused','briefing'].includes(state))saveNow();reset(false);syncMenu();}
+function showLevels(){closeOverlays();state='levels';$('levels').hidden=false;$('scoreboard').hidden=true;mapPage=Math.floor((Math.min(profile.unlocked,CATALOG_LIMIT)-1)/PAGE_SIZE);renderLevels();}
+function renderLevels(){
+ const grid=$('level-grid');grid.replaceChildren();const first=mapPage*PAGE_SIZE+1,last=Math.min(first+PAGE_SIZE-1,CATALOG_LIMIT);
+ $('levels-galaxy').textContent=`ЭКСПЕДИЦИЯ / ${galaxyForLevel(first).name.toUpperCase()}`;
+ $('levels-page').textContent=`${numberLabel(first)}–${numberLabel(last)} / ${numberLabel(CATALOG_LIMIT)}`;
+ $('levels-prev').disabled=mapPage===0;$('levels-next').disabled=last===CATALOG_LIMIT;$('level-jump').value=Math.min(profile.unlocked,CATALOG_LIMIT);
+ for(let n=first;n<=last;n++){
+  const s=systemForLevel(n),done=profile.completed[n],button=document.createElement('button');button.className='level-card';button.disabled=n>profile.unlocked;
+  button.innerHTML=`<div class="number">${[`${localSector(n)} / 77`,catalogLabel(s)].filter(Boolean).join(' · ')}</div><strong>${s.name}</strong><span>${s.route[0].name} → ${s.route.at(-1).name}<br>${s.route.length-1} прыжков${s.fictional?' · '+s.theme:''}</span><span class="level-stars">${done?'★'.repeat(done.stars)+'☆'.repeat(3-done.stars):button.disabled?'ЗАКРЫТО':n===profile.unlocked?'ТЕКУЩАЯ ↗':'НАЧАТЬ ↗'}</span>`;
+  button.addEventListener('click',()=>startLevel(n,true));grid.append(button);
+ }
+}
+function moveMap(step){mapPage=clamp(mapPage+step,0,Math.floor((CATALOG_LIMIT-1)/PAGE_SIZE));renderLevels();}
+function jumpMap(){const n=Number($('level-jump').value);if(!Number.isInteger(n)||n<1||n>CATALOG_LIMIT){$('level-jump').value=profile.unlocked;return;}mapPage=Math.floor((n-1)/PAGE_SIZE);renderLevels();$('level-jump').value=n;}
+
+function startLevel(n,animate=false){if(!Number.isInteger(n)||n<1||n>profile.unlocked||n>CATALOG_LIMIT)return;const layout=animate?galaxyLayout():null;mode='expedition';level=n;profile.mode=mode;reset(true);if(animate)beginEntry('orbit',layout);}
+function startChosen(){startAudio();if(savedRun?.mode==='expedition')resumeSaved(true);else startLevel(profile.unlocked,true);}
+function resumeSaved(animate=false){
+ if(!validRun(savedRun)){savedRun=null;saveNow(false);syncMenu();return;}
+ const r=savedRun;mode=r.mode;level=r.level;activeSystemId=r.systemId;score=r.score;jumps=r.jumps;combo=r.combo;maxCombo=r.maxCombo;perfects=r.perfects;flightTime=r.flightTime;perfectPending=r.perfectPending===true;slow=r.slow;orbitBoost=r.orbitBoost;orbitOffset=r.orbitOffset;runTime=r.runTime;
+ current={...r.current};current.img=texture(current);target={...r.target};target.img=texture(target);planets=[current,target];player={...r.player};particles=[];rings=[];trail=[];
+ camera=r.camera&&finite(r.camera.x,-1e9)&&finite(r.camera.y,-1e9)&&finite(r.camera.z,.28,2)?{...r.camera}:desiredCamera();
+ profile.mode=mode;best=profile.records[mode];startBest=best;previousState=r.phase;state='paused';lastTime=performance.now();closeOverlays();$('paused').hidden=false;$('scoreboard').hidden=false;$('toast').classList.remove('show');syncHUD();if(animate)beginEntry(r.phase);
+}
+function showAtlas(tab=atlasTab){
+ if(state!=='atlas')atlasCursor=Math.min(profile.unlocked,CATALOG_LIMIT);
+ closeOverlays();state='atlas';$('atlas').hidden=false;$('scoreboard').hidden=true;atlasTab=tab;renderAtlas();
+}
+function moveAtlas(step){atlasCursor=clamp(atlasCursor+step*(atlasTab==='systems'?PAGE_SIZE:1),1,CATALOG_LIMIT);renderAtlas();}
+function renderAtlas(){
+ const grid=$('atlas-grid');grid.replaceChildren();$('atlas-count').textContent=`КОСМИЧЕСКИЙ АТЛАС · ${numberLabel(profile.discovered.length)} ОТКРЫТИЙ`;
+ document.querySelectorAll('[data-atlas]').forEach(b=>b.classList.toggle('active',b.dataset.atlas===atlasTab));
+ $('atlas-nav').hidden=atlasTab==='galaxies';let entries;
+ if(atlasTab==='galaxies')entries=GALAXIES.map((g,i)=>({name:g.name,description:g.description,source:g.source,tag:`ГАЛАКТИКА ${i+1} · 77 СИСТЕМ`,hue:g.hue,fictional:g.fictional,galaxy:true}));
+ else if(atlasTab==='systems'){
+  const first=Math.floor((atlasCursor-1)/PAGE_SIZE)*PAGE_SIZE+1,last=Math.min(first+PAGE_SIZE-1,CATALOG_LIMIT);
+  $('atlas-page').textContent=`СИСТЕМЫ ${numberLabel(first)}–${numberLabel(last)}`;$('atlas-prev').disabled=first===1;$('atlas-next').disabled=last===CATALOG_LIMIT;
+  entries=Array.from({length:last-first+1},(_,i)=>{const n=first+i,s=systemForLevel(n);return{name:s.name,description:s.description,source:s.orderSource||s.source,tag:[numberLabel(n),catalogLabel(s),`${s.route.length-1} ПЛАНЕТ`].filter(Boolean).join(' · '),hue:s.route.at(-1).hue,fictional:s.fictional};});
+ }else{
+  const s=systemForLevel(atlasCursor);$('atlas-page').textContent=`${numberLabel(atlasCursor)} · ${s.name}`;$('atlas-prev').disabled=atlasCursor===1;$('atlas-next').disabled=atlasCursor===CATALOG_LIMIT;
+  entries=s.route.map(w=>({name:w.name,description:w.description,source:s.orderSource||s.source,tag:[catalogLabel(s),w.biome||s.name].filter(Boolean).join(' · '),hue:w.hue,fictional:s.fictional,locked:!profile.discovered.includes(worldKey(s,w))}));
+ }
+ for(const entry of entries){const article=document.createElement('article');article.className='atlas-entry'+(entry.locked?' locked':'');article.innerHTML=`<div class="atlas-symbol" style="--planet:hsl(${entry.hue},55%,58%)"></div><h3>${entry.name}</h3><small>${entry.tag}</small><p>${entry.locked?'Посети этот мир в экспедиции, чтобы открыть карточку.':entry.description}</p>${entry.locked?'<small>ЕЩЁ НЕ ИССЛЕДОВАН</small>':entry.fictional?`<small>ХУДОЖЕСТВЕННАЯ ${entry.galaxy?'ГАЛАКТИКА':'СИСТЕМА'} ORBIT</small>`:`<a href="${entry.source}" target="_blank" rel="noopener noreferrer">Источник фактов ↗</a>`}`;grid.append(article);}
+}
+
 function reset(start=false){
- score=jumps=combo=maxCombo=perfects=0;flightTime=slow=orbitBoost=toastLife=shake=deathTime=0;perfectPending=false;sequence++;
+ activeSystemId=null;entryTransition=null;score=jumps=combo=maxCombo=perfects=0;flightTime=slow=orbitBoost=orbitOffset=toastLife=shake=deathTime=runTime=saveClock=0;perfectPending=false;sequence++;
  current=makePlanet(0,0,0);target=makePlanet(350,-55,1);planets=[current,target];
- player={x:0,y:0,a:Math.PI*.88,dir:1,vx:0,vy:0};setOrbitPosition();particles=[];rings=[];trail=[];startBest=best;
+ player={x:0,y:0,a:Math.PI*.88,dir:1,vx:0,vy:0};setOrbitPosition();particles=[];rings=[];trail=[];best=profile.records[mode];startBest=best;
  camera={x:145,y:-20,z:desiredCamera().z};state=start?'orbit':'menu';
- $('menu').hidden=start;$('end').hidden=true;$('paused').hidden=true;$('scoreboard').hidden=!start;$('hint').hidden=!start;
+ closeOverlays();$('menu').hidden=start;$('scoreboard').hidden=!start;
  $('toast').classList.remove('show');syncHUD();
+ if(start){profile.mode=mode;discover(current);maybeTutorial();saveNow();}syncMenu();
 }
 function syncHUD(){
  $('score').textContent=score;$('best').textContent=best;$('combo').textContent=combo>1?`PERFECT COMBO ×${combo}`:'';
- $('sector').textContent=`СЕКТОР ${String(jumps+1).padStart(3,'0')}`;
- $('hint').innerHTML=jumps===0?'Поймай направление. <em>Пробел / нажатие</em> — прыжок.':'Мятная дуга — окно запуска. <em>Узкая яркая отметка — Perfect.</em>';
+ $('sector').textContent=mode==='expedition'?`${galaxyForLevel(level).name.toUpperCase()} · СЕКТОР ${localSector(level)} / 77`:`СЕКТОР ${String(jumps+1).padStart(3,'0')}`;
+ $('route-label').textContent=mode==='expedition'?`${galaxyForLevel(level).name} · ${localSector(level)}/77 · ${currentSystem().name} · ${jumps} / ${currentSystem().route.length-1} прыжков`:'БЕСКОНЕЧНЫЙ ПОЛЁТ';
+ $('route-dots').innerHTML=mode==='expedition'?currentSystem().route.map((_,i)=>`<i class="${i<=jumps?'done':''}"></i>`).join(''):'';
 }
-function setOrbitPosition(){player.x=current.x+Math.cos(player.a)*current.r;player.y=current.y+Math.sin(player.a)*current.r;}
+function setOrbitPosition(){const r=current.r+orbitOffset;player.x=current.x+Math.cos(player.a)*r;player.y=current.y+Math.sin(player.a)*r;}
 // Add 10% of the starting angular speed per planet, without exponential growth.
-function orbitSpeed(){return 1.58*(1+jumps*.10);}
+function orbitSpeed(){return 1.58*(1+jumps*.10)*(mode==='expedition'?(1+Math.min((level-1)*.035,.7))*(currentSystem().speedScale||1):1);}
 function advanceOrbit(dt){
- const decay=Math.exp(-14*dt);
- player.a+=(orbitSpeed()*dt+orbitBoost*(1-decay)/14)*player.dir;
- orbitBoost*=decay;setOrbitPosition();
+ const decay=Math.exp(-14*dt),travel=orbitSpeed()*dt+orbitBoost*(1-decay)/14;
+ if(state==='orbit'){
+  current.age+=dt;const before=current.orbitTravel;current.orbitTravel+=travel;
+  // Count actual travel, including arrival easing. Shrinking cannot precede a full turn.
+  const activeFraction=travel>0?clamp((current.orbitTravel-Math.max(TAU,before))/travel,0,1):0;
+  current.shrinkAge=Math.min(current.duration,current.shrinkAge+dt*activeFraction);
+  const surface=current.body+PLAYER_RADIUS/camera.z;
+  current.r=current.baseR-(current.baseR-surface)*clamp(current.shrinkAge/current.duration,0,1);
+ }
+ player.a+=travel*player.dir;orbitBoost*=decay;orbitOffset*=decay;setOrbitPosition();
+ if(state==='orbit'&&current.shrinkAge>=current.duration)die('gravity');
 }
 function aimAt(a){
- const px=current.x+Math.cos(a)*current.r,py=current.y+Math.sin(a)*current.r;
+ const r=current.r+orbitOffset,px=current.x+Math.cos(a)*r,py=current.y+Math.sin(a)*r;
  const dx=-Math.sin(a)*player.dir,dy=Math.cos(a)*player.dir,tx=target.x-px,ty=target.y-py;
  return {along:tx*dx+ty*dy,miss:Math.abs(tx*dy-ty*dx),dx,dy};
 }
@@ -99,48 +526,92 @@ function launch(){
  const aim=aimAt(player.a),speed=390+Math.min(jumps*4,140);
  perfectPending=aim.along>0&&aim.miss<target.r*.20;
  player.vx=aim.dx*speed;player.vy=aim.dy*speed;flightTime=0;state='flight';
- current.dead=true;explode(current.x,current.y,current.hue,75,current.body);rings.push({x:current.x,y:current.y,r:current.body,life:1,max:1,color:'#b8e4ff'});shake=reduced?0:4;
- $('hint').hidden=true;tone(160,55,.15,'triangle');
+ current.departed=true;
+ tone(280,440,.09,'sine');saveNow();
 }
-// Swept collision: even a long frame cannot skip the target's capture circle.
-function segmentCircle(x0,y0,x1,y1,p){
- const dx=x1-x0,dy=y1-y0,fx=x0-p.x,fy=y0-p.y,a=dx*dx+dy*dy;
- if(fx*fx+fy*fy<=p.r*p.r)return 0;if(a<1e-10)return null;
- const b=2*(fx*dx+fy*dy),c=fx*fx+fy*fy-p.r*p.r,disc=b*b-4*a*c;
- if(disc<0)return null;const t=(-b-Math.sqrt(disc))/(2*a);return t>=0&&t<=1?t:null;
+// Sweep the whole visible ball. A small numeric tolerance keeps exact grazes stable.
+function segmentCircle(x0,y0,x1,y1,p,padding=0){
+ const dx=x1-x0,dy=y1-y0,fx=x0-p.x,fy=y0-p.y,r=p.r+padding,epsilon=1e-7;
+ if(Math.hypot(fx,fy)<=r+epsilon)return 0;
+ const length=Math.hypot(dx,dy);if(length<1e-10)return null;
+ const ux=dx/length,uy=dy/length,along=-(fx*ux+fy*uy),across=Math.abs(fx*uy-fy*ux);
+ if(across>r+epsilon)return null;
+ const entry=along-Math.sqrt(Math.max(0,(r-across)*(r+across)));
+ if(entry < -epsilon || entry > length+epsilon)return null;
+ return clamp(entry/length,0,1);
 }
 function capture(){
- const p=target,rx=player.x-p.x,ry=player.y-p.y;player.dir=rx*player.vy-ry*player.vx>=0?1:-1;player.a=Math.atan2(ry,rx);current=p;setOrbitPosition();
+ const p=target,rx=player.x-p.x,ry=player.y-p.y;player.dir=rx*player.vy-ry*player.vx>=0?1:-1;player.a=Math.atan2(ry,rx);current=p;
+ // Settle from the contact point onto the orbit without snapping the ball inward.
+ orbitOffset=Math.hypot(rx,ry)-p.r;setOrbitPosition();
  jumps++;let bonus=1;
+ current.age=0;current.orbitTravel=0;current.shrinkAge=0;current.duration=planetDuration();
  // Carry arrival speed into the orbit and ease into its cruising speed.
- orbitBoost=Math.max(0,Math.hypot(player.vx,player.vy)/current.r-orbitSpeed());
+ orbitBoost=Math.max(0,Math.hypot(player.vx,player.vy)/(current.r+orbitOffset)-orbitSpeed());
  if(perfectPending){combo++;perfects++;maxCombo=Math.max(maxCombo,combo);bonus=2+Math.min(combo-1,4);slow=reduced?0:.52;showToast('PERFECT LAUNCH',`+${bonus} ОЧКА${combo>1?' · КОМБО ×'+combo:' · ТОЧНО В ЦЕНТР'}`);tone(660,990,.23,'sine');}
  else{combo=0;showToast('ОРБИТА ПОЙМАНА','+1 ОЧКО');tone(390,580,.12,'sine');}
- score+=bonus;if(score>best){best=score;try{localStorage.setItem('orbit.best.v1',String(best));}catch(_){}}
+ score+=bonus;if(score>best){best=score;profile.records[mode]=best;}
  rings.push({x:p.x,y:p.y,r:p.r,life:.6,max:.6,color:perfectPending?'#a4ffce':'#b6d8ff'});
+ discover(current);
+ if(mode==='expedition'&&jumps===currentSystem().route.length-1){completeLevel();return;}
  target=nextPlanet(current);planets=planets.filter(p=>p.index>=current.index-1);planets.push(target);state='orbit';perfectPending=false;
- $('hint').hidden=false;syncHUD();
+ syncHUD();saveNow();
 }
 function explode(x,y,hue,count,radius=10){for(let i=0;i<count;i++){const a=rand(0,TAU),speed=rand(25,170),life=rand(.45,1.25);particles.push({x:x+Math.cos(a)*rand(0,radius),y:y+Math.sin(a)*rand(0,radius),vx:Math.cos(a)*speed,vy:Math.sin(a)*speed,r:rand(1,4),life,max:life,color:`hsl(${hue+rand(-15,25)},65%,${rand(55,85)}%)`});}}
-function die(){if(state!=='flight')return;state='dying';deathTime=0;explode(player.x,player.y,170,35);shake=reduced?0:7;tone(150,35,.4,'sawtooth');$('hint').hidden=true;}
-function finish(){state='dead';$('end').hidden=false;$('final-score').textContent=score;$('jumps').textContent=jumps;$('perfects').textContent=perfects;$('max-combo').textContent='×'+maxCombo;$('new-record').textContent=score>startBest?'НОВЫЙ РЕКОРД ✦':'';$('scoreboard').hidden=true;}
+function die(reason='miss'){if(!['orbit','flight'].includes(state))return;state='dying';deathReason=reason;deathTime=0;savedRun=null;saveNow(false);explode(player.x,player.y,170,35);shake=reduced?0:7;tone(150,35,.4,'sawtooth');}
+function finish(){state='dead';closeOverlays();$('end').hidden=false;$('death-reason').textContent=deathReason==='gravity'?'Гравитация взяла своё':'Сигнал потерян';$('final-score').textContent=score;$('jumps').textContent=jumps;$('perfects').textContent=perfects;$('max-combo').textContent='×'+maxCombo;$('new-record').textContent=score>startBest?'НОВЫЙ РЕКОРД ✦':'';$('scoreboard').hidden=true;}
+function completeLevel(){
+ const s=currentSystem(),stars=1+(perfects>=Math.ceil(jumps*.5)?1:0)+(perfects===jumps?1:0),old=profile.completed[level];
+ profile.completed[level]={score:Math.max(score,old?.score||0),stars:Math.max(stars,old?.stars||0)};profile.unlocked=Math.min(CATALOG_LIMIT,Math.max(profile.unlocked,level+1));
+ state='won';target=current;savedRun=null;saveNow(false);closeOverlays();$('won').hidden=false;$('scoreboard').hidden=true;
+ const reachedCore=localSector(level)===SYSTEMS_PER_GALAXY;
+ $('win-title').textContent=reachedCore?'Центр галактики достигнут':s.name+' пройдена';$('win-stars').textContent='★'.repeat(stars)+'☆'.repeat(3-stars);$('win-score').textContent=score;$('win-perfects').textContent=perfects;
+ $('next-level').disabled=level>=CATALOG_LIMIT;$('next-level').textContent=reachedCore?'Следующая галактика ↗':'Следующая система ↗';
+ $('win-description').textContent=level<CATALOG_LIMIT?reachedCore?`Все 77 систем галактики ${galaxyForLevel(level).name} позади. Открыта галактика ${galaxyForLevel(level+1).name}.`:`Все ${jumps} прыжков позади. Следующая система: ${systemForLevel(level+1).name}. Сектор ${localSector(level+1)} / 77.`:'Последняя звезда экспедиции достигнута. Все системы пройдены!';
+ $('toast').classList.remove('show');tone(660,1320,.4,'sine');
+}
 function showToast(title,sub){$('toast-title').textContent=title;$('toast-sub').textContent=sub;$('toast').classList.add('show');toastLife=1.5;}
-function togglePause(){if(state==='menu'||state==='dead'||state==='dying')return;if(state==='paused'){state=previousState;$('paused').hidden=true;}else{previousState=state;state='paused';$('paused').hidden=false;}lastTime=performance.now();}
+function togglePause(){if(state==='entering'){finishEntry(true);return;}if(!['orbit','flight','paused'].includes(state))return;if(state==='paused'){state=previousState;$('paused').hidden=true;maybeTutorial();}else{previousState=state;state='paused';$('paused').hidden=false;}lastTime=performance.now();saveNow();}
 function startAudio(){if(!soundOn)return;try{audio=audio||new(window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume().catch(()=>{});}catch(_){}}
 function tone(from,to,duration,type){if(!soundOn)return;startAudio();if(!audio)return;try{const o=audio.createOscillator(),g=audio.createGain();o.type=type;o.frequency.setValueAtTime(from,audio.currentTime);o.frequency.exponentialRampToValueAtTime(Math.max(20,to),audio.currentTime+duration);g.gain.setValueAtTime(.045,audio.currentTime);g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+duration);o.connect(g);g.connect(audio.destination);o.start();o.stop(audio.currentTime+duration);}catch(_){}}
-function toggleSound(){soundOn=!soundOn;$('sound').setAttribute('aria-pressed',String(soundOn));$('sound').setAttribute('aria-label',soundOn?'Выключить звук':'Включить звук');$('sound-wave').setAttribute('d',soundOn?'M17 8q6 4 0 8M16 11q2 1 0 2':'m17 9 5 6m0-6-5 6');startAudio();if(soundOn)tone(500,700,.12,'sine');}
-function primaryAction(){startAudio();if(state==='menu'||state==='dead')reset(true);else if(state==='paused')togglePause();else launch();}
-$('start').addEventListener('click',()=>{startAudio();reset(true);});$('retry').addEventListener('click',()=>{startAudio();reset(true);});$('restart').addEventListener('click',()=>reset(true));$('resume').addEventListener('click',togglePause);$('pause').addEventListener('click',togglePause);$('sound').addEventListener('click',toggleSound);
-document.addEventListener('pointerdown',e=>{if(e.target.closest('button')||e.button!==0)return;e.preventDefault();primaryAction();});
+function syncSoundButton(){$('sound').setAttribute('aria-pressed',String(soundOn));$('sound').setAttribute('aria-label',soundOn?'Выключить звук':'Включить звук');$('sound-wave').setAttribute('d',soundOn?'M17 8q6 4 0 8M16 11q2 1 0 2':'m17 9 5 6m0-6-5 6');}
+function toggleSound(){soundOn=!soundOn;syncSoundButton();startAudio();if(soundOn)tone(500,700,.12,'sine');saveNow();}
+function primaryAction(){startAudio();if(state==='menu')startChosen();else if(state==='briefing')completeTutorial();else if(state==='dead')reset(true);else if(state==='won')startLevel(level+1,true);else if(state==='paused')togglePause();else if(state==='orbit')launch();}
+$('retry').addEventListener('click',()=>{startAudio();reset(true);});$('restart').addEventListener('click',()=>reset(true));$('resume').addEventListener('click',togglePause);$('pause').addEventListener('click',togglePause);$('sound').addEventListener('click',toggleSound);
+
+$('open-levels').addEventListener('click',showLevels);$('open-atlas').addEventListener('click',()=>showAtlas());
+for(const id of ['close-levels','close-atlas','end-menu','pause-menu','win-menu'])$(id).addEventListener('click',showMenu);
+$('next-level').addEventListener('click',()=>startLevel(level+1,true));document.querySelectorAll('[data-atlas]').forEach(b=>b.addEventListener('click',()=>showAtlas(b.dataset.atlas)));
+canvas.addEventListener('pointerdown',e=>{if(e.button!==0)return;e.preventDefault();if(state==='menu'){hideSectorInfo();mapDrag={x:e.clientX,y:e.clientY};canvas.setPointerCapture?.(e.pointerId);return;}primaryAction();});
 document.addEventListener('keydown',e=>{
  if(e.repeat)return;
- if(e.code==='Space'){e.preventDefault();primaryAction();}
- else if(e.code==='KeyR'){e.preventDefault();reset(true);}
+ if(e.code==='Space'){if(e.target?.closest?.('button'))return;e.preventDefault();primaryAction();}
+ else if(e.code==='KeyR'&&['orbit','flight','paused','dead','won'].includes(state)){e.preventDefault();reset(true);}
+ else if(e.code==='Escape'&&state==='menu'){e.preventDefault();hideSectorInfo();}
+ else if(e.code==='Escape'&&['atlas','levels','settings'].includes(state)){e.preventDefault();showMenu();}
  else if(e.code==='KeyP'||e.code==='Escape'){e.preventDefault();togglePause();}
  else if(e.code==='KeyM')toggleSound();
 });
-document.addEventListener('visibilitychange',()=>{if(document.hidden&&(state==='orbit'||state==='flight'))togglePause();lastTime=performance.now();});
-window.addEventListener('blur',()=>{if(state==='orbit'||state==='flight')togglePause();});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&['orbit','flight','entering'].includes(state))togglePause();lastTime=performance.now();});
+window.addEventListener('blur',()=>{if(['orbit','flight','entering'].includes(state))togglePause();});
+window.addEventListener('pagehide',()=>saveNow());
+function exportProgress(){
+ saveNow();const blob=new Blob([JSON.stringify({version:2,profile,run:savedRun},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),link=document.createElement('a');
+ link.href=url;link.download='orbit-progress.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function importProgress(data){
+ if(!data||data.version!==2||!data.profile)throw Error('Unsupported save');
+ const incoming=cleanProfile(data.profile),oldProfile=profile,merged=mergeProfiles(incoming,oldProfile);
+ normalizeRun(data.run);profile=merged;if(data.run!==null&&data.run!==undefined&&!validRun(data.run)){profile=oldProfile;throw Error('Invalid run');}
+ if(data.run)savedRun=data.run;
+ mode=profile.mode;soundOn=profile.sound;best=profile.records[mode];syncSoundButton();saveMessage='Прогресс импортирован. Рекорды и открытия объединены.';saveNow(false);reset(false);
+}
+$('levels-prev').addEventListener('click',()=>moveMap(-1));$('levels-next').addEventListener('click',()=>moveMap(1));
+ $('levels-current').addEventListener('click',()=>{mapPage=Math.floor((profile.unlocked-1)/PAGE_SIZE);renderLevels();});
+ $('level-go').addEventListener('click',jumpMap);$('level-jump').addEventListener('keydown',e=>{if(e.code==='Enter'){e.preventDefault();jumpMap();}});
+ $('atlas-prev').addEventListener('click',()=>moveAtlas(-1));$('atlas-next').addEventListener('click',()=>moveAtlas(1));$('atlas-current').addEventListener('click',()=>{atlasCursor=Math.min(profile.unlocked,CATALOG_LIMIT);renderAtlas();});
+ $('export-save').addEventListener('click',exportProgress);$('import-save').addEventListener('click',()=>$('save-file').click());
+$('save-file').addEventListener('change',async e=>{try{const file=e.target.files[0];if(!file)return;if(file.size>2e6)throw Error('File too large');importProgress(JSON.parse(await file.text()));}catch(_){saveMessage='Не удалось импортировать файл. Выбери экспорт прогресса ORBIT версии 2.';syncSaveNote();}finally{e.target.value='';}});
 function desiredCamera(){
  const marginX=W<600?80:155,usableH=Math.max(140,H-(H<580?185:310));
  const z=Math.min(W<600?1.05:1.3,(W-marginX)/(Math.abs(target.x-current.x)+current.r+target.r),(usableH)/(Math.abs(target.y-current.y)+current.r+target.r));
@@ -149,22 +620,78 @@ function desiredCamera(){
  return{x,y,z:Math.max(.28,z)};
 }
 function update(realDt){
- if(state==='paused')return;
+ if(state==='paused'||state==='briefing')return;
+ if(state==='entering'){time+=realDt;entryTransition.elapsed+=realDt;if(entryTransition.elapsed>=entryTransition.duration)finishEntry();return;}
+ if(['menu','levels','atlas','settings'].includes(state)){time+=realDt;return;}
  const slowPhase=clamp(1-slow/.52,0,1);
  time+=realDt;const dt=realDt*(1-.28*Math.sin(Math.PI*slowPhase)**2);slow=Math.max(0,slow-realDt);
+ if(state==='orbit'||state==='flight')runTime+=dt;
  if(toastLife>0){toastLife-=realDt;if(toastLife<=0)$('toast').classList.remove('show');}
- if(state==='orbit'||state==='menu'){advanceOrbit(dt);}
+ if(state==='orbit'){advanceOrbit(dt);}
  else if(state==='flight'){
-  const nx=player.x+player.vx*dt,ny=player.y+player.vy*dt,t=segmentCircle(player.x,player.y,nx,ny,target);flightTime+=dt;
-  if(t!==null){player.x+=(nx-player.x)*t;player.y+=(ny-player.y)*t;capture();advanceOrbit(dt*(1-t));}
+  const nx=player.x+player.vx*dt,ny=player.y+player.vy*dt,t=segmentCircle(player.x,player.y,nx,ny,target,(PLAYER_RADIUS+.5)/camera.z);flightTime+=dt;
+  if(t!==null){player.x+=(nx-player.x)*t;player.y+=(ny-player.y)*t;capture();if(state==='orbit')advanceOrbit(dt*(1-t));}
   else{player.x=nx;player.y=ny;const tx=target.x-player.x,ty=target.y-player.y;if(tx*player.vx+ty*player.vy<-(target.r+35)*Math.hypot(player.vx,player.vy)||flightTime>3.3)die();}
  }else if(state==='dying'){deathTime+=realDt;if(deathTime>.75)finish();}
  if(['orbit','flight','menu'].includes(state)){trail.push({x:player.x,y:player.y});if(trail.length>48)trail.shift();}
  for(const p of particles){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=Math.exp(-1.3*dt);p.vy*=Math.exp(-1.3*dt);p.life-=dt;}particles=particles.filter(p=>p.life>0);
  for(const r of rings){r.r+=dt*120;r.life-=dt;}rings=rings.filter(r=>r.life>0);shake*=Math.exp(-7*realDt);
  const goal=desiredCamera(),ease=1-Math.exp(-3.2*realDt);camera.x+=(goal.x-camera.x)*ease;camera.y+=(goal.y-camera.y)*ease;camera.z+=(goal.z-camera.z)*ease;
+ if(state==='orbit'||state==='flight'){saveClock+=realDt;if(saveClock>=.75){saveClock=0;saveNow();}}
 }
 function circle(x,y,r,color,width=1){ctx.beginPath();ctx.arc(x,y,r,0,TAU);if(width){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.stroke();}else{ctx.fillStyle=color;ctx.fill();}}
+// Real systems and fictional expedition sectors share a schematic Milky Way map.
+function expeditionSector(){
+ const run=savedRun?.mode==='expedition'?savedRun:null,n=run?run.level:profile.unlocked,sys=run?runSystem(run):systemForLevel(n),index=run?run.current.index:0;
+ const position=sectorPosition(n);
+ return{system:sys,level:n,index,world:sys.route[index],galaxy:galaxyIndexForLevel(n),...position};
+}
+function beginEntry(phase,layout=galaxyLayout()){
+ const sector=expeditionSector();entryTransition={elapsed:0,duration:reduced?.18:1.9,phase,sector,layout};
+ state='entering';closeOverlays();$('scoreboard').hidden=true;$('toast').classList.remove('show');lastTime=performance.now();
+}
+function finishEntry(paused=false){
+ if(!entryTransition)return;const phase=entryTransition.phase;entryTransition=null;previousState=phase;state=paused?'paused':phase;
+ $('scoreboard').hidden=false;$('paused').hidden=!paused;lastTime=performance.now();syncHUD();if(!paused)maybeTutorial();syncSceneUI();saveNow();
+}
+const galaxyPlates=new Map();
+function galaxyTexture(index=viewGalaxy){
+ if(galaxyPlates.has(index))return galaxyPlates.get(index);const galaxy=GALAXIES[index];
+ const c=document.createElement('canvas');c.width=1400;c.height=1000;const g=c.getContext('2d'),random=seeded(galaxy.id+'/spiral-v1'),r=(a,b)=>a+random()*(b-a);
+ const glow=(x,y,radius,color)=>{const fill=g.createRadialGradient(x,y,0,x,y,radius);fill.addColorStop(0,color);fill.addColorStop(1,'#080d1700');g.fillStyle=fill;g.fillRect(x-radius,y-radius,radius*2,radius*2);};
+ glow(700,500,470,'#48688b30');glow(700,500,260,'#ad8f6233');
+ g.save();g.translate(700,500);g.scale(1,.67);g.rotate(-.18);
+ for(let arm=0;arm<galaxy.arms;arm++){
+  const phase=arm*TAU/galaxy.arms;
+  // Broad star-forming arms built once into a soft plate.
+  for(let i=0;i<14000;i++){
+   const radius=45+Math.pow(random(),.62)*560,angle=phase+Math.log(radius/62)*1.7+(random()+random()-1)*.22;
+   const x=Math.cos(angle)*radius+r(-10,10),y=Math.sin(angle)*radius+r(-10,10),size=r(.4,2.2);
+   g.fillStyle=random()>.13?`hsla(${galaxy.hue},40%,74%,${r(.025,.23)})`:`rgba(255,216,166,${r(.08,.35)})`;g.fillRect(x,y,size,size);
+  }
+  for(let i=0;i<45;i++){
+   const radius=100+i*10,angle=phase+Math.log(radius/62)*1.7;glow(Math.cos(angle)*radius,Math.sin(angle)*radius,24,'#9abde615');
+  }
+ }
+ // A warm elongated bar, with increasing stellar density toward the bulge.
+ for(let i=0;i<14000;i++){
+  const a=r(0,TAU),rad=Math.pow(random(),1.65)*180,x=Math.cos(a)*rad*1.2,y=Math.sin(a)*rad*.6;
+  g.fillStyle=`rgba(255,221,171,${r(.035,.2)})`;g.fillRect(x,y,r(.5,1.8),r(.5,1.8));
+ }
+ glow(0,0,150,'#ffd49d70');glow(0,0,50,'#ffe5b787');g.restore();
+ galaxyPlates.set(index,c);if(galaxyPlates.size>3)galaxyPlates.delete(galaxyPlates.keys().next().value);return c;
+}
+function drawGalaxy(){
+ const sector=entryTransition?.sector||expeditionSector(),layout=entryTransition?.layout||galaxyLayout(),focus=sectorScreen(sector.level,layout),t=entryTransition?clamp(entryTransition.elapsed/entryTransition.duration,0,1):0,e=t*t*(3-2*t);
+ ctx.save();ctx.globalAlpha=1-clamp((t-.48)/.44,0,1);
+ const zoom=reduced?1:1+e*e*19;ctx.translate(W*.5*e+focus.x*(1-e),H*.56*e+focus.y*(1-e));ctx.scale(zoom,zoom);ctx.translate(-focus.x,-focus.y);
+ ctx.drawImage(galaxyTexture(entryTransition?.sector.galaxy??viewGalaxy),layout.baseX-layout.width/2,layout.baseY-layout.height/2,layout.width,layout.height);
+ const index=entryTransition?.sector.galaxy??viewGalaxy,progress=clamp((profile.unlocked-galaxyStart(index))/76,0,1);
+ function routePath(end){ctx.beginPath();for(let i=0;i<=380;i++){const t=end*i/380,p=spiralPoint(t),x=layout.baseX+(p.x-.5)*layout.width,y=layout.baseY+(p.y-.5)*layout.height;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}}
+ routePath(1);ctx.strokeStyle='#aacbd030';ctx.lineWidth=1;ctx.setLineDash([2,6]);ctx.stroke();ctx.setLineDash([]);if(progress>0){routePath(progress);ctx.strokeStyle='#a4ffce70';ctx.lineWidth=1.5;ctx.stroke();}
+ if(entryTransition){circle(focus.x,focus.y,16,'#a4ffce60',1);circle(focus.x,focus.y,5,'#b9ffdb',0);}
+ ctx.restore();
+}
 function background(){
  ctx.fillStyle='#080d17';ctx.fillRect(0,0,W,H);
  let g=ctx.createRadialGradient(W*.2,H*.5,0,W*.2,H*.5,W*.65);g.addColorStop(0,'#2e295322');g.addColorStop(1,'#080d1700');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
@@ -173,38 +700,47 @@ function background(){
  ctx.strokeStyle='#9bb9df05';ctx.lineWidth=1;ctx.beginPath();ctx.arc(W*.5,H*.54,Math.min(W,H)*.75,0,TAU);ctx.stroke();ctx.beginPath();ctx.arc(W*.5,H*.54,Math.min(W,H)*.93,0,TAU);ctx.stroke();
 }
 function drawPlanet(p){
- if(p.dead)return;const active=p===current,isTarget=p===target;
+ if(p.dead)return;const active=p===current&&!p.departed,isTarget=p===target&&p!==current,entry=mode==='expedition'?currentSystem().route[p.index]:null;
  const glow=ctx.createRadialGradient(p.x,p.y,p.body*.5,p.x,p.y,p.r*1.3);glow.addColorStop(0,`hsla(${p.hue},65%,60%,.13)`);glow.addColorStop(1,`hsla(${p.hue},65%,60%,0)`);ctx.fillStyle=glow;ctx.fillRect(p.x-p.r*1.3,p.y-p.r*1.3,p.r*2.6,p.r*2.6);
- ctx.setLineDash(isTarget?[3,7]:[]);circle(p.x,p.y,p.r,isTarget?'#bfd8ee50':'#c0d4ed24',1/camera.z);ctx.setLineDash([]);
+ const danger=active&&current.shrinkAge/current.duration>.72;
+ ctx.setLineDash(isTarget?[3,7]:[]);circle(p.x,p.y,p.r,isTarget?'#bfd8ee50':danger?'#ff927ca0':'#c0d4ed40',1/camera.z);ctx.setLineDash([]);
+ if(danger){const alpha=ctx.globalAlpha;ctx.globalAlpha=alpha*(.2+.12*Math.sin(time*8));circle(p.x,p.y,p.r+3,'#ff927c',3/camera.z);ctx.globalAlpha=alpha;}
+ if(entry?.kind==='star'){const halo=ctx.createRadialGradient(p.x,p.y,p.body*.7,p.x,p.y,p.r);halo.addColorStop(0,`hsla(${p.hue},85%,70%,.25)`);halo.addColorStop(1,`hsla(${p.hue},85%,70%,0)`);ctx.fillStyle=halo;ctx.fillRect(p.x-p.r,p.y-p.r,p.r*2,p.r*2);}
  if(isTarget){circle(p.x,p.y,p.r+5,`rgba(164,255,206,${.08+.04*Math.sin(time*2)})`,1/camera.z);for(let i=0;i<4;i++){let a=i*Math.PI/2;ctx.beginPath();ctx.moveTo(p.x+Math.cos(a)*(p.r-3),p.y+Math.sin(a)*(p.r-3));ctx.lineTo(p.x+Math.cos(a)*(p.r+4),p.y+Math.sin(a)*(p.r+4));ctx.strokeStyle='#a4ffce90';ctx.stroke();}}
- if(p.ring){ctx.save();ctx.translate(p.x,p.y);ctx.rotate(-.32);ctx.beginPath();ctx.ellipse(0,0,p.body*1.65,p.body*.36,0,0,TAU);ctx.strokeStyle=`hsla(${p.hue},55%,75%,.25)`;ctx.lineWidth=5;ctx.stroke();ctx.restore();}
+ if(p.ring)planetRings(p);
  ctx.drawImage(p.img,p.x-p.body*1.08,p.y-p.body*1.08,p.body*2.16,p.body*2.16);
- if(active&&(state==='orbit'||state==='menu')){
-  const heading=Math.atan2(target.y-p.y,target.x-p.x),dist=Math.hypot(target.x-p.x,target.y-p.y),a=heading-player.dir*Math.acos(p.r/dist),win=Math.asin(target.r/dist)*.90,perfect=Math.asin(target.r*.2/dist);
+ if(p.ring)planetRings(p,true);
+ if(active&&(state==='orbit'||state==='briefing')){
+  const heading=Math.atan2(target.y-p.y,target.x-p.x),dist=Math.hypot(target.x-p.x,target.y-p.y),a=heading-player.dir*Math.acos((p.r+orbitOffset)/dist),win=Math.asin(target.r/dist)*.90,perfect=Math.asin(target.r*.2/dist);
   ctx.lineCap='round';ctx.beginPath();ctx.arc(p.x,p.y,p.r,a-win,a+win);ctx.strokeStyle='#a4ffce55';ctx.lineWidth=4/camera.z;ctx.stroke();ctx.beginPath();ctx.arc(p.x,p.y,p.r,a-perfect,a+perfect);ctx.strokeStyle='#bdffdb';ctx.lineWidth=5/camera.z;ctx.stroke();ctx.lineCap='butt';
  }
- ctx.textAlign='center';ctx.font=`${9/camera.z}px "Segoe UI",sans-serif`;ctx.fillStyle=isTarget?'#b8d6cc':'#7e94ae';ctx.fillText(`${names[p.index%names.length]} / ${String(p.index+1).padStart(3,'0')}`,p.x,p.y+p.r+23/camera.z);
- if(isTarget){ctx.font=`${8/camera.z}px "Segoe UI",sans-serif`;ctx.fillStyle='#8ca69d';ctx.fillText('СЛЕДУЮЩАЯ',p.x,p.y-p.r-17/camera.z);}
+ ctx.textAlign='center';ctx.font=`${9/camera.z}px "Segoe UI",sans-serif`;ctx.fillStyle=isTarget?'#b8d6cc':'#7e94ae';ctx.fillText(`${entry?entry.name:names[p.index%names.length]} / ${String(p.index+1).padStart(3,'0')}`,p.x,p.y+p.r+23/camera.z);
+ if(isTarget){ctx.font=`${8/camera.z}px "Segoe UI",sans-serif`;ctx.fillStyle='#8ca69d';ctx.fillText(entry?.kind==='star'?'ЦЕЛЬ · ЗВЕЗДА':'СЛЕДУЮЩАЯ',p.x,p.y-p.r-17/camera.z);}
 }
 function draw(){
- ctx.setTransform(DPR,0,0,DPR,0,0);background();
- ctx.save();const sx=reduced?0:(Math.random()-.5)*shake,sy=reduced?0:(Math.random()-.5)*shake;
+ syncSceneUI();ctx.setTransform(DPR,0,0,DPR,0,0);background();
+ if(['menu','levels','atlas','settings','entering'].includes(state))drawGalaxy();
+ if(['menu','levels','atlas','settings'].includes(state))return;
+ ctx.save();
+ const entryT=entryTransition?clamp(entryTransition.elapsed/entryTransition.duration,0,1):1,worldAlpha=entryTransition?clamp((entryT-.45)/.45,0,1):1;
+ if(entryTransition){ctx.globalAlpha=worldAlpha;const zoom=.65+.35*entryT;ctx.translate(W*.5,H*.56);ctx.scale(zoom,zoom);ctx.translate(-W*.5,-H*.56);}
+ const sx=reduced?0:(Math.random()-.5)*shake,sy=reduced?0:(Math.random()-.5)*shake;
  ctx.translate(W*.5+sx,H*(H<580?.57:.56)+sy);ctx.scale(camera.z,camera.z);ctx.translate(-camera.x,-camera.y);
  for(const p of planets)drawPlanet(p);
- for(const r of rings){ctx.globalAlpha=r.life/r.max*.6;circle(r.x,r.y,r.r,r.color,1.3/camera.z);}ctx.globalAlpha=1;
- for(const p of particles){ctx.globalAlpha=p.life/p.max;circle(p.x,p.y,p.r,p.color,0);}ctx.globalAlpha=1;
+ for(const r of rings){ctx.globalAlpha=worldAlpha*r.life/r.max*.6;circle(r.x,r.y,r.r,r.color,1.3/camera.z);}ctx.globalAlpha=worldAlpha;
+ for(const p of particles){ctx.globalAlpha=worldAlpha*p.life/p.max;circle(p.x,p.y,p.r,p.color,0);}ctx.globalAlpha=worldAlpha;
  if(trail.length>1){for(let i=1;i<trail.length;i++){ctx.beginPath();ctx.moveTo(trail[i-1].x,trail[i-1].y);ctx.lineTo(trail[i].x,trail[i].y);ctx.strokeStyle=`rgba(185,255,222,${i/trail.length*.34})`;ctx.lineWidth=(i/trail.length)*3/camera.z;ctx.stroke();}}
- if(['menu','orbit','flight','paused'].includes(state)){
-  if(state==='orbit'||state==='menu'){
+ if(['entering','orbit','flight','paused','briefing'].includes(state)){
+  if(state==='orbit'||state==='briefing'){
    const a=aimAt(player.a),ok=a.along>0&&a.miss<target.r;ctx.setLineDash([2/camera.z,7/camera.z]);ctx.beginPath();ctx.moveTo(player.x+a.dx*14/camera.z,player.y+a.dy*14/camera.z);ctx.lineTo(player.x+a.dx*88/camera.z,player.y+a.dy*88/camera.z);ctx.strokeStyle=ok?'#a4ffce9a':'#c7e0ec44';ctx.lineWidth=1/camera.z;ctx.stroke();ctx.setLineDash([]);
   }
-  ctx.shadowBlur=18;ctx.shadowColor='#bdffe3';circle(player.x,player.y,5/camera.z,'#effff5',0);ctx.shadowBlur=0;circle(player.x,player.y,9/camera.z,'#c1ffe52b',1/camera.z);
+  ctx.shadowBlur=18;ctx.shadowColor='#bdffe3';circle(player.x,player.y,PLAYER_RADIUS/camera.z,'#effff5',0);ctx.shadowBlur=0;circle(player.x,player.y,9/camera.z,'#c1ffe52b',1/camera.z);
  }
  ctx.restore();
  if(slow>0){ctx.strokeStyle=`rgba(164,255,206,${slow*.26})`;ctx.lineWidth=5;ctx.strokeRect(2.5,2.5,W-5,H-5);}
 }
 function frame(now){const dt=lastTime?Math.min((now-lastTime)/1000,.05):0;lastTime=now;update(dt);draw();requestAnimationFrame(frame);}
-reset();requestAnimationFrame(frame);
+reset();syncSoundButton();requestAnimationFrame(frame);
 })();
 </script>
 </body>
