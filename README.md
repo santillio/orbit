@@ -1,44 +1,46 @@
 # ORBIT
 
-**[Играть в браузере →](https://santillio.github.io/orbit/)**
+**[Play in your browser →](https://santillio.github.io/orbit/)**
 
-Небольшая бесконечная 2D-аркада в одном автономном HTML-файле.
+A small, endless 2D arcade game in a single self-contained HTML file.
 
-Шарик вращается вокруг планеты. Поймай момент и запусти его по касательной,
-чтобы попасть на орбиту следующей планеты. Промах завершает попытку.
+A ball orbits a planet. Time your launch to send it along a tangent and catch
+the next planet's orbit. Miss the orbit and your run ends.
 
-## Запуск
+## Run locally
 
-Скачай `index.html` и открой его в браузере. Установка, сборка и интернет не нужны.
-Можно играть мышью, клавиатурой или касанием на телефоне.
+Download `index.html` and open it in a browser. No installation, build step,
+or internet connection is required. Play with a keyboard, mouse, or touchscreen.
 
-## Управление
+## Controls
 
-| Действие | Управление |
+| Action | Input |
 | --- | --- |
-| Начать / прыгнуть | Пробел, клик или касание |
-| Пауза / продолжить | P или Esc |
-| Начать заново | R |
-| Включить / выключить звук | M или кнопка динамика |
+| Start / launch | Space, click, or tap |
+| Pause / resume | P or Esc |
+| Restart | R |
+| Toggle sound | M or the speaker button |
 
-Мятная дуга на орбите показывает окно удачного запуска, а узкая яркая отметка —
-окно Perfect Launch. Короткий пунктир перед шариком показывает направление полёта.
+The mint arc marks the launch window. Its narrow, bright segment marks the
+Perfect Launch window. The short dotted line ahead of the ball shows its flight direction.
 
-## Что внутри
+## Features
 
-- Процедурные планеты и постепенно растущая сложность.
-- Плавная камера, след шарика и взрыв прошлой планеты.
-- Perfect Launch, комбо, бонусные очки и короткое слоумо.
-- Рекорд в локальном хранилище браузера, если оно доступно.
-- Пауза при переключении окна и поддержка уменьшения движения.
-- Звук без внешних ресурсов, по умолчанию выключен.
+- Procedural planets and increasing difficulty.
+- Each planet adds 10% of the starting angular speed to the orbit speed.
+- Smooth camera movement, a continuous ball trail, and planet explosions.
+- Smooth orbit capture that carries arrival speed into the new orbit.
+- Perfect Launch bonuses, combos, and brief, eased slow motion.
+- A high score saved in browser storage when available.
+- Automatic pause when switching windows and reduced-motion support.
+- Synthesized sound with no external assets, muted by default.
 
-Обычный прыжок даёт 1 очко. Perfect Launch — 2, а последовательные точные
-прыжки увеличивают награду до 6 очков. Обычный захват сбрасывает комбо.
+A regular capture earns 1 point. A Perfect Launch earns 2 points, and consecutive
+perfect captures increase the reward up to 6 points. A regular capture resets the combo.
 
 ## GitHub Pages
 
-В настройках репозитория открой **Pages → Deploy from a branch**,
-выбери **main** и **/ (root)**. После публикации GitHub покажет ссылку на игру.
+In the repository settings, open **Pages → Deploy from a branch** and choose
+**main** and **/ (root)**. GitHub displays the game URL once deployment is complete.
 
-В проекте нет зависимостей, внешних шрифтов, изображений или сетевых запросов.
+The game has no dependencies, external fonts, external images, or network requests.
