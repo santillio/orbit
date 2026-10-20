@@ -24,7 +24,7 @@ let {g,node,store}=boot();g.reset(true);let initial=g.snapshot().current.r;
 for(let i=0;i<470;i++)g.update(1/120);assert.equal(g.snapshot().current.r,initial);assert(g.snapshot().current.orbitTravel<Math.PI*2);
 for(let i=0;i<120;i++)g.update(1/120);assert(g.snapshot().current.r<initial);assert.equal(g.snapshot().state,'orbit');
 g.togglePause();let age=g.snapshot().current.age;g.update(10);assert.equal(g.snapshot().current.age,age);g.togglePause();
-for(let i=0;i<1500&&g.snapshot().state!=='dead';i++)g.update(1/120);assert.equal(g.snapshot().state,'dead');assert.equal(g.snapshot().savedRun,null);assert(node('death-reason').textContent.toUpperCase().includes('ГРАВИТАЦИЯ'));
+for(let i=0;i<1500&&g.snapshot().state!=='dead';i++)g.update(1/120);assert.equal(g.snapshot().state,'dead');assert.equal(g.snapshot().savedRun,null);assert(node('death-reason').textContent.toUpperCase().includes('GRAVITY'));
 // Both directions and boosted arrivals get a full actual turn, at any level speed.
 for(const fps of [24,60,144])for(const n of [1,3,20])for(const [dir,boost] of [[1,0],[-1,0],[1,3],[-1,3]]){
  const test=boot().g;test.snapshot().profile.unlocked=20;test.startLevel(n);jump(test);const p=test.snapshot().current;p.orbitTravel=0;p.shrinkAge=0;p.r=p.baseR;test.snapshot().player.dir=dir;test.setArrivalBoost(boost);
@@ -82,15 +82,15 @@ assert.equal(JSON.stringify(catalog.g.systemForLevel(12)),ninth);assert.equal(JS
 // Bounded pages expose the expanded catalog, including the final partial page.
 catalog.g.showLevels();assert.equal(catalog.node('level-grid').children.length,11);catalog.g.moveMap(1);assert(catalog.node('levels-page').textContent.startsWith('12–22'));
 catalog.node('level-jump').value=1001;catalog.g.jumpMap();assert.equal(catalog.node('level-grid').children.length,11);assert(catalog.node('levels-next').disabled);assert(catalog.node('level-grid').children.every(n=>n.disabled));
-catalog.g.showAtlas('systems');assert.equal(catalog.node('atlas-grid').children.length,11);catalog.g.moveAtlas(9999);assert.equal(catalog.node('atlas-grid').children.length,11);assert(catalog.node('atlas-grid').children.every(n=>n.innerHTML.includes('ВЫМЫШЛЕННАЯ')&&!n.innerHTML.includes('href="undefined"')));
+catalog.g.showAtlas('systems');assert.equal(catalog.node('atlas-grid').children.length,11);catalog.g.moveAtlas(9999);assert.equal(catalog.node('atlas-grid').children.length,11);assert(catalog.node('atlas-grid').children.every(n=>n.innerHTML.includes('FICTIONAL')&&!n.innerHTML.includes('href="undefined"')));
 catalog.g.showAtlas('planets');assert.equal(catalog.node('atlas-grid').children.length,catalog.g.systemForLevel(1001).route.length);
 // Play through every added real system, the real/fiction boundary, and late campaign samples.
 for(const n of [2,3,4,5,6,7,8,9,10,11,12,42,76,77,78,154,155,512,999,1000,1001]){
  const run=boot();run.g.snapshot().profile.unlocked=n;run.g.startLevel(n);const sys=run.g.currentSystem();
  assert(run.g.validRun(run.g.packRun()));if(sys.route.length>2)jump(run.g);run.g.saveNow();const checkpoint=JSON.parse(JSON.stringify(run.g.snapshot()));const reloaded=boot(run.store);reloaded.g.resumeSaved();assert.equal(reloaded.g.currentSystem().id,sys.id);assert.equal(reloaded.g.snapshot().current.entryId,checkpoint.current.entryId);reloaded.g.togglePause();
  for(let j=reloaded.g.snapshot().jumps;j<sys.route.length-1;j++)jump(reloaded.g);assert.equal(reloaded.g.snapshot().state,'won');assert.equal(reloaded.g.snapshot().profile.unlocked,Math.min(n+1,1001));assert.equal(reloaded.node('next-level').disabled,n===1001);
- if(n%77===0){assert(reloaded.node('win-title').textContent.includes('Центр галактики'));assert(reloaded.node('next-level').textContent.includes('Следующая галактика'));}
- if(n>11){reloaded.g.showAtlas('planets');if(n<1001)reloaded.g.moveAtlas(-1);assert(reloaded.node('atlas-grid').children.every(card=>!card.className.includes('locked')));assert(reloaded.node('atlas-grid').children.every(card=>card.innerHTML.includes('ХУДОЖЕСТВЕННАЯ')));}
+ if(n%77===0){assert(reloaded.node('win-title').textContent.includes('Galactic core'));assert(reloaded.node('next-level').textContent.includes('Next galaxy'));}
+ if(n>11){reloaded.g.showAtlas('planets');if(n<1001)reloaded.g.moveAtlas(-1);assert(reloaded.node('atlas-grid').children.every(card=>!card.className.includes('locked')));assert(reloaded.node('atlas-grid').children.every(card=>card.innerHTML.includes('FICTIONAL ORBIT')));}
 }
 // Each galaxy has exactly 77 ordered sectors tracing three inward turns.
 const spiral=boot();assert.deepEqual(Array.from({length:4},(_,i)=>spiral.g.systemForLevel(i+1).id),['solar','proxima','barnard','ross128']);
@@ -104,7 +104,7 @@ for(let galaxy=0;galaxy<13;galaxy++){
  }
  assert(Math.abs(totalAngle-Math.PI*6)<1e-9);assert(previousRadius<.05);
 }
-spiral.g.snapshot().profile.unlocked=78;spiral.g.showMenu();assert.equal(spiral.g.snapshot().viewGalaxy,1);assert.equal(spiral.node('galaxy-sectors').children.length,77);assert.equal(spiral.node('galaxy-sectors').children[0].dataset.level,'78');assert(spiral.node('galaxy-name').textContent.includes('АНДРОМЕДА'));
+spiral.g.snapshot().profile.unlocked=78;spiral.g.showMenu();assert.equal(spiral.g.snapshot().viewGalaxy,1);assert.equal(spiral.node('galaxy-sectors').children.length,77);assert.equal(spiral.node('galaxy-sectors').children[0].dataset.level,'78');assert(spiral.node('galaxy-name').textContent.includes('ANDROMEDA'));
 spiral.g.browseGalaxy(-1);assert.equal(spiral.node('galaxy-sectors').children[0].dataset.level,'1');spiral.g.browseGalaxy(99);assert.equal(spiral.g.snapshot().viewGalaxy,12);assert.equal(spiral.node('galaxy-sectors').children.at(-1).dataset.level,'1001');spiral.g.draw();spiral.g.centerGalaxy();assert.equal(spiral.g.snapshot().viewGalaxy,1);
 // Version-3 checkpoints retain their actual system even when its campaign position changes.
 const beforeRouteChange=boot();beforeRouteChange.g.snapshot().profile.unlocked=8;beforeRouteChange.g.startLevel(8);jump(beforeRouteChange.g);beforeRouteChange.g.saveNow();const oldRoute=JSON.parse(beforeRouteChange.store.get('orbit.progress.v2'));oldRoute.run.catalogVersion=3;oldRoute.run.level=6;oldRoute.profile.unlocked=6;
@@ -118,17 +118,17 @@ const restoredDeparture=boot(peaceful.store);restoredDeparture.g.resumeSaved();a
 const oldDeparture=JSON.parse(peaceful.store.get('orbit.progress.v2'));oldDeparture.run.current.dead=true;delete oldDeparture.run.catalogVersion;delete oldDeparture.run.systemId;const restoredOldDeparture=boot(new Map([['orbit.progress.v2',JSON.stringify(oldDeparture)]]));assert(restoredOldDeparture.g.snapshot().savedRun);assert.equal(restoredOldDeparture.g.snapshot().savedRun.current.dead,false);
 // First-time instructions appear inside the first system, with gravity and movement frozen.
 const newcomer=boot(new Map(),false,true);assert.equal(newcomer.g.snapshot().profile.tutorialDone,false);assert.equal(newcomer.g.snapshot().state,'menu');assert(!html.includes('class="card home-card"'));assert(!html.includes('id="mode-expedition"'));assert(!html.includes('id="hint"'));
-assert(newcomer.node('galaxy-sectors').children.find(n=>n.dataset.level==='1').innerHTML.includes('Начать экспедицию'));
+assert(newcomer.node('galaxy-sectors').children.find(n=>n.dataset.level==='1').innerHTML.includes('Start expedition'));
 newcomer.g.startLevel(1,true);assert.equal(newcomer.g.snapshot().state,'entering');newcomer.g.update(2);assert.equal(newcomer.g.snapshot().state,'briefing');const briefAngle=newcomer.g.snapshot().player.a;newcomer.g.update(100);assert.equal(newcomer.g.snapshot().current.orbitTravel,0);assert.equal(newcomer.g.snapshot().player.a,briefAngle);
-newcomer.g.saveNow();const reloadBrief=boot(newcomer.store,false,true);assert(reloadBrief.node('galaxy-sectors').children.find(n=>n.dataset.level==='1').innerHTML.includes('Продолжить экспедицию'));reloadBrief.g.resumeSaved(true);reloadBrief.g.update(2);assert.equal(reloadBrief.g.snapshot().state,'briefing');reloadBrief.g.completeTutorial();assert.equal(reloadBrief.g.snapshot().state,'orbit');assert.equal(reloadBrief.g.snapshot().profile.tutorialDone,true);assert.equal(reloadBrief.g.snapshot().current.orbitTravel,0);
+newcomer.g.saveNow();const reloadBrief=boot(newcomer.store,false,true);assert(reloadBrief.node('galaxy-sectors').children.find(n=>n.dataset.level==='1').innerHTML.includes('Continue expedition'));reloadBrief.g.resumeSaved(true);reloadBrief.g.update(2);assert.equal(reloadBrief.g.snapshot().state,'briefing');reloadBrief.g.completeTutorial();assert.equal(reloadBrief.g.snapshot().state,'orbit');assert.equal(reloadBrief.g.snapshot().profile.tutorialDone,true);assert.equal(reloadBrief.g.snapshot().current.orbitTravel,0);
 reloadBrief.g.showMenu();reloadBrief.g.startLevel(1);assert.equal(reloadBrief.g.snapshot().state,'orbit');
 const interruptedBrief=boot(new Map(),false,true);interruptedBrief.g.startLevel(1,true);interruptedBrief.g.togglePause();interruptedBrief.g.togglePause();assert.equal(interruptedBrief.g.snapshot().state,'briefing');
 const noLateLesson=boot(new Map(),false,true);noLateLesson.g.snapshot().profile.unlocked=2;noLateLesson.g.startLevel(2);assert.equal(noLateLesson.g.snapshot().state,'orbit');noLateLesson.g.selectMode('endless');noLateLesson.g.reset(true);assert.equal(noLateLesson.g.snapshot().state,'orbit');
 noLateLesson.g.aim();noLateLesson.g.launch();noLateLesson.g.update(.02);noLateLesson.g.showMenu();const endlessX=noLateLesson.g.snapshot().savedRun.player.x;noLateLesson.events.get('endless-flight:click')();assert.equal(noLateLesson.g.snapshot().state,'entering');noLateLesson.g.update(2);assert.equal(noLateLesson.g.snapshot().state,'flight');assert.equal(noLateLesson.g.snapshot().player.x,endlessX);
 // Completed sectors expose descriptions and records on hover/focus; the frontier glows separately.
 const mapTest=boot();mapTest.g.snapshot().profile.completed={1:{stars:3,score:42},2:{stars:2,score:20}};mapTest.g.snapshot().profile.unlocked=3;mapTest.g.showMenu();const sectors=mapTest.node('galaxy-sectors').children;
-assert(sectors.find(n=>n.dataset.level==='3').innerHTML.includes('Продолжить экспедицию'));mapTest.g.showSectorInfo(3);assert(mapTest.node('sector-visit').textContent.includes('Продолжить экспедицию'));
-const passed=sectors.find(n=>n.dataset.level==='1'),frontier=sectors.find(n=>n.dataset.level==='3');assert(passed.className.includes('completed'));assert(frontier.className.includes('current'));passed._events.pointerenter();assert.equal(mapTest.node('sector-info-title').textContent,'Солнечная система');assert(mapTest.node('sector-info-facts').textContent.includes('42'));assert.equal(mapTest.node('sector-info').hidden,false);
+assert(sectors.find(n=>n.dataset.level==='3').innerHTML.includes('Continue expedition'));mapTest.g.showSectorInfo(3);assert(mapTest.node('sector-visit').textContent.includes('Continue expedition'));
+const passed=sectors.find(n=>n.dataset.level==='1'),frontier=sectors.find(n=>n.dataset.level==='3');assert(passed.className.includes('completed'));assert(frontier.className.includes('current'));passed._events.pointerenter();assert.equal(mapTest.node('sector-info-title').textContent,'Solar System');assert(mapTest.node('sector-info-facts').textContent.includes('42'));assert.equal(mapTest.node('sector-info').hidden,false);
 // Mouse departure closes the card, while crossing onto it or a new sector cancels dismissal.
 const info=mapTest.node('sector-info');passed._events.pointerleave({pointerType:'mouse'});mapTest.advanceTimers(160);assert.equal(info.hidden,false);mapTest.advanceTimers(30);assert.equal(info.hidden,true);
 passed._events.pointerenter();passed._events.pointerleave({pointerType:'mouse'});mapTest.advanceTimers(80);info._events.pointerenter();mapTest.advanceTimers(1000);assert.equal(info.hidden,false);info._events.pointerleave({pointerType:'mouse'});mapTest.advanceTimers(180);assert.equal(info.hidden,true);
@@ -224,7 +224,7 @@ for(const fps of [20,60,144])for(const dir of [1,-1])for(const boost of [0,4]){
 }
 const partialLap=boot();partialLap.g.endlessAt(10);partialLap.g.snapshot().current.orbitTravel=fullTurn*1.75;partialLap.g.snapshot().current.shrinkAge=1.5;
 partialLap.g.advanceOrbit(fullTurn*.1/partialLap.g.orbitSpeed());assert.equal(partialLap.g.snapshot().score,0);partialLap.g.saveNow();
-const savedLap=boot(partialLap.store);savedLap.g.resumeSaved();savedLap.g.update(100);assert.equal(savedLap.g.snapshot().score,0);savedLap.g.togglePause();savedLap.g.advanceOrbit(fullTurn*.2/savedLap.g.orbitSpeed());assert.equal(savedLap.g.snapshot().score,1);assert.equal(savedLap.node('orbit-reward').textContent,'+1 ЗА ОБОРОТ');savedLap.g.saveNow();
+const savedLap=boot(partialLap.store);savedLap.g.resumeSaved();savedLap.g.update(100);assert.equal(savedLap.g.snapshot().score,0);savedLap.g.togglePause();savedLap.g.advanceOrbit(fullTurn*.2/savedLap.g.orbitSpeed());assert.equal(savedLap.g.snapshot().score,1);assert.equal(savedLap.node('orbit-reward').textContent,'+1 FOR THE TURN');savedLap.g.saveNow();
 const creditedLap=boot(savedLap.store);creditedLap.g.resumeSaved();creditedLap.g.togglePause();creditedLap.g.advanceOrbit(fullTurn*.05/creditedLap.g.orbitSpeed());assert.equal(creditedLap.g.snapshot().score,1);assert.equal(creditedLap.g.snapshot().profile.records.endless,1);
 const manyLaps=boot();manyLaps.g.endlessAt(1000);manyLaps.g.snapshot().current.orbitTravel=fullTurn*2.95;manyLaps.g.snapshot().current.shrinkAge=.5;manyLaps.g.advanceOrbit(.05);assert.equal(manyLaps.g.snapshot().score,2);
 const impactLap=boot();impactLap.g.endlessAt(1);impactLap.g.snapshot().current.orbitTravel=fullTurn*2-.02;impactLap.g.snapshot().current.shrinkAge=impactLap.g.snapshot().current.duration-.001;impactLap.g.advanceOrbit(.05);assert.equal(impactLap.g.snapshot().state,'dying');assert.equal(impactLap.g.snapshot().score,0);
@@ -271,5 +271,7 @@ for(let i=0;i<20000;i++){
  assert(g.segmentCircle(x,y,x+ux*200,y+uy*200,p)!==null);
  assert.equal(g.segmentCircle(x+nx*.001,y+ny*.001,x+ux*200+nx*.001,y+uy*200+ny*.001,p),null);
 }
-assert(!html.includes('gravity-time'));assert(!html.includes('Орбита сжимается'));assert(!html.includes('ОРБИТА СЖИМАЕТСЯ'));
+// The game ships in English only.
+assert(!/[А-Яа-яЁё]/.test(html),'Cyrillic text left in index.html');
+assert(!html.includes('gravity-time'));assert(!html.includes('Orbit shrinking'));assert(!html.includes('ORBIT SHRINKING'));
 console.log(`PASS: interactive completed/current sectors, zoom and pan; first-system-only tutorial and paused gravity; reversible reset and stale-tab protection; 13 spiral galaxies × 77 systems; 1001 unique deterministic systems, ${worldCount} worlds; bounded catalog navigation; added real routes and late-game completion; final campaign boundary; fictional atlas and save/reload; old repeating-level migration; intact planets on departure; full-revolution grace; entry and pause; persistent progress/import/records; corrupt or blocked storage; 20,000 exact tangencies.`);
