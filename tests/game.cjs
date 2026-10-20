@@ -138,6 +138,13 @@ const resetStore=new Map(),owner=boot(resetStore);owner.g.startLevel(1);for(let 
 assert.equal(owner.g.snapshot().state,'menu');assert.equal(owner.g.snapshot().profile.unlocked,1);assert.equal(owner.g.snapshot().profile.discovered.length,0);assert.equal(owner.g.snapshot().profile.tutorialDone,false);assert.equal(owner.g.snapshot().profile.records.expedition,0);assert(resetStore.has('orbit.backup.v2'));assert(owner.g.snapshot().saveEpoch>0);
 staleResetTab.g.saveNow();assert.equal(staleResetTab.g.snapshot().profile.unlocked,1);resetStore.set('orbit.progress.v2',priorPayload);resetStore.set('orbit.best.v1','999');const afterReset=boot(resetStore,false,true);assert.equal(afterReset.g.snapshot().profile.unlocked,1);assert.equal(afterReset.g.snapshot().profile.records.endless,0);assert.equal(afterReset.g.snapshot().profile.tutorialDone,false);
 owner.g.restoreProgress();assert.equal(owner.g.snapshot().profile.unlocked,2);assert(owner.g.snapshot().profile.records.expedition>0);assert(owner.g.snapshot().profile.tutorialDone);owner.g.resetProgress();assert.equal(JSON.parse(resetStore.get('orbit.backup.v2')).profile.unlocked,2);
+// Every reset backs up the latest progress, an empty reset keeps it, and restore is a rollback rather than a merge.
+{const st=new Map(),t=boot(st).g;t.startLevel(1);for(let j=0;j<8;j++)jump(t);t.showMenu();t.resetProgress();
+ t.startLevel(1);t.completeTutorial();for(let j=0;j<8;j++)jump(t);t.startLevel(2);for(let j=0;j<2;j++)jump(t);t.showMenu();t.resetProgress();
+ assert.equal(JSON.parse(st.get('orbit.backup.v2')).profile.unlocked,3);t.resetProgress();assert.equal(JSON.parse(st.get('orbit.backup.v2')).profile.unlocked,3);
+ t.selectMode('endless');t.reset(true);jump(t);jump(t);t.showMenu();assert(t.snapshot().profile.records.endless>0);
+ t.restoreProgress();assert.equal(t.snapshot().profile.unlocked,3);assert.equal(t.snapshot().profile.records.endless,0);
+ t.saveNow();const reloaded=boot(st).g.snapshot();assert.equal(reloaded.profile.unlocked,3);assert.equal(reloaded.profile.records.endless,0);}
 // Endless pickups require actual contact during shrink, never fill more than one slot,
 // and survive saving without letting a spent life reappear on the same planet.
 {
