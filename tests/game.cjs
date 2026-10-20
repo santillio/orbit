@@ -7,14 +7,17 @@ function boot(store=new Map(),blocked=false,newPlayer=false){
  function node(id){if(!nodes.has(id))nodes.set(id,{hidden:false,style:{},dataset:{},_events:{},textContent:'',innerHTML:'',children:[],classList:{add(){},remove(){},toggle(){}},setAttribute(){},replaceChildren(){this.children=[]},append(n){this.children.push(n)},addEventListener(k,fn){this._events[k]=fn;events.set(String(id)+':'+k,fn)},getContext:()=>ctx});return nodes.get(id)}
  const sandbox={console,Math:Object.create(Math),performance:{now:()=>0},innerWidth:1280,innerHeight:800,devicePixelRatio:1,requestAnimationFrame(){},addEventListener(k,f){events.set('window:'+k,f)},setTimeout(fn,delay){const id=nextTimer++;timers.set(id,{fn,at:timerTime+delay});return id;},clearTimeout(id){timers.delete(id)},localStorage:{getItem(k){if(blocked)throw Error('Blocked');return store.get(k)||null},setItem(k,v){if(blocked)throw Error('Blocked');store.set(k,v)}},document:{hidden:false,getElementById:node,createElement:()=>({...node(Symbol()),children:[]}),querySelectorAll:()=>[],addEventListener(k,f){events.set('document:'+k,f)}}};
  sandbox.window=sandbox;sandbox.matchMedia=()=>({matches:false});
- const code=original.replace(/\}\)\(\);\s*$/,`${newPlayer?'':'profile.tutorialDone=true;'}globalThis.game={reset,update,draw,launch,aimAt,segmentCircle,togglePause,primaryAction,advanceOrbit,orbitSpeed,saveNow,packRun,validRun,resumeSaved,showMenu,startLevel,selectMode,showLevels,showAtlas,importProgress,systemForLevel,currentSystem,systemById,moveMap,jumpMap,moveAtlas,validDiscovery,sectorPosition,galaxyIndexForLevel,galaxyForLevel,browseGalaxy,showSectorInfo,renderGalaxyMap,visitSector,zoomGalaxy,centerGalaxy,completeTutorial,showSettings,resetProgress,restoreProgress,checkSaveEpoch,saveStorageKey,die,prepareEndlessPlanet,pickupPosition,bonusSector,inBonusSector,bonusBand,meteorPositions,meteorHit,meteorWindow,setOrbitPosition,
+ const code=original.replace(/\}\)\(\);\s*$/,`${newPlayer?'':'profile.tutorialDone=true;'}globalThis.game={reset,update,draw,launch,aimAt,segmentCircle,togglePause,primaryAction,advanceOrbit,orbitSpeed,saveNow,packRun,validRun,resumeSaved,showMenu,startLevel,selectMode,showLevels,showAtlas,importProgress,systemForLevel,currentSystem,systemById,moveMap,jumpMap,moveAtlas,validDiscovery,sectorPosition,galaxyIndexForLevel,galaxyForLevel,browseGalaxy,showSectorInfo,renderGalaxyMap,visitSector,zoomGalaxy,centerGalaxy,completeTutorial,showSettings,resetProgress,restoreProgress,checkSaveEpoch,saveStorageKey,die,prepareEndlessPlanet,pickupPosition,bonusSector,inBonusSector,bonusBand,meteorPositions,meteorHit,meteorWindow,setOrbitPosition,isTangentEntry,captureRadius,
  snapshot:()=>({state,previousState,mode,level,current,target,player,camera,score,jumps,combo,perfects,orbitBoost,orbitOffset,profile,savedRun,storageAvailable,runTime,particles,rings,shake,mapPage,atlasCursor,mapView,viewGalaxy,selectedSector,saveEpoch,endless}),
  setArrivalBoost(v){orbitBoost=v},
  endlessAt(n){mode="endless";reset(true);jumps=n-1;current.index=n-1;target.index=n;current.r=current.baseR=90;current.body=32;current.duration=8;current.x=current.y=0;target.x=350;target.y=0;target.r=80;endless.nextLife=30;prepareEndlessPlanet();endless.shower=null;setOrbitPosition();},
  aim(){const h=Math.atan2(target.y-current.y,target.x-current.x),d=Math.hypot(target.x-current.x,target.y-current.y);player.a=h-player.dir*Math.acos((current.r+orbitOffset)/d);setOrbitPosition()},
+ aimEdge(k=.97){this.aim();const R=captureRadius(),side=-player.dir;let step=1e-4,guard=0;while(aimAt(player.a).miss<k*R&&guard++<1e5){player.a+=side*step;setOrbitPosition();}},
+ routeHits:()=>JSON.stringify(routeHits),
  miss(){player.a=Math.atan2(target.y-current.y,target.x-current.x)+player.dir*Math.PI/2;setOrbitPosition()}};})();`);
  vm.createContext(sandbox);vm.runInContext(code,sandbox);return{g:sandbox.game,node,events,store,random(value){sandbox.Math.random=()=>value},advanceTimers(ms){timerTime+=ms;for(const [id,t] of timers)if(t.at<=timerTime){timers.delete(id);t.fn();}}};
 }
+function jumpEdge(g,k=.97){g.aimEdge(k);g.launch();for(let i=0;i<1000&&g.snapshot().state==='flight';i++)g.update(1/120);assert(['orbit','won'].includes(g.snapshot().state));}
 function jump(g){g.aim();g.launch();for(let i=0;i<1000&&g.snapshot().state==='flight';i++)g.update(1/120);assert(['orbit','won'].includes(g.snapshot().state));}
 // A complete physical revolution is protected before gravity starts pulling.
 let {g,node,store}=boot();g.reset(true);let initial=g.snapshot().current.r;
@@ -49,7 +52,7 @@ const legacyRun=boot(new Map([['orbit.progress.v2',JSON.stringify(old)]]));asser
 const expected=[['neptune','sun',8],['b','star',2],['e','star',4],['b','star',1]];
 for(let n=1;n<=4;n++){
  g.startLevel(n);assert.equal(g.snapshot().mode,'expedition');assert.equal(g.snapshot().current.entryId,expected[n-1][0]);
- for(let j=0;j<expected[n-1][2];j++)jump(g);
+ for(let j=0;j<expected[n-1][2];j++)jumpEdge(g);assert.equal(g.snapshot().perfects,expected[n-1][2]);
  const s=g.snapshot();assert.equal(s.state,'won');assert.equal(s.current.entryId,expected[n-1][1]);assert.equal(s.jumps,expected[n-1][2]);assert.equal(s.profile.unlocked,n+1);assert.equal(s.profile.completed[n].stars,3);assert.equal(s.savedRun,null);g.draw();
 }
 assert.equal(g.snapshot().profile.discovered.length,19);
@@ -133,6 +136,27 @@ passed._events.pointerenter();passed._events.pointerleave({pointerType:'mouse'})
 frontier._events.pointerleave({pointerType:'touch'});mapTest.advanceTimers(1000);assert.equal(info.hidden,false);frontier._events.blur({relatedTarget:{closest:()=>info}});mapTest.advanceTimers(1000);assert.equal(info.hidden,false);info._events.focusout({relatedTarget:null});mapTest.advanceTimers(180);assert.equal(info.hidden,true);
 const oldLeft=frontier.style.left;mapTest.g.zoomGalaxy(1.8);assert.equal(mapTest.g.snapshot().mapView.z,1.8);assert.notEqual(frontier.style.left,oldLeft);mapTest.g.zoomGalaxy(100);assert.equal(mapTest.g.snapshot().mapView.z,5);mapTest.g.centerGalaxy();assert.equal(mapTest.g.snapshot().mapView.z,1);
 mapTest.events.get('space:pointerdown')({button:0,clientX:100,clientY:100,preventDefault(){}});assert.equal(mapTest.g.snapshot().state,'menu');mapTest.events.get('space:pointermove')({clientX:140,clientY:125});assert.equal(mapTest.g.snapshot().mapView.x,40);assert.equal(mapTest.g.snapshot().mapView.y,25);mapTest.events.get('space:pointerup')();mapTest.g.visitSector(1);assert.equal(mapTest.g.snapshot().state,'entering');mapTest.g.update(2);assert.equal(mapTest.g.snapshot().level,1);
+// Tangential capture: a grazing entry earns ×2 with a growing combo, a head-on entry earns 1.
+// The angle is measured at the actual contact point, in both orbit directions.
+{const t=boot().g;t.reset(true);t.aim();t.launch();for(let i=0;i<1000&&t.snapshot().state==='flight';i++)t.update(1/120);
+ assert.equal(t.snapshot().score,1);assert.equal(t.snapshot().perfects,0);assert.equal(t.snapshot().combo,0);
+ const rewards=[2,3,4,5,6,6];for(const reward of rewards){const before=t.snapshot().score;jumpEdge(t);assert.equal(t.snapshot().score-before,reward);}
+ assert.equal(t.snapshot().combo,6);const before=t.snapshot().score;jump(t);assert.equal(t.snapshot().score-before,1);assert.equal(t.snapshot().combo,0);}
+for(const dir of [1,-1]){const t=boot().g;t.reset(true);t.snapshot().player.dir=dir;jumpEdge(t);assert.equal(t.snapshot().perfects,1);}
+// The threshold sits at 30° from the tangent; just inside counts, just outside does not.
+{const t=boot().g,s=Math.sin(Math.PI/6),c=Math.cos(Math.PI/6);
+ assert(t.isTangentEntry(1,0,s-1e-6,c));assert(!t.isTangentEntry(1,0,s+1e-3,c));assert(t.isTangentEntry(0,-5,-1,0));assert(!t.isTangentEntry(0,-5,0,1));}
+// A shallow but not tangential entry stays regular.
+{const t=boot().g;t.reset(true);jumpEdge(t,.5);assert.equal(t.snapshot().perfects,0);assert.equal(t.snapshot().score,1);}
+// Stars: ★ finish, ★★ a third of captures tangential, ★★★ two thirds; route dots record each capture.
+for(const [pattern,stars] of [[[0,0,0,0,0,0,0,0],1],[[1,1,1,0,0,0,0,0],2],[[1,1,1,1,1,1,0,0],3],[[0,0,1,1,1,1,1,1],3],[[1,1,0,0,0,0,0,0],1]]){
+ const t=boot().g;t.startLevel(1);for(const hit of pattern)hit?jumpEdge(t):jump(t);
+ assert.equal(t.snapshot().state,'won');assert.equal(t.snapshot().profile.completed[1].stars,stars);assert.equal(t.routeHits(),JSON.stringify(pattern.map(Boolean)));
+}
+// Route history survives save/reload mid-system, and older runs without it still resume.
+{const t=boot();t.g.startLevel(1);jumpEdge(t.g);jump(t.g);jumpEdge(t.g);t.g.saveNow();const back=boot(t.store);back.g.resumeSaved();assert.equal(back.g.routeHits(),"[true,false,true]");
+ const raw=JSON.parse(t.store.get('orbit.progress.v2'));delete raw.run.routeHits;const legacy=boot(new Map([['orbit.progress.v2',JSON.stringify(raw)]]));assert(legacy.g.snapshot().savedRun);legacy.g.resumeSaved();assert.equal(JSON.parse(legacy.g.routeHits()).filter(Boolean).length,2);
+ const bad=JSON.parse(t.store.get('orbit.progress.v2'));bad.run.routeHits=[true,true,true];assert(!t.g.validRun(bad.run));}
 // Reset is reversible and uses a new storage epoch, so stale or old tabs cannot resurrect progress.
 const resetStore=new Map(),owner=boot(resetStore);owner.g.startLevel(1);for(let j=0;j<8;j++)jump(owner.g);const staleResetTab=boot(resetStore);const priorPayload=resetStore.get('orbit.progress.v2');owner.g.showMenu();owner.g.showSettings();owner.g.resetProgress();
 assert.equal(owner.g.snapshot().state,'menu');assert.equal(owner.g.snapshot().profile.unlocked,1);assert.equal(owner.g.snapshot().profile.discovered.length,0);assert.equal(owner.g.snapshot().profile.tutorialDone,false);assert.equal(owner.g.snapshot().profile.records.expedition,0);assert(resetStore.has('orbit.backup.v2'));assert(owner.g.snapshot().saveEpoch>0);
@@ -165,21 +189,21 @@ extras.g.snapshot().current.index=59;extras.g.prepareEndlessPlanet();assert(extr
 extras.g.snapshot().current.index=64;extras.g.die('gravity');assert.equal(extras.g.snapshot().endless.nextLife,95);assert.equal(extras.g.snapshot().state,'orbit');
 extras.g.snapshot().current.index=93;extras.g.prepareEndlessPlanet();assert(!extras.g.snapshot().endless.pickup);extras.g.snapshot().current.index=94;extras.g.prepareEndlessPlanet();assert(extras.g.snapshot().endless.pickup);
 const skipped=boot();skipped.g.endlessAt(30);skipped.g.aim();skipped.g.launch();assert(!skipped.g.snapshot().endless.pickup);assert.equal(skipped.g.snapshot().endless.nextLife,60);
-// A golden launch doubles the actual capture reward, including Perfect combo points.
-for(const n of [4,5,10,15]){
+// A golden launch doubles the actual capture reward, including tangent combo points.
+for(const n of [4,5,10,15])for(const edge of [false,true]){
  const gold=boot();gold.g.endlessAt(n);gold.g.aim();assert.equal(gold.g.bonusSector(),n%5===0);assert(!gold.g.inBonusSector());
- gold.g.snapshot().current.orbitTravel=Math.PI*2;gold.g.snapshot().current.shrinkAge=4;gold.g.snapshot().current.r=gold.g.bonusBand().radius;gold.g.aim();const expected=n%5===0?2:1;assert.equal(gold.g.inBonusSector(),n%5===0);
+ gold.g.snapshot().current.orbitTravel=Math.PI*2;gold.g.snapshot().current.shrinkAge=4;gold.g.snapshot().current.r=gold.g.bonusBand().radius;edge?gold.g.aimEdge():gold.g.aim();const expected=n%5===0?2:1;assert.equal(gold.g.inBonusSector(),n%5===0);
  gold.g.launch();assert.equal(gold.g.snapshot().endless.multiplier,expected);gold.g.saveNow();const goldReload=boot(gold.store);goldReload.g.resumeSaved();goldReload.g.togglePause();assert.equal(goldReload.g.snapshot().endless.multiplier,expected);
  const start=goldReload.g.snapshot().score;for(let i=0;i<500&&goldReload.g.snapshot().state==='flight';i++)goldReload.g.update(1/120);
- assert.equal(goldReload.g.snapshot().score-start,2*expected);assert.equal(goldReload.g.snapshot().endless.multiplier,1);
+ assert.equal(goldReload.g.snapshot().score-start,(edge?2:1)*expected);assert.equal(goldReload.g.snapshot().endless.multiplier,1);
 }
 const outsideGold=boot();outsideGold.g.endlessAt(5);outsideGold.g.snapshot().current.shrinkAge=1;outsideGold.g.snapshot().current.r=outsideGold.g.bonusBand().outer+1;assert(!outsideGold.g.inBonusSector());
 const ordinaryGold=boot();ordinaryGold.g.endlessAt(5);ordinaryGold.g.snapshot().current.orbitTravel=Math.PI*2;ordinaryGold.g.snapshot().current.shrinkAge=4;ordinaryGold.g.snapshot().current.r=ordinaryGold.g.bonusBand().radius;ordinaryGold.g.aim();ordinaryGold.g.snapshot().player.a+=.1;ordinaryGold.g.setOrbitPosition();ordinaryGold.g.launch();for(let f=0;f<360&&ordinaryGold.g.snapshot().state==='flight';f++)ordinaryGold.g.update(1/120);assert.equal(ordinaryGold.g.snapshot().score,2);assert.equal(ordinaryGold.g.snapshot().perfects,0);
-// The gold zone is a stationary annulus halfway between the original orbit and
-// the planet surface. Eligibility depends on radius, not launch angle.
+// The gold zone is a stationary annulus from the planet surface up to halfway
+// toward the original orbit. Eligibility depends on radius, not launch angle.
 for(const n of [4,5,10])for(const angle of [-Math.PI,-1.5,0,.8,Math.PI]){
  const bandTest=boot();bandTest.g.endlessAt(n);const p=bandTest.g.snapshot().current,band=bandTest.g.bonusBand();
- assert.equal(band.radius,(p.baseR+p.body)/2);assert(band.inner>p.body&&band.outer<p.baseR);
+ assert.equal(band.inner,p.body);assert.equal(band.outer,(p.baseR+p.body)/2);assert.equal(band.radius,p.body+(p.baseR-p.body)/4);
  p.shrinkAge=4;bandTest.g.snapshot().player.a=angle;
  for(const [r,inside] of [[p.baseR,false],[band.outer+.01,false],[band.outer,true],[band.radius,true],[band.inner,true],[band.inner-.01,false]]){
   p.r=r;bandTest.g.setOrbitPosition();assert.equal(bandTest.g.inBonusSector(),inside&&n%5===0);
