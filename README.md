@@ -60,8 +60,8 @@ or internet connection is required. Play with a keyboard, mouse, or touchscreen.
 | Restart | R |
 | Toggle sound | M or the speaker button |
 
-The mint arc marks the launch window. Its narrow, bright segment marks the
-Perfect Launch window. The short dotted line ahead of the ball shows its flight direction.
+The mint arc marks the launch window. Its ends are where the ball grazes the next
+orbit, which is where tangential captures happen. The short dotted line ahead of the ball shows its flight direction.
 Instructions appear only on the first visit to the first system. The briefing
 freezes the ball and gravity until dismissed. Completing it is remembered, and
 replaying or resuming later does not add persistent tutorial text to gameplay.
@@ -79,7 +79,7 @@ replaying or resuming later does not add persistent tutorial text to gameplay.
 - Smooth camera movement and a continuous ball trail. Departed planets stay intact
   and leave the camera naturally; launching creates no debris or shockwave.
 - Smooth orbit capture that carries arrival speed into the new orbit.
-- Perfect Launch bonuses, combos, and brief, eased slow motion.
+- Tangential capture bonuses, combos, and brief, eased slow motion.
 - A high score saved in browser storage when available.
 - Automatic saves for the current attempt, unlocked levels, mode records, settings,
   and discovered worlds. Gameplay stays frozen during the entry transition;
@@ -94,22 +94,30 @@ replaying or resuming later does not add persistent tutorial text to gameplay.
 - Automatic pause when switching windows and reduced-motion support.
 - Synthesized sound with no external assets, muted by default.
 
-A regular capture earns 1 point. A Perfect Launch earns 2 points, and consecutive
-perfect captures increase the reward up to 6 points. A regular capture resets the combo.
+A regular capture earns 1 point. A **tangential capture** earns 2 points: the ball
+must meet the next orbit within 30° of its tangent, measured at the actual contact
+point. Consecutive tangential captures raise the reward by one point each, up to
+6 points. A regular capture, such as a head-on dive toward the planet, resets the combo.
+Aiming at the edge of the launch window is riskier, since a slightly wider shot misses.
+
+In Expedition, stars reward tangential captures: ★ for finishing the system,
+★★ when at least a third of its captures are tangential, and ★★★ for at least
+two thirds. Route dots under the score light up mint for each tangential capture,
+and the victory screen shows how many more were needed for the next star.
 
 ## Endless encounters
 
 - **Spare attempt:** a violet diamond appears above planet 30. It is a physical
   pickup inside the initial orbit: wait for shrinking and cross it with the ball.
   Only one spare can be held. Failure automatically consumes it and returns the
-  ball to the last planet with a fresh orbit; score remains, Perfect combo resets.
+  ball to the last planet with a fresh orbit; score remains, the tangent combo resets.
   The next pickup appears 30 planets after the spare is spent. If a pickup is left
   behind, the next opportunity is 30 planets later. Holding a spare suppresses new
   pickups, so they never stack.
-- **Golden ring:** every fifth planet has a fixed gold annulus halfway between
-  its original orbit and surface, spanning 40–60% of that radial gap. Launch while
+- **Golden ring:** every fifth planet has a fixed gold annulus from the planet
+  surface up to halfway toward its original orbit, spanning 0–50% of that radial gap. Launch while
   the ball is inside this band, at any angle, then catch the next planet to double
-  that jump's points, including any Perfect combo reward. Merely crossing the
+  that jump's points, including any tangent combo reward. Merely crossing the
   band does not award points. The ordinary mint aim window remains visible.
 - **Shrinking-orbit points:** each full physical revolution after the initial
   grace revolution earns 1 point. Partial turns carry through saves and pauses;
@@ -194,10 +202,12 @@ through added real and sampled fictional systems, the final
 level boundary, atlas discovery, save import validation, old-cycle migration,
 intact planet departure, unavailable storage, and tangent capture accuracy.
 It also checks shrinking-orbit pickup contact at 20–144 FPS, one-slot spare
-attempts and cooldowns, revival and old-save migration, regular and Perfect
+attempts and cooldowns, revival and old-save migration, regular and tangential
 double-score launches, meteor collisions, pause/reload, safe weather windows,
 and the launch-opening forecast in both orbit directions.
 The radial gold band is checked at every launch angle and both boundaries.
+Tangential captures are checked in both orbit directions, at the 30° boundary,
+for combo growth and reset, star thresholds, and route history across saves.
 Shrinking-turn scores are checked across frame rates, partial-turn saves,
 multiple turns in one frame, impact boundaries, and separate Expedition scoring.
 
