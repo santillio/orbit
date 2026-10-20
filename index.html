@@ -1,13 +1,13 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#080d17">
-<title>ORBIT — один прыжок до бесконечности</title>
-<meta name="description" content="Космическая аркада в одном HTML-файле: прыгай по касательной с орбиты на орбиту, пройди 1001 систему в 13 галактиках или лети бесконечно.">
-<meta property="og:title" content="ORBIT — один прыжок до бесконечности">
-<meta property="og:description" content="Космическая аркада: один прыжок, одна касательная, 1001 система.">
+<title>ORBIT — Per orbitas ad astra</title>
+<meta name="description" content="A space arcade game in a single HTML file: leap along tangents from orbit to orbit, cross 1,001 systems in 13 galaxies, or fly endlessly.">
+<meta property="og:title" content="ORBIT — Per orbitas ad astra">
+<meta property="og:description" content="A space arcade game. Per orbitas ad astra: through orbits to the stars.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='9' fill='%23080d17'/%3E%3Cellipse cx='20' cy='20' rx='16' ry='8' transform='rotate(-38 20 20)' fill='none' stroke='%23a4ffce' stroke-width='2'/%3E%3Ccircle cx='20' cy='20' r='5' fill='%23a4ffce'/%3E%3Ccircle cx='31' cy='11' r='3' fill='%23effff6'/%3E%3C/svg%3E">
 <style>
 :root{color-scheme:dark;--ink:#eff6f7;--muted:#8493a8;--mint:#a4ffce;--line:rgba(183,210,234,.14)}
@@ -47,30 +47,30 @@ body{touch-action:manipulation}canvas{touch-action:none}.overlay{align-items:saf
 </style>
 </head>
 <body>
-<canvas id="space" tabindex="0" aria-label="Игровое поле ORBIT. Пробел или нажатие запускает шарик по касательной."></canvas>
+<canvas id="space" tabindex="0" aria-label="ORBIT playfield. Press Space or tap to launch the ball along the tangent."></canvas>
 <header class="top">
- <div class="brand"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><ellipse cx="20" cy="20" rx="18" ry="9" transform="rotate(-38 20 20)" stroke="currentColor"/><circle cx="20" cy="20" r="5" fill="currentColor"/><circle cx="32" cy="10" r="2.6" fill="#effff6"/></svg><div><div class="wordmark">ORBIT</div><div class="edition">ОДИН ПРЫЖОК ДО БЕСКОНЕЧНОСТИ</div></div></div>
- <div class="tools"><div class="record"><span class="label">Рекорд</span><strong id="best">0</strong></div><button class="icon" id="sound" title="Звук (M)" aria-label="Включить звук" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 9h4l5-4v14l-5-4H4z"/><path id="sound-wave" d="m17 9 5 6m0-6-5 6"/></svg></button><button class="icon" id="settings-button" aria-label="Настройки" title="Настройки"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m9 3-1 3-3 1 1 3-2 2 2 2-1 3 3 1 1 3h6l1-3 3-1-1-3 2-2-2-2 1-3-3-1-1-3z"/><circle cx="12" cy="12" r="3"/></svg></button><button class="icon" id="pause" title="Пауза (P / Esc)" aria-label="Пауза"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h3v14H7zm7 0h3v14h-3z"/></svg></button></div>
+ <div class="brand"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><ellipse cx="20" cy="20" rx="18" ry="9" transform="rotate(-38 20 20)" stroke="currentColor"/><circle cx="20" cy="20" r="5" fill="currentColor"/><circle cx="32" cy="10" r="2.6" fill="#effff6"/></svg><div><div class="wordmark">ORBIT</div><div class="edition">PER ORBITAS AD ASTRA</div></div></div>
+ <div class="tools"><div class="record"><span class="label">Best</span><strong id="best">0</strong></div><button class="icon" id="sound" title="Sound (M)" aria-label="Turn sound on" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 9h4l5-4v14l-5-4H4z"/><path id="sound-wave" d="m17 9 5 6m0-6-5 6"/></svg></button><button class="icon" id="settings-button" aria-label="Settings" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m9 3-1 3-3 1 1 3-2 2 2 2-1 3 3 1 1 3h6l1-3 3-1-1-3 2-2-2-2 1-3-3-1-1-3z"/><circle cx="12" cy="12" r="3"/></svg></button><button class="icon" id="pause" title="Pause (P / Esc)" aria-label="Pause"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h3v14H7zm7 0h3v14h-3z"/></svg></button></div>
 </header>
-<div class="scoreboard" id="scoreboard" hidden><div id="score" class="score">0</div><div class="score-tag">ОЧКИ</div><div class="route-label" id="route-label"></div><div class="route-dots" id="route-dots"></div><div id="combo" class="combo"></div><div id="orbit-reward" class="orbit-reward" aria-hidden="true"></div></div><div id="endless-status" class="endless-status" hidden aria-live="polite"></div>
+<div class="scoreboard" id="scoreboard" hidden><div id="score" class="score">0</div><div class="score-tag">POINTS</div><div class="route-label" id="route-label"></div><div class="route-dots" id="route-dots"></div><div id="combo" class="combo"></div><div id="orbit-reward" class="orbit-reward" aria-hidden="true"></div></div><div id="endless-status" class="endless-status" hidden aria-live="polite"></div>
 <div class="toast" id="toast" role="status"><strong id="toast-title"></strong><span id="toast-sub"></span></div>
-<footer class="bottom"><div class="status"><i class="dot"></i><span id="sector">СЕКТОР 001</span></div><div class="keys" id="keys"><span><kbd>SPACE</kbd><b> / TAP</b> ПРЫЖОК</span><span class="desktop-key"><kbd>P</kbd>ПАУЗА</span><span class="desktop-key"><kbd>R</kbd>ЗАНОВО</span></div></footer>
-<section class="overlay galaxy-home" id="menu" aria-label="Карта галактики">
- <nav class="menu-links" aria-label="Экспедиция"><button id="open-levels">Системы</button><button id="open-atlas">Атлас</button></nav>
- <div id="galaxy-sectors" class="galaxy-sectors" role="group" aria-label="Секторы экспедиции"></div>
- <aside id="sector-info" class="sector-info" hidden aria-label="Описание сектора"><button class="info-close" id="close-sector" aria-label="Закрыть описание сектора">×</button><small id="sector-info-status"></small><h2 id="sector-info-title"></h2><p id="sector-info-description"></p><div class="sector-facts" id="sector-info-facts"></div><button id="sector-visit" class="sector-visit">В полёт ↗</button></aside>
- <div class="galaxy-caption"><div class="galaxy-nav"><button id="galaxy-prev" aria-label="Предыдущая галактика">‹</button><span id="galaxy-name">МЛЕЧНЫЙ ПУТЬ</span><button id="galaxy-next" aria-label="Следующая галактика">›</button></div><small id="galaxy-count">77 систем</small></div>
- <button class="endless-launch" id="endless-flight">Бесконечный полёт <span>↗</span></button>
- <div class="map-tools" aria-label="Масштаб карты"><button id="map-out" aria-label="Отдалить карту">−</button><button id="map-center" aria-label="К текущему сектору">◎</button><button id="map-in" aria-label="Приблизить карту">+</button></div>
+<footer class="bottom"><div class="status"><i class="dot"></i><span id="sector">SECTOR 001</span></div><div class="keys" id="keys"><span><kbd>SPACE</kbd><b> / TAP</b> JUMP</span><span class="desktop-key"><kbd>P</kbd>PAUSE</span><span class="desktop-key"><kbd>R</kbd>RESTART</span></div></footer>
+<section class="overlay galaxy-home" id="menu" aria-label="Galaxy map">
+ <nav class="menu-links" aria-label="Expedition"><button id="open-levels">Systems</button><button id="open-atlas">Atlas</button></nav>
+ <div id="galaxy-sectors" class="galaxy-sectors" role="group" aria-label="Expedition sectors"></div>
+ <aside id="sector-info" class="sector-info" hidden aria-label="Sector details"><button class="info-close" id="close-sector" aria-label="Close sector details">×</button><small id="sector-info-status"></small><h2 id="sector-info-title"></h2><p id="sector-info-description"></p><div class="sector-facts" id="sector-info-facts"></div><button id="sector-visit" class="sector-visit">Launch ↗</button></aside>
+ <div class="galaxy-caption"><div class="galaxy-nav"><button id="galaxy-prev" aria-label="Previous galaxy">‹</button><span id="galaxy-name">MILKY WAY</span><button id="galaxy-next" aria-label="Next galaxy">›</button></div><small id="galaxy-count">77 systems</small></div>
+ <button class="endless-launch" id="endless-flight">Endless Flight <span>↗</span></button>
+ <div class="map-tools" aria-label="Map zoom"><button id="map-out" aria-label="Zoom out">−</button><button id="map-center" aria-label="Go to current sector">◎</button><button id="map-in" aria-label="Zoom in">+</button></div>
 </section>
-<section class="overlay" id="settings" hidden><div class="card sheet settings-card"><div class="sheet-head"><h2>Настройки</h2><button class="close-button" id="close-settings" aria-label="Закрыть настройки">×</button></div><p class="save-note" id="save-note"></p><div class="settings-actions"><button class="secondary" id="export-save">Экспорт сохранения</button><button class="secondary" id="import-save">Импорт сохранения</button><button class="secondary" id="reset-progress">Начать с нуля</button><button class="secondary" id="restore-progress" hidden>Вернуть сохранение до сброса</button></div><p class="atlas-foot">При сбросе предыдущая экспедиция остаётся в резервной копии в этом браузере.</p><input id="save-file" type="file" accept="application/json,.json" hidden></div></section>
-<section id="tutorial" class="first-flight" hidden aria-label="Первый полёт"><small>СОЛНЕЧНАЯ СИСТЕМА / ПЕРВЫЙ ПОЛЁТ</small><h2>Поймай направление</h2><p><strong>Пробел или касание</strong> — прыжок по касательной. Попади в орбиту следующей планеты.</p><p>Мятная дуга — окно запуска. Целься к её <strong>краю</strong>: вход в орбиту по касательной даёт ×2 и серию. Первый оборот безопасен, затем гравитация тянет к поверхности.</p><button class="primary" id="tutorial-start">В полёт ↗</button></section>
+<section class="overlay" id="settings" hidden><div class="card sheet settings-card"><div class="sheet-head"><h2>Settings</h2><button class="close-button" id="close-settings" aria-label="Close settings">×</button></div><p class="save-note" id="save-note"></p><div class="settings-actions"><button class="secondary" id="export-save">Export save</button><button class="secondary" id="import-save">Import save</button><button class="secondary" id="reset-progress">Start from scratch</button><button class="secondary" id="restore-progress" hidden>Restore the save from before reset</button></div><p class="atlas-foot">Resetting keeps the previous expedition as a backup in this browser.</p><input id="save-file" type="file" accept="application/json,.json" hidden></div></section>
+<section id="tutorial" class="first-flight" hidden aria-label="First flight"><small>SOLAR SYSTEM / FIRST FLIGHT</small><h2>Catch the heading</h2><p><strong>Space or tap</strong> launches the ball along the tangent. Land in the next planet’s orbit.</p><p>The mint arc is the launch window. Aim for its <strong>edge</strong>: grazing into an orbit along its tangent scores ×2 and builds a streak. The first turn is safe; then gravity pulls you toward the surface.</p><button class="primary" id="tutorial-start">Launch ↗</button></section>
 
-<section class="overlay" id="end" hidden><div class="card"><h2 id="death-reason">Сигнал потерян</h2><div class="result" id="final-score">0</div><div class="result-label">ОЧКИ ЗА ПОЛЁТ</div><div class="new-record" id="new-record"></div><div class="stats"><div><strong id="jumps">0</strong><span>ПРЫЖКОВ</span></div><div><strong id="perfects">0</strong><span>КАСАНИЙ</span></div><div><strong id="max-combo">×0</strong><span>МАКС. КОМБО</span></div></div><button class="primary" id="retry">Повторить</button><button class="secondary" id="end-menu">В меню</button><div class="start-hint" style="margin-bottom:0">Пробел / R — новая попытка</div></div></section>
-<section class="overlay" id="paused" hidden><div class="card"><div class="eyebrow">КОСМОС ПОДОЖДЁТ</div><h2>На орбите тишина</h2><p class="intro" id="pause-note">Полёт сохранён. Гравитация тоже на паузе.</p><button class="primary" id="resume">Продолжить полёт</button><button class="secondary" id="restart">Начать попытку заново</button><button class="secondary" id="pause-menu">Сохранить и выйти в меню</button><div class="start-hint" style="margin-bottom:0">P / Esc / пробел — продолжить</div></div></section>
-<section class="overlay" id="levels" hidden><div class="card sheet"><div class="sheet-head"><div><div class="eyebrow" id="levels-galaxy">ЭКСПЕДИЦИЯ / МЛЕЧНЫЙ ПУТЬ</div><h2>От края — к звезде</h2></div><button class="close-button" id="close-levels" aria-label="Закрыть карту систем">×</button></div><p>Пройди все планеты по порядку и достигни звезды. После проигрыша начинаешь систему заново; открытые уровни остаются.</p><div class="catalog-nav"><button id="levels-prev" aria-label="Предыдущие системы">←</button><span id="levels-page"></span><button id="levels-next" aria-label="Следующие системы">→</button><button id="levels-current">К прогрессу</button></div><div class="catalog-jump"><label for="level-jump">Номер системы</label><input id="level-jump" type="number" min="1" max="1001" step="1" value="1"><button id="level-go">Перейти</button></div><div class="level-grid" id="level-grid"></div><p class="atlas-foot">13 галактик по 77 систем. Начало: Солнечная система → Проксима Центавра → Звезда Барнарда → Ross 128. Далее маршрут по выбранным известным системам и вымышленным секторам идёт спиралью к центру. Положения на карте и межгалактические перелёты — игровые.</p></div></section>
-<section class="overlay" id="atlas" hidden><div class="card sheet"><div class="sheet-head"><div><div class="eyebrow" id="atlas-count">КОСМИЧЕСКИЙ АТЛАС</div><h2>Каждый прыжок — открытие</h2></div><button class="close-button" id="close-atlas" aria-label="Закрыть атлас">×</button></div><div class="atlas-tabs"><button data-atlas="galaxies" class="active">Галактики</button><button data-atlas="systems">Системы</button><button data-atlas="planets">Миры</button></div><div class="catalog-nav" id="atlas-nav" hidden><button id="atlas-prev" aria-label="Назад по атласу">←</button><span id="atlas-page"></span><button id="atlas-next" aria-label="Вперёд по атласу">→</button><button id="atlas-current">К прогрессу</button></div><div class="atlas-grid" id="atlas-grid"></div><p class="atlas-foot">Реальные системы: факты NASA, ESA и ESO. Вымышленные системы — художественные миры ORBIT. Внешний вид экзопланет условный. Карточки миров открываются при посещении.</p></div></section>
-<section class="overlay" id="won" hidden><div class="card"><div class="eyebrow">ЗВЕЗДА ДОСТИГНУТА</div><h2 id="win-title">Система пройдена</h2><div class="win-stars" id="win-stars">★ ★ ★</div><div class="new-record" id="win-hint"></div><p class="intro" id="win-description"></p><div class="stats"><div><strong id="win-score">0</strong><span>ОЧКОВ</span></div><div><strong id="win-perfects">0</strong><span>КАСАНИЙ</span></div></div><button class="primary" id="next-level">Следующая система ↗</button><button class="secondary" id="win-menu">В меню и атлас</button></div></section>
+<section class="overlay" id="end" hidden><div class="card"><h2 id="death-reason">Signal lost</h2><div class="result" id="final-score">0</div><div class="result-label">POINTS THIS FLIGHT</div><div class="new-record" id="new-record"></div><div class="stats"><div><strong id="jumps">0</strong><span>JUMPS</span></div><div><strong id="perfects">0</strong><span>GRAZES</span></div><div><strong id="max-combo">×0</strong><span>BEST STREAK</span></div></div><button class="primary" id="retry">Try again</button><button class="secondary" id="end-menu">Menu</button><div class="start-hint" style="margin-bottom:0">Space / R: new attempt</div></div></section>
+<section class="overlay" id="paused" hidden><div class="card"><div class="eyebrow">SPACE CAN WAIT</div><h2>Quiet in orbit</h2><p class="intro" id="pause-note">Flight saved. Gravity is paused too.</p><button class="primary" id="resume">Resume flight</button><button class="secondary" id="restart">Restart attempt</button><button class="secondary" id="pause-menu">Save and return to menu</button><div class="start-hint" style="margin-bottom:0">P / Esc / Space: resume</div></div></section>
+<section class="overlay" id="levels" hidden><div class="card sheet"><div class="sheet-head"><div><div class="eyebrow" id="levels-galaxy">EXPEDITION / MILKY WAY</div><h2>From the edge to the star</h2></div><button class="close-button" id="close-levels" aria-label="Close systems list">×</button></div><p>Cross every planet in order and reach the star. A loss restarts the system; unlocked levels stay unlocked.</p><div class="catalog-nav"><button id="levels-prev" aria-label="Previous systems">←</button><span id="levels-page"></span><button id="levels-next" aria-label="Next systems">→</button><button id="levels-current">Go to progress</button></div><div class="catalog-jump"><label for="level-jump">System number</label><input id="level-jump" type="number" min="1" max="1001" step="1" value="1"><button id="level-go">Go</button></div><div class="level-grid" id="level-grid"></div><p class="atlas-foot">13 galaxies of 77 systems each. The route begins Solar System → Proxima Centauri → Barnard’s Star → Ross 128, then spirals toward the core through selected known systems and fictional sectors. Map positions and intergalactic jumps are part of the game.</p></div></section>
+<section class="overlay" id="atlas" hidden><div class="card sheet"><div class="sheet-head"><div><div class="eyebrow" id="atlas-count">SPACE ATLAS</div><h2>Every jump is a discovery</h2></div><button class="close-button" id="close-atlas" aria-label="Close atlas">×</button></div><div class="atlas-tabs"><button data-atlas="galaxies" class="active">Galaxies</button><button data-atlas="systems">Systems</button><button data-atlas="planets">Worlds</button></div><div class="catalog-nav" id="atlas-nav" hidden><button id="atlas-prev" aria-label="Atlas back">←</button><span id="atlas-page"></span><button id="atlas-next" aria-label="Atlas forward">→</button><button id="atlas-current">Go to progress</button></div><div class="atlas-grid" id="atlas-grid"></div><p class="atlas-foot">Real systems: facts from NASA, ESA and ESO. Fictional systems are ORBIT’s own invented worlds. Exoplanet looks are artistic. World cards unlock when you visit.</p></div></section>
+<section class="overlay" id="won" hidden><div class="card"><div class="eyebrow">STAR REACHED</div><h2 id="win-title">System complete</h2><div class="win-stars" id="win-stars">★ ★ ★</div><div class="new-record" id="win-hint"></div><p class="intro" id="win-description"></p><div class="stats"><div><strong id="win-score">0</strong><span>POINTS</span></div><div><strong id="win-perfects">0</strong><span>GRAZES</span></div></div><button class="primary" id="next-level">Next system ↗</button><button class="secondary" id="win-menu">Menu and atlas</button></div></section>
 <script>
 (() => {
 'use strict';
@@ -81,75 +81,76 @@ const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const AUTOSAVE_INTERVAL=2.5;
 // A capture counts as tangential when the ball meets the orbit within this angle of its tangent.
 const TANGENT_ANGLE=30*Math.PI/180;
-const plural=(n,[one,few,many])=>{const a=n%10,b=n%100;return a===1&&b!==11?one:a>=2&&a<=4&&(b<12||b>14)?few:many;};
-const pointsLabel=n=>`+${n} ${plural(n,['ОЧКО','ОЧКА','ОЧКОВ'])}`;
+// English counts: "1 planet", "2 planets".
+const counted=(n,word,many=word+'s')=>`${n} ${n===1?word:many}`;
+const pointsLabel=n=>`+${counted(n,'POINT')}`;
 const SAVE_KEY='orbit.progress.v2',EPOCH_KEY='orbit.saveEpoch.v1',BACKUP_KEY='orbit.backup.v2';
 let saveEpoch=0;
 const SOURCES={solar:'https://science.nasa.gov/solar-system/planets/',trappist:'https://science.nasa.gov/asset/webb/trappist-1-system-orbit-comparison/',kepler:'https://science.nasa.gov/universe/exoplanets/discovery-of-eight-planets-makes-alien-system-the-first-to-tie-with-our-solar-system/'};
 const world=(id,name,hue,kind,description)=>({id,name,hue,kind,description});
 const SYSTEMS=[
- {id:'solar',name:'Солнечная система',description:'Наш дом в Млечном Пути: восемь планет вокруг Солнца. Начни у Нептуна и пройди к центральной звезде.',source:SOURCES.solar,route:[
-  world('neptune','Нептун',222,'ice','Самая далёкая из восьми планет Солнечной системы. Вместе с Ураном относится к ледяным гигантам.'),
-  world('uranus','Уран',176,'ice','Седьмая планета от Солнца. Ледяной гигант, расположенный между Сатурном и Нептуном.'),
-  world('saturn','Сатурн',40,'ring','Шестая планета от Солнца и газовый гигант. Вторая по размеру планета нашей системы.'),
-  world('jupiter','Юпитер',25,'gas','Пятая планета от Солнца. Самая большая планета Солнечной системы.'),
-  world('mars','Марс',12,'rock','Четвёртая планета от Солнца. Один из четырёх внутренних миров с твёрдой поверхностью.'),
-  world('earth','Земля',195,'rock','Наш дом. Третья планета от Солнца и пятая по размеру планета системы.'),
-  world('venus','Венера',42,'rock','Вторая планета от Солнца. По размеру немного меньше Земли.'),
-  world('mercury','Меркурий',28,'rock','Ближайшая к Солнцу и самая маленькая из восьми планет Солнечной системы.'),
-  world('sun','Солнце',43,'star','Центральная звезда нашей планетной системы. Здесь завершается первый маршрут экспедиции.')
+ {id:'solar',name:'Solar System',description:'Our home in the Milky Way: eight planets around the Sun. Start at Neptune and work your way in to the central star.',source:SOURCES.solar,route:[
+  world('neptune','Neptune',222,'ice','The farthest of the Solar System’s eight planets. With Uranus, it is one of the ice giants.'),
+  world('uranus','Uranus',176,'ice','The seventh planet from the Sun. An ice giant between Saturn and Neptune.'),
+  world('saturn','Saturn',40,'ring','The sixth planet from the Sun and a gas giant. The second-largest planet in our system.'),
+  world('jupiter','Jupiter',25,'gas','The fifth planet from the Sun. The largest planet in the Solar System.'),
+  world('mars','Mars',12,'rock','The fourth planet from the Sun. One of the four inner worlds with a solid surface.'),
+  world('earth','Earth',195,'rock','Our home. The third planet from the Sun and the fifth-largest in the system.'),
+  world('venus','Venus',42,'rock','The second planet from the Sun. Slightly smaller than Earth.'),
+  world('mercury','Mercury',28,'rock','The closest to the Sun and the smallest of the Solar System’s eight planets.'),
+  world('sun','Sun',43,'star','The central star of our planetary system. The expedition’s first route ends here.')
  ]},
- {id:'trappist',name:'TRAPPIST-1',description:'Компактная система с семью планетами. Все их орбиты расположены ближе к своей звезде, чем орбита Меркурия к Солнцу.',source:SOURCES.trappist,route:[
-  world('h','TRAPPIST-1 h',217,'rock','Самая внешняя из семи известных планет системы. Её орбита находится за обитаемой зоной звезды.'),
-  world('g','TRAPPIST-1 g',174,'rock','Шестая планета от звезды. Её орбита расположена в обитаемой зоне: это не означает, что жизнь или вода уже обнаружены.'),
-  world('f','TRAPPIST-1 f',167,'rock','Пятая планета от звезды. Её орбита также находится в обитаемой зоне системы.'),
-  world('e','TRAPPIST-1 e',191,'rock','Четвёртая планета от звезды. Входит в тройку миров e, f и g, орбиты которых лежат в обитаемой зоне.'),
-  world('d','TRAPPIST-1 d',27,'rock','Третья планета от звезды. Её орбита проходит ближе к звезде, чем внутренняя граница обитаемой зоны.'),
-  world('c','TRAPPIST-1 c',20,'rock','Вторая планета от звезды. Её орбита проходит ближе к звезде, чем внутренняя граница обитаемой зоны.'),
-  world('b','TRAPPIST-1 b',8,'rock','Ближайшая к звезде из семи известных планет этой компактной системы.'),
-  world('star','TRAPPIST-1',16,'star','Звезда, вокруг которой обращаются семь планет с обозначениями от b до h.')
+ {id:'trappist',name:'TRAPPIST-1',description:'A compact system of seven planets. All of their orbits are closer to their star than Mercury’s orbit is to the Sun.',source:SOURCES.trappist,route:[
+  world('h','TRAPPIST-1 h',217,'rock','The outermost of the system’s seven known planets. Its orbit lies beyond the star’s habitable zone.'),
+  world('g','TRAPPIST-1 g',174,'rock','The sixth planet from the star. Its orbit is in the habitable zone; that does not mean life or water has been found.'),
+  world('f','TRAPPIST-1 f',167,'rock','The fifth planet from the star. Its orbit is also in the system’s habitable zone.'),
+  world('e','TRAPPIST-1 e',191,'rock','The fourth planet from the star. One of the trio e, f and g whose orbits lie in the habitable zone.'),
+  world('d','TRAPPIST-1 d',27,'rock','The third planet from the star. Its orbit runs closer to the star than the inner edge of the habitable zone.'),
+  world('c','TRAPPIST-1 c',20,'rock','The second planet from the star. Its orbit runs closer to the star than the inner edge of the habitable zone.'),
+  world('b','TRAPPIST-1 b',8,'rock','The closest to the star of this compact system’s seven known planets.'),
+  world('star','TRAPPIST-1',16,'star','The star orbited by seven planets, designated b through h.')
  ]},
- {id:'kepler',name:'Kepler-90',description:'У этой звезды известно восемь планет. Обнаружение Kepler-90 i довело их число до восьми; её нашли с помощью машинного обучения.',source:SOURCES.kepler,route:[
-  ...['h','g','f','e','d','i','c','b'].map((id,i)=>world(id,`Kepler-90 ${id}`,35+i*26,i<2?'gas':'rock',`На маршруте от звезды это планета №${8-i}. Буквы в названиях отражают порядок открытий, а не расстояние до звезды.`)),
-  world('star','Kepler-90',45,'star','Центральная звезда системы с восемью известными планетами. Их орбиты образуют компактную систему.')
+ {id:'kepler',name:'Kepler-90',description:'This star has eight known planets. Kepler-90 i, found with machine learning, brought the count to eight.',source:SOURCES.kepler,route:[
+  ...['h','g','f','e','d','i','c','b'].map((id,i)=>world(id,`Kepler-90 ${id}`,35+i*26,i<2?'gas':'rock',`Planet ${8-i} counting from the star. The letters follow the order of discovery, not distance from the star.`)),
+  world('star','Kepler-90',45,'star','The central star of a system with eight known planets in a compact set of orbits.')
  ],orderSource:'https://baas.aas.org/pub/2020n6i309p01/release/1'}
 ];
 SYSTEMS.push(
- realSystem('kepler11','Kepler-11',['g','f','e','d','c','b'],'Реальная система с шестью известными планетами на тесных орбитах. Маршрут: g → f → e → d → c → b → звезда.','https://www.nasa.gov/news-release/nasa-finds-earth-size-planet-candidates-in-habitable-zone-six-planet-system/'),
- realSystem('kepler62','Kepler-62',['f','e','d','c','b'],'Реальная система с пятью известными планетами. Две внешние, e и f, обращаются в обитаемой зоне; это не означает, что на них обнаружена жизнь.','https://science.nasa.gov/photojournal/kepler-62-and-the-solar-system/',30),
- realSystem('kepler186','Kepler-186',['f','e','d','c','b'],'Реальная система с пятью известными планетами вокруг красного карлика. Маршрут начинается у внешней планеты f.','https://science.nasa.gov/photojournal/kepler-186-and-the-solar-system/',15),
- realSystem('toi178','TOI-178',['g','f','e','d','c','b'],'Реальная система с шестью известными планетами. Пять внешних планет связаны цепочкой орбитальных резонансов.','https://www.eso.org/public/news/eso2102/',29),
- realSystem('hd110067','HD 110067',['g','f','e','d','c','b'],'Реальная система из шести известных планет, меньших Нептуна. Их орбиты образуют резонансную цепочку.','https://www.esa.int/Science_Exploration/Space_Science/Cheops/ESA_s_Cheops_helps_unlock_rare_six-planet_system',31)
+ realSystem('kepler11','Kepler-11',['g','f','e','d','c','b'],'A real system with six known planets on tightly packed orbits. Route: g → f → e → d → c → b → star.','https://www.nasa.gov/news-release/nasa-finds-earth-size-planet-candidates-in-habitable-zone-six-planet-system/'),
+ realSystem('kepler62','Kepler-62',['f','e','d','c','b'],'A real system with five known planets. The outer two, e and f, orbit in the habitable zone; that does not mean life has been found there.','https://science.nasa.gov/photojournal/kepler-62-and-the-solar-system/',30),
+ realSystem('kepler186','Kepler-186',['f','e','d','c','b'],'A real system with five known planets around a red dwarf. The route starts at the outer planet f.','https://science.nasa.gov/photojournal/kepler-186-and-the-solar-system/',15),
+ realSystem('toi178','TOI-178',['g','f','e','d','c','b'],'A real system with six known planets. The outer five are linked in a chain of orbital resonances.','https://www.eso.org/public/news/eso2102/',29),
+ realSystem('hd110067','HD 110067',['g','f','e','d','c','b'],'A real system of six known planets smaller than Neptune. Their orbits form a resonant chain.','https://www.esa.int/Science_Exploration/Space_Science/Cheops/ESA_s_Cheops_helps_unlock_rare_six-planet_system',31)
 );
 for(const system of SYSTEMS)system.fictional=false;
-function realSystem(id,name,order,description,source,starHue=43){
- return{id,name,description,source,fictional:false,route:[...order.map((letter,i)=>world(letter,name+' '+letter,(215+i*31)%360,['kepler11','toi178','hd110067'].includes(id)&&letter!=='b'?'gas':'rock',`Планета ${name} ${letter}. Маршрут проходит от внешних орбит к звезде. Внешний вид и размеры адаптированы для игры; это не фотография планеты.`)),world('star',name,starHue,'star',`Центральная звезда системы ${name}. Финальная цель этого маршрута.`)]};
+function realSystem(id,name,order,description,source,starHue=43,prefix=name){
+ return{id,name,description,source,fictional:false,route:[...order.map((letter,i)=>world(letter,prefix+' '+letter,(215+i*31)%360,['kepler11','toi178','hd110067'].includes(id)&&letter!=='b'?'gas':'rock',`Planet ${prefix} ${letter}. The route runs from the outer orbits to the star. Its look and size are adapted for the game; this is not a photograph of the planet.`)),world('star',name,starHue,'star',`The central star, ${name}. The final goal of this route.`)]};
 }
 const CATALOG_LIMIT=1001,CATALOG_VERSION=4,PAGE_SIZE=11;
 const generatedSystems=new Map();
 const BIOMES=[
- {name:'Ледяной мир',kind:'frozen',hue:204,description:'Лёд покрывает трещины и тёмные равнины. На ночной стороне светятся слабые полярные сияния.'},
- {name:'Океанический мир',kind:'ocean',hue:195,description:'Океан разделён цепями островов; облачные вихри скрывают очертания суши.'},
- {name:'Вулканический мир',kind:'lava',hue:12,description:'Застывшие лавовые поля рассечены раскалёнными разломами.'},
- {name:'Пустынный мир',kind:'rock',hue:32,description:'Песчаные равнины обрамляют древние кратеры и тёмные горные гряды.'},
- {name:'Облачный мир',kind:'gas',hue:75,description:'Плотные облачные пояса образуют медленные вихри в верхних слоях атмосферы.'},
- {name:'Кольцевой гигант',kind:'ring',hue:39,description:'Светлые полосы атмосферы окружены широкими кольцами из пыли и льда.'},
- {name:'Кристаллический мир',kind:'crystal',hue:267,description:'Кристаллические хребты отражают свет звезды фиолетовыми и голубыми бликами.'},
- {name:'Сумеречный мир',kind:'rock',hue:227,description:'Серые кратеры и тёмные плато почти сливаются на ночной стороне.'}
+ {name:'Frozen world',kind:'frozen',hue:204,description:'Ice covers cracks and dark plains. Faint auroras glow on the night side.'},
+ {name:'Ocean world',kind:'ocean',hue:195,description:'Chains of islands divide the ocean; swirling clouds hide the outlines of land.'},
+ {name:'Volcanic world',kind:'lava',hue:12,description:'Glowing rifts split fields of cooled lava.'},
+ {name:'Desert world',kind:'rock',hue:32,description:'Sandy plains surround ancient craters and dark mountain ridges.'},
+ {name:'Cloud world',kind:'gas',hue:75,description:'Dense cloud belts form slow vortices in the upper atmosphere.'},
+ {name:'Ringed giant',kind:'ring',hue:39,description:'Pale atmospheric bands are circled by wide rings of dust and ice.'},
+ {name:'Crystal world',kind:'crystal',hue:267,description:'Crystal ridges throw back the starlight in violet and blue glints.'},
+ {name:'Twilight world',kind:'rock',hue:227,description:'Grey craters and dark plateaus almost vanish on the night side.'}
 ];
-const STAR_TYPES=[{name:'красный карлик',hue:15},{name:'оранжевый карлик',hue:29},{name:'жёлтая звезда',hue:44},{name:'белая звезда',hue:210},{name:'голубая звезда',hue:221}];
-const SYSTEM_NAMES=['Астра','Эйдос','Нимбус','Кайрос','Иллион','Селена','Оникс','Эхо','Таласса','Меридиан','Люмен','Искра','Гелион','Нокс','Эридан','Аурелия','Тирея','Сапфир','Веспер','Альцион','Нефрит','Аркадия','Веллум','Ориэль','Кассия','Мнема','Иридий','Фарос','Зефир','Лантана','Астер','Лакуна'];
-const WORLD_NAMES=['Соль','Вейра','Мирра','Орис','Тэя','Крона','Туман','Лира','Нерея','Арда','Церна','Иней','Руна','Эмбер','Тессера','Эос','Леда','Виста','Грань','Риф'];
+const STAR_TYPES=[{name:'red dwarf',hue:15},{name:'orange dwarf',hue:29},{name:'yellow star',hue:44},{name:'white star',hue:210},{name:'blue star',hue:221}];
+const SYSTEM_NAMES=['Astra','Eidos','Nimbus','Kairos','Illion','Selene','Onyx','Echo','Thalassa','Meridian','Lumen','Iskra','Helion','Nox','Eridan','Aurelia','Tyrea','Sapphire','Vesper','Alcyon','Jade','Arcadia','Vellum','Oriel','Cassia','Mnema','Iridium','Pharos','Zephyr','Lantana','Aster','Lacuna'];
+const WORLD_NAMES=['Sal','Veira','Myrra','Oris','Theia','Crona','Mist','Lyra','Nerea','Arda','Cerna','Rime','Rune','Ember','Tessera','Eos','Leda','Vista','Facet','Reef'];
 function generatedSystem(n){
  if(generatedSystems.has(n))return generatedSystems.get(n);
  const random=seeded('orbit-catalog-v1/'+n),pick=a=>a[Math.floor(random()*a.length)],count=4+Math.floor(random()*7),serial=n-8;
  const theme=pick(BIOMES),star=pick(STAR_TYPES),name=pick(SYSTEM_NAMES)+' / NX-'+String(serial).padStart(5,'0'),route=[];
  for(let i=0;i<count;i++){
   const biome=i===0&&random()<.65?BIOMES[0]:i>=count-2&&random()<.55?BIOMES[2]:random()<.45?theme:pick(BIOMES);
-  route.push({...world('p'+(count-i),pick(WORLD_NAMES)+' '+(count-i),(biome.hue+Math.floor(random()*19)-9+360)%360,biome.kind,`Вымышленный мир системы ${name}. ${biome.description}`),biome:biome.name});
+  route.push({...world('p'+(count-i),pick(WORLD_NAMES)+' '+(count-i),(biome.hue+Math.floor(random()*19)-9+360)%360,biome.kind,`A fictional world of the ${name} system. ${biome.description}`),biome:biome.name});
  }
- route.push(world('star',name,star.hue,'star',`Вымышленная ${star.name}. Здесь заканчивается маршрут через ${count} планет системы ${name}.`));
- const s={id:'fiction-'+n,name,fictional:true,starType:star.name,theme:theme.name,description:`Вымышленная система. ${star.name[0].toUpperCase()+star.name.slice(1)}, ${count} планет. Основной характер сектора: ${theme.name.toLowerCase()}. Маршрут проходит от внешнего мира ${route[0].name} к звезде.`,route,
+ route.push(world('star',name,star.hue,'star',`A fictional ${star.name}. The route through the ${count} planets of ${name} ends here.`));
+ const s={id:'fiction-'+n,name,fictional:true,starType:star.name,theme:theme.name,description:`A fictional system. ${star.name[0].toUpperCase()+star.name.slice(1)}, ${count} planets. Dominant character: ${theme.name.toLowerCase()}. The route runs from the outer world ${route[0].name} to the star.`,route,
   spacing:300+random()*70,spread:.4+random()*.4,orbitScale:.92+random()*.13,gravityScale:.91+random()*.18,speedScale:.94+random()*.12,sectorAngle:random()*TAU,sectorRadius:.19+random()*.19};
  generatedSystems.set(n,s);if(generatedSystems.size>96)generatedSystems.delete(generatedSystems.keys().next().value);return s;
 }
@@ -165,14 +166,14 @@ function validDiscovery(key){
  if(typeof key!=='string'||key.length>100)return false;const parts=key.split('/');if(parts.length!==2)return false;
  const sys=systemById(parts[0]);return !!sys&&sys.route.some(w=>w.id===parts[1]);
 }
-function catalogLabel(s){return s.fictional?'ВЫМЫШЛЕННАЯ':'';}
-function numberLabel(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ');}
+function catalogLabel(s){return s.fictional?'FICTIONAL':'';}
+function numberLabel(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
 
 const LEGACY_SYSTEM_IDS=['solar','trappist','kepler','kepler11','kepler62','kepler186','toi178','hd110067'];
 SYSTEMS.push(
- realSystem('proxima','Проксима Центавра',['b','d'],'Ближайшая к Солнцу звезда, примерно в 4,2 светового года. Маршрут по подтверждённым планетам b и d ведёт к красному карлику.','https://science.nasa.gov/exoplanet-catalog/proxima-centauri-d/',15),
- realSystem('barnard','Звезда Барнарда',['e','c','b','d'],'Красный карлик примерно в 6 световых годах от Солнца. В каталоге четыре небольшие планеты; от внешней к внутренней они идут в порядке e, c, b, d.','https://exoplanetarchive.ipac.caltech.edu/overview/Barnard%20b',16),
- realSystem('ross128','Ross 128',['b'],'Близкий красный карлик примерно в 11 световых годах. Маршрут проходит через планету Ross 128 b к звезде.','https://science.nasa.gov/universe/exoplanets/discovery-alert-eso-finds-second-closest-earth-size-planet-in-habitable-zone/',17)
+ realSystem('proxima','Proxima Centauri',['b','d'],'The nearest star to the Sun, about 4.2 light-years away. The route through confirmed planets b and d leads to the red dwarf.','https://science.nasa.gov/exoplanet-catalog/proxima-centauri-d/',15),
+ realSystem('barnard','Barnard’s Star',['e','c','b','d'],'A red dwarf about 6 light-years from the Sun. The catalog lists four small planets; from outer to inner they run e, c, b, d.','https://exoplanetarchive.ipac.caltech.edu/overview/Barnard%20b',16,'Barnard'),
+ realSystem('ross128','Ross 128',['b'],'A nearby red dwarf about 11 light-years away. The route passes planet Ross 128 b on its way to the star.','https://science.nasa.gov/universe/exoplanets/discovery-alert-eso-finds-second-closest-earth-size-planet-in-habitable-zone/',17)
 );
 const NEARBY_ORDER=['solar','proxima','barnard','ross128','trappist','hd110067','toi178','kepler186','kepler62','kepler11','kepler'];
 SYSTEMS.sort((a,b)=>NEARBY_ORDER.indexOf(a.id)-NEARBY_ORDER.indexOf(b.id));
@@ -181,9 +182,9 @@ const galaxyIndexForLevel=n=>clamp(Math.floor((n-1)/SYSTEMS_PER_GALAXY),0,GALAXY
 const localSector=n=>(n-1)%SYSTEMS_PER_GALAXY+1;
 const galaxyStart=i=>i*SYSTEMS_PER_GALAXY+1;
 const GALAXIES=[
- {id:'milky-way',name:'Млечный Путь',description:'Наша спиральная галактика с перемычкой. Экспедиция начинается в Солнечной системе, проходит через выбранные близкие системы, затем по вымышленным секторам движется к центру. Спираль — игровая схема.',source:'https://science.nasa.gov/universe/galaxies/types/',hue:211,arms:4},
- {id:'andromeda',name:'Андромеда / M31',description:'Соседняя крупная галактика, примерно в 2,5 миллиона световых лет от нас. Все 77 игровых систем этого маршрута вымышлены; здесь нет утверждения об обнаружении конкретных экзопланет.',source:'https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-31/',hue:225,arms:2},
- ...['Аврора','Предел Эха','Аметист','Северный Венец','Тихая Волна','Астерион','Сады Нокса','Лазурная Бездна','Золотая Река','Серебряный Порог','Последний Рассвет'].map((name,i)=>({id:'imagined-galaxy-'+(i+1),name,fictional:true,hue:[173,260,280,202,182,34,254,215,43,191,12][i],arms:2+i%3,description:`Вымышленная галактика ORBIT. В её рукавах проложен маршрут из 77 систем: от внешнего сектора к центральному узлу. Каждый виток спирали приближает экспедицию к ядру.`}))
+ {id:'milky-way',name:'Milky Way',description:'Our barred spiral galaxy. The expedition starts in the Solar System, passes through selected nearby systems, then heads for the core through fictional sectors. The spiral is a game layout.',source:'https://science.nasa.gov/universe/galaxies/types/',hue:211,arms:4},
+ {id:'andromeda',name:'Andromeda / M31',description:'Our large neighbouring galaxy, about 2.5 million light-years away. All 77 systems on this route are fictional; no specific exoplanets are claimed here.',source:'https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-31/',hue:225,arms:2},
+ ...['Aurora','Echo Reach','Amethyst','Northern Crown','Silent Wave','Asterion','Gardens of Nox','Azure Abyss','Golden River','Silver Threshold','Last Dawn'].map((name,i)=>({id:'imagined-galaxy-'+(i+1),name,fictional:true,hue:[173,260,280,202,182,34,254,215,43,191,12][i],arms:2+i%3,description:`A fictional ORBIT galaxy. A 77-system route runs through its arms, from the outer sector to the central hub. Every turn of the spiral brings the expedition closer to the core.`}))
 ];
 function galaxyForLevel(n){return GALAXIES[galaxyIndexForLevel(n)];}
 
@@ -211,7 +212,7 @@ function galaxyLayout(){
 function sectorScreen(n,layout=galaxyLayout()){const p=sectorPosition(n);return{x:layout.baseX+(p.x-.5)*layout.width,y:layout.baseY+(p.y-.5)*layout.height};}
 function galaxySectorNumbers(){return Array.from({length:SYSTEMS_PER_GALAXY},(_,i)=>galaxyStart(viewGalaxy)+i);}
 function browseGalaxy(step){viewGalaxy=clamp(viewGalaxy+step,0,GALAXY_COUNT-1);mapView={x:0,y:0,z:1};hideSectorInfo();renderGalaxyMap();}
-function expeditionActionLabel(){return savedRun?.mode==='expedition'||profile.unlocked>1||Object.keys(profile.completed).length>0||profile.discovered.length>0?'Продолжить экспедицию ↗':'Начать экспедицию ↗';}
+function expeditionActionLabel(){return savedRun?.mode==='expedition'||profile.unlocked>1||Object.keys(profile.completed).length>0||profile.discovered.length>0?'Continue expedition ↗':'Start expedition ↗';}
 function syncSceneUI(){
  if(sceneUIState===state)return;sceneUIState=state;
  const mapScene=['menu','levels','atlas','settings'].includes(state);document.body?.classList.toggle('map-scene',mapScene);
@@ -219,10 +220,10 @@ function syncSceneUI(){
 }
 function renderGalaxyMap(){
  const root=$('galaxy-sectors');root.replaceChildren();sectorNodes=[];const frontier=expeditionSector(),galaxy=GALAXIES[viewGalaxy];
- $('galaxy-name').textContent=galaxy.name.toUpperCase();$('galaxy-count').textContent=`77 систем · галактика ${viewGalaxy+1} / ${GALAXY_COUNT}`;$('galaxy-prev').disabled=viewGalaxy===0;$('galaxy-next').disabled=viewGalaxy===GALAXY_COUNT-1;
+ $('galaxy-name').textContent=galaxy.name.toUpperCase();$('galaxy-count').textContent=`77 systems · galaxy ${viewGalaxy+1} / ${GALAXY_COUNT}`;$('galaxy-prev').disabled=viewGalaxy===0;$('galaxy-next').disabled=viewGalaxy===GALAXY_COUNT-1;
  for(const n of galaxySectorNumbers()){
   const done=profile.completed[n],isCurrent=n===frontier.level,sys=isCurrent?frontier.system:systemForLevel(n),b=document.createElement('button');
-  b.className='map-sector '+(isCurrent?'current':done?'completed':n<=profile.unlocked?'available':'locked');b.setAttribute('aria-label',`Сектор ${localSector(n)}: ${sys.name}. ${isCurrent?'Текущий':done?'Пройден':n<=profile.unlocked?'Доступен':'Закрыт'}`);b.dataset.level=String(n);
+  b.className='map-sector '+(isCurrent?'current':done?'completed':n<=profile.unlocked?'available':'locked');b.setAttribute('aria-label',`Sector ${localSector(n)}: ${sys.name}. ${isCurrent?'Current':done?'Completed':n<=profile.unlocked?'Available':'Locked'}`);b.dataset.level=String(n);
   if(isCurrent){b.setAttribute('aria-current','location');b.innerHTML=`<span class="sector-label"><b>${frontier.system.name}</b><em>${expeditionActionLabel()}</em></span>`;}
   b.addEventListener('pointerenter',()=>showSectorInfo(n));b.addEventListener('pointerleave',scheduleSectorHide);b.addEventListener('focus',()=>showSectorInfo(n));b.addEventListener('blur',leaveSectorFocus);b.addEventListener('click',()=>{if(isCurrent)visitSector(n);else showSectorInfo(n);});root.append(b);sectorNodes.push({n,node:b});
  }
@@ -235,10 +236,10 @@ function positionGalaxyMap(){
 function positionSectorInfo(n){const p=sectorScreen(n),width=Math.min(320,W-32),x=p.x>W*.55?p.x-width-28:p.x+28;const panel=$('sector-info');panel.style.left=clamp(x,16,W-width-16)+'px';panel.style.top=clamp(p.y-85,128,Math.max(128,H-350))+'px';}
 function showSectorInfo(n){
  if(state!=='menu')return;cancelSectorHide();selectedSector=n;const done=profile.completed[n],frontier=expeditionSector(),isCurrent=n===frontier.level,s=isCurrent?frontier.system:systemForLevel(n);
- $('sector-info-status').textContent=[`${galaxyForLevel(n).name} / СЕКТОР ${localSector(n)} ИЗ 77`,isCurrent?'ТЕКУЩИЙ':done?'ПРОЙДЕН':n<=profile.unlocked?'ДОСТУПЕН':'ЗАКРЫТ',catalogLabel(s)].filter(Boolean).join(' · ');
+ $('sector-info-status').textContent=[`${galaxyForLevel(n).name.toUpperCase()} / SECTOR ${localSector(n)} OF 77`,isCurrent?'CURRENT':done?'COMPLETED':n<=profile.unlocked?'AVAILABLE':'LOCKED',catalogLabel(s)].filter(Boolean).join(' · ');
  $('sector-info-title').textContent=isCurrent?frontier.system.name:s.name;$('sector-info-description').textContent=(isCurrent?frontier.system:s).description;
- $('sector-info-facts').textContent=`${localSector(n)===77?'ЦЕНТР ГАЛАКТИКИ · ':''}${s.route.length-1} планет · ${done?'★'.repeat(done.stars)+' · лучший полёт: '+done.score+' очков':s.route[0].name+' → '+s.route.at(-1).name}`;
- $('sector-visit').textContent=n>profile.unlocked?'Система закрыта':isCurrent?expeditionActionLabel():done?'Повторить систему ↗':'Начать экспедицию ↗';$('sector-visit').disabled=n>profile.unlocked;
+ $('sector-info-facts').textContent=`${localSector(n)===77?'GALACTIC CORE · ':''}${counted(s.route.length-1,'planet')} · ${done?'★'.repeat(done.stars)+' · best flight: '+counted(done.score,'point'):s.route[0].name+' → '+s.route.at(-1).name}`;
+ $('sector-visit').textContent=n>profile.unlocked?'System locked':isCurrent?expeditionActionLabel():done?'Replay system ↗':'Start expedition ↗';$('sector-visit').disabled=n>profile.unlocked;
  $('sector-info').hidden=false;positionSectorInfo(n);
 }
 function cancelSectorHide(){if(sectorHideTimer!==null){clearTimeout(sectorHideTimer);sectorHideTimer=null;}}
@@ -266,7 +267,7 @@ function resetProgress(){
   if(hasProgress||!localStorage.getItem(BACKUP_KEY))localStorage.setItem(BACKUP_KEY,JSON.stringify({version:2,profile,run:savedRun}));
   const epoch=Math.max(saveEpoch+1,Date.now());const nextProfile=freshProfile();localStorage.setItem(SAVE_KEY+'.epoch.'+epoch,JSON.stringify({version:2,profile:nextProfile,run:null}));localStorage.setItem(EPOCH_KEY,String(epoch));localStorage.setItem('orbit.best.v1','0');
   saveEpoch=epoch;profile=nextProfile;savedRun=null;mode='expedition';level=1;best=0;soundOn=false;saveMessage='';mapView={x:0,y:0,z:1};reset(false);syncSoundButton();
- }catch(_){saveMessage='Не удалось сбросить сохранение: браузер запретил запись.';syncSaveNote();}
+ }catch(_){saveMessage='Could not reset the save: the browser blocked storage.';syncSaveNote();}
 }
 // Restoring is a rollback, not a merge: write the backup into a new epoch so neither
 // saveNow() nor a stale tab can blend newer progress back in.
@@ -281,8 +282,8 @@ function restoreProgress(){
   localStorage.setItem(SAVE_KEY+'.epoch.'+epoch,JSON.stringify({version:2,profile:restored,run}));
   localStorage.setItem(EPOCH_KEY,String(epoch));localStorage.setItem('orbit.best.v1',String(restored.records.endless));
   saveEpoch=epoch;savedRun=run;mode=restored.mode;soundOn=restored.sound;best=restored.records[mode];
-  saveMessage='Сохранение до сброса восстановлено.';syncSoundButton();reset(false);
- }catch(_){profile=oldProfile;saveMessage='Не удалось восстановить резервную копию.';syncSaveNote();}
+  saveMessage='The save from before the reset is restored.';syncSoundButton();reset(false);
+ }catch(_){profile=oldProfile;saveMessage='Could not restore the backup.';syncSaveNote();}
 }
 $('close-sector').addEventListener('click',hideSectorInfo);$('sector-visit').addEventListener('click',()=>{if(selectedSector!==null)visitSector(selectedSector);});
 $('sector-info').addEventListener('pointerenter',cancelSectorHide);$('sector-info').addEventListener('pointerleave',scheduleSectorHide);$('sector-info').addEventListener('focusin',cancelSectorHide);$('sector-info').addEventListener('focusout',leaveSectorFocus);
@@ -440,7 +441,7 @@ function loadProgress(){
   const data=JSON.parse(raw);if(data.version!==2)throw Error('Unsupported save');
   const legacy=profile.records.endless;profile=cleanProfile(data.profile);profile.records.endless=Math.max(legacy,profile.records.endless);
   normalizeRun(data.run);if(validRun(data.run))savedRun=data.run;
- }catch(_){saveMessage='Не удалось прочитать сохранение. Можно восстановить его из экспортированного файла.';}
+ }catch(_){saveMessage='Could not read the save. You can restore it from an exported file.';}
 }
 function packPlanet(p){const out={};for(const key of ['x','y','index','body','r','baseR','hue','tilt','ring','dead','departed','entryId','skin','kind','age','duration','orbitTravel','shrinkAge'])if(p[key]!==undefined)out[key]=p[key];return out;}
 function packRun(){
@@ -460,9 +461,9 @@ function saveNow(captureRun=true){
  syncSaveNote();
 }
 function syncSaveNote(){
- $('save-note').textContent=saveMessage|| (storageAvailable?'Автосохранение в этом браузере · для переноса используй экспорт':'Браузер не разрешил сохранение · экспортируй прогресс перед выходом');
- $('save-note').classList.toggle('bad',!storageAvailable||saveMessage.startsWith('Не удалось'));
- $('pause-note').textContent=storageAvailable?'Полёт сохранён. Гравитация тоже на паузе.':'Гравитация на паузе. Для сохранения выйди в меню и экспортируй прогресс.';
+ $('save-note').textContent=saveMessage|| (storageAvailable?'Autosaves in this browser · use export to move progress':'This browser blocked saving · export your progress before leaving');
+ $('save-note').classList.toggle('bad',!storageAvailable||saveMessage.startsWith('Could not'));
+ $('pause-note').textContent=storageAvailable?'Flight saved. Gravity is paused too.':'Gravity is paused. To keep progress, return to the menu and export it.';
 }
 function discover(p){if(mode!=='expedition')return;const s=currentSystem(),w=s.route[p.index];if(w){const key=worldKey(s,w);if(!profile.discovered.includes(key))profile.discovered.push(key);}}
 function planetDuration(){const scale=mode==='expedition'?(currentSystem().gravityScale||1):1;return clamp(Math.max(6.2,10.5-Math.min(jumps*.10,2.5)-(mode==='expedition'?Math.min((level-1)*.16,1.8):0))*scale,5.5,12);}
@@ -484,12 +485,12 @@ function showMenu(){if(['orbit','flight','paused','briefing'].includes(state))sa
 function showLevels(){closeOverlays();state='levels';$('levels').hidden=false;$('scoreboard').hidden=true;mapPage=Math.floor((Math.min(profile.unlocked,CATALOG_LIMIT)-1)/PAGE_SIZE);renderLevels();}
 function renderLevels(){
  const grid=$('level-grid');grid.replaceChildren();const first=mapPage*PAGE_SIZE+1,last=Math.min(first+PAGE_SIZE-1,CATALOG_LIMIT);
- $('levels-galaxy').textContent=`ЭКСПЕДИЦИЯ / ${galaxyForLevel(first).name.toUpperCase()}`;
+ $('levels-galaxy').textContent=`EXPEDITION / ${galaxyForLevel(first).name.toUpperCase()}`;
  $('levels-page').textContent=`${numberLabel(first)}–${numberLabel(last)} / ${numberLabel(CATALOG_LIMIT)}`;
  $('levels-prev').disabled=mapPage===0;$('levels-next').disabled=last===CATALOG_LIMIT;$('level-jump').value=Math.min(profile.unlocked,CATALOG_LIMIT);
  for(let n=first;n<=last;n++){
   const s=systemForLevel(n),done=profile.completed[n],button=document.createElement('button');button.className='level-card';button.disabled=n>profile.unlocked;
-  button.innerHTML=`<div class="number">${[`${localSector(n)} / 77`,catalogLabel(s)].filter(Boolean).join(' · ')}</div><strong>${s.name}</strong><span>${s.route[0].name} → ${s.route.at(-1).name}<br>${s.route.length-1} прыжков${s.fictional?' · '+s.theme:''}</span><span class="level-stars">${done?'★'.repeat(done.stars)+'☆'.repeat(3-done.stars):button.disabled?'ЗАКРЫТО':n===profile.unlocked?'ТЕКУЩАЯ ↗':'НАЧАТЬ ↗'}</span>`;
+  button.innerHTML=`<div class="number">${[`${localSector(n)} / 77`,catalogLabel(s)].filter(Boolean).join(' · ')}</div><strong>${s.name}</strong><span>${s.route[0].name} → ${s.route.at(-1).name}<br>${counted(s.route.length-1,'jump')}${s.fictional?' · '+s.theme:''}</span><span class="level-stars">${done?'★'.repeat(done.stars)+'☆'.repeat(3-done.stars):button.disabled?'LOCKED':n===profile.unlocked?'CURRENT ↗':'START ↗'}</span>`;
   button.addEventListener('click',()=>startLevel(n,true));grid.append(button);
  }
 }
@@ -513,19 +514,19 @@ function showAtlas(tab=atlasTab){
 }
 function moveAtlas(step){atlasCursor=clamp(atlasCursor+step*(atlasTab==='systems'?PAGE_SIZE:1),1,CATALOG_LIMIT);renderAtlas();}
 function renderAtlas(){
- const grid=$('atlas-grid');grid.replaceChildren();$('atlas-count').textContent=`КОСМИЧЕСКИЙ АТЛАС · ${numberLabel(profile.discovered.length)} ОТКРЫТИЙ`;
+ const grid=$('atlas-grid');grid.replaceChildren();$('atlas-count').textContent=`SPACE ATLAS · ${numberLabel(profile.discovered.length)} ${profile.discovered.length===1?'DISCOVERY':'DISCOVERIES'}`;
  document.querySelectorAll('[data-atlas]').forEach(b=>b.classList.toggle('active',b.dataset.atlas===atlasTab));
  $('atlas-nav').hidden=atlasTab==='galaxies';let entries;
- if(atlasTab==='galaxies')entries=GALAXIES.map((g,i)=>({name:g.name,description:g.description,source:g.source,tag:`ГАЛАКТИКА ${i+1} · 77 СИСТЕМ`,hue:g.hue,fictional:g.fictional,galaxy:true}));
+ if(atlasTab==='galaxies')entries=GALAXIES.map((g,i)=>({name:g.name,description:g.description,source:g.source,tag:`GALAXY ${i+1} · 77 SYSTEMS`,hue:g.hue,fictional:g.fictional,galaxy:true}));
  else if(atlasTab==='systems'){
   const first=Math.floor((atlasCursor-1)/PAGE_SIZE)*PAGE_SIZE+1,last=Math.min(first+PAGE_SIZE-1,CATALOG_LIMIT);
-  $('atlas-page').textContent=`СИСТЕМЫ ${numberLabel(first)}–${numberLabel(last)}`;$('atlas-prev').disabled=first===1;$('atlas-next').disabled=last===CATALOG_LIMIT;
-  entries=Array.from({length:last-first+1},(_,i)=>{const n=first+i,s=systemForLevel(n);return{name:s.name,description:s.description,source:s.orderSource||s.source,tag:[numberLabel(n),catalogLabel(s),`${s.route.length-1} ПЛАНЕТ`].filter(Boolean).join(' · '),hue:s.route.at(-1).hue,fictional:s.fictional};});
+  $('atlas-page').textContent=`SYSTEMS ${numberLabel(first)}–${numberLabel(last)}`;$('atlas-prev').disabled=first===1;$('atlas-next').disabled=last===CATALOG_LIMIT;
+  entries=Array.from({length:last-first+1},(_,i)=>{const n=first+i,s=systemForLevel(n);return{name:s.name,description:s.description,source:s.orderSource||s.source,tag:[numberLabel(n),catalogLabel(s),counted(s.route.length-1,'PLANET')].filter(Boolean).join(' · '),hue:s.route.at(-1).hue,fictional:s.fictional};});
  }else{
   const s=systemForLevel(atlasCursor);$('atlas-page').textContent=`${numberLabel(atlasCursor)} · ${s.name}`;$('atlas-prev').disabled=atlasCursor===1;$('atlas-next').disabled=atlasCursor===CATALOG_LIMIT;
   entries=s.route.map(w=>({name:w.name,description:w.description,source:s.orderSource||s.source,tag:[catalogLabel(s),w.biome||s.name].filter(Boolean).join(' · '),hue:w.hue,fictional:s.fictional,locked:!profile.discovered.includes(worldKey(s,w))}));
  }
- for(const entry of entries){const article=document.createElement('article');article.className='atlas-entry'+(entry.locked?' locked':'');article.innerHTML=`<div class="atlas-symbol" style="--planet:hsl(${entry.hue},55%,58%)"></div><h3>${entry.name}</h3><small>${entry.tag}</small><p>${entry.locked?'Посети этот мир в экспедиции, чтобы открыть карточку.':entry.description}</p>${entry.locked?'<small>ЕЩЁ НЕ ИССЛЕДОВАН</small>':entry.fictional?`<small>ХУДОЖЕСТВЕННАЯ ${entry.galaxy?'ГАЛАКТИКА':'СИСТЕМА'} ORBIT</small>`:`<a href="${entry.source}" target="_blank" rel="noopener noreferrer">Источник фактов ↗</a>`}`;grid.append(article);}
+ for(const entry of entries){const article=document.createElement('article');article.className='atlas-entry'+(entry.locked?' locked':'');article.innerHTML=`<div class="atlas-symbol" style="--planet:hsl(${entry.hue},55%,58%)"></div><h3>${entry.name}</h3><small>${entry.tag}</small><p>${entry.locked?'Visit this world on the expedition to unlock its card.':entry.description}</p>${entry.locked?'<small>NOT YET EXPLORED</small>':entry.fictional?`<small>FICTIONAL ORBIT ${entry.galaxy?'GALAXY':'SYSTEM'}</small>`:`<a href="${entry.source}" target="_blank" rel="noopener noreferrer">Fact source ↗</a>`}`;grid.append(article);}
 }
 
 function reset(start=false){
@@ -540,16 +541,16 @@ function reset(start=false){
  if(start){profile.mode=mode;discover(current);maybeTutorial();saveNow();}syncMenu();
 }
 function syncHUD(){
- $('score').textContent=score;$('best').textContent=best;$('combo').textContent=combo>1?`СЕРИЯ КАСАНИЙ ×${combo}`:'';
- $('sector').textContent=mode==='expedition'?`${galaxyForLevel(level).name.toUpperCase()} · СЕКТОР ${localSector(level)} / 77`:`СЕКТОР ${String(jumps+1).padStart(3,'0')}`;
- $('route-label').textContent=mode==='expedition'?`${galaxyForLevel(level).name} · ${localSector(level)}/77 · ${currentSystem().name} · ${jumps} / ${currentSystem().route.length-1} прыжков`:'БЕСКОНЕЧНЫЙ ПОЛЁТ';
+ $('score').textContent=score;$('best').textContent=best;$('combo').textContent=combo>1?`GRAZE STREAK ×${combo}`:'';
+ $('sector').textContent=mode==='expedition'?`${galaxyForLevel(level).name.toUpperCase()} · SECTOR ${localSector(level)} / 77`:`SECTOR ${String(jumps+1).padStart(3,'0')}`;
+ $('route-label').textContent=mode==='expedition'?`${galaxyForLevel(level).name} · ${localSector(level)}/77 · ${currentSystem().name} · ${jumps} / ${counted(currentSystem().route.length-1,'jump')}`:'ENDLESS FLIGHT';
  $('route-dots').innerHTML=mode==='expedition'?currentSystem().route.map((_,i)=>`<i class="${i===0||i<=jumps?(routeHits[i-1]?'done tangent':'done'):''}"></i>`).join(''):'';
  syncEndlessHUD();
 }
 function syncEndlessHUD(){
  const node=$('endless-status');node.hidden=mode!=='endless'||!['orbit','flight','entering'].includes(state);if(mode!=='endless')return;
  const shower=endless.shower,open=shower&&meteorWindow();
- const text=[endless.life?'✦ ЗАПАСНАЯ ПОПЫТКА':endless.pickup?'✦ ПОДБЕРИ ПОПЫТКУ НАД ПЛАНЕТОЙ':'',endless.multiplier===2?'×2 ЗА ПРЫЖОК':bonusSector()?(inBonusSector()?'В КОЛЬЦЕ · СТАРТ ×2':'КОЛЬЦО ×2 · ВО ВТОРОЙ ПОЛОВИНЕ СЖАТИЯ'):'',shower?(open?'МЕТЕОРЫ · ОКНО ДЛЯ СТАРТА':'МЕТЕОРЫ · ЖДИ ПРОСВЕТ'):''].filter(Boolean).join(' · ');
+ const text=[endless.life?'✦ SPARE ATTEMPT':endless.pickup?'✦ GRAB THE SPARE ABOVE THE PLANET':'',endless.multiplier===2?'×2 THIS JUMP':bonusSector()?(inBonusSector()?'IN THE RING · LAUNCH FOR ×2':'RING ×2 · IN THE LOWER HALF OF THE SHRINK'):'',shower?(open?'METEORS · WINDOW OPEN':'METEORS · WAIT FOR A GAP'):''].filter(Boolean).join(' · ');
  if(node.textContent!==text)node.textContent=text;
 }
 function bonusSector(){return mode==='endless'&&(current.index+1)%5===0;}
@@ -559,12 +560,12 @@ function inBonusSector(){const band=bonusBand(),r=current.r+orbitOffset;return b
 function addScore(points){score+=points;if(score>best){best=score;profile.records[mode]=best;}$('score').textContent=score;$('best').textContent=best;}
 function awardOrbitPoints(points){
  if(points<=0)return;addScore(points);orbitRewardLife=.85;
- $('orbit-reward').textContent=`+${points} ЗА ОБОРОТ`;$('orbit-reward').classList.add('show');
+ $('orbit-reward').textContent=`+${points} FOR THE TURN`;$('orbit-reward').classList.add('show');
 }
 function prepareEndlessPlanet(){
  if(mode!=='endless')return;
  const n=current.index+1;endless.multiplier=1;
- if(!endless.life&&n>=endless.nextLife){endless.nextLife=n;endless.pickup=true;showToast('ЗАПАСНАЯ ПОПЫТКА','ПОДБЕРИ СИМВОЛ НАД ПЛАНЕТОЙ');}
+ if(!endless.life&&n>=endless.nextLife){endless.nextLife=n;endless.pickup=true;showToast('SPARE ATTEMPT','GRAB THE SYMBOL ABOVE THE PLANET');}
  else endless.pickup=false;
  const previousShower=!!endless.shower;
  endless.shower=n>30&&!previousShower&&Math.random()<.30?{elapsed:0,phase:rand(0,1200)}:null;
@@ -576,7 +577,7 @@ function checkEndlessPickup(oldAngle,oldRadius,travel){
  const item=pickupPosition(),steps=Math.max(1,Math.ceil(Math.abs(travel)/.08)),radius=current.r+orbitOffset,padding=PLAYER_RADIUS/camera.z+8;
  let x=current.x+Math.cos(oldAngle)*oldRadius,y=current.y+Math.sin(oldAngle)*oldRadius;
  for(let i=1;i<=steps;i++){const t=i/steps,a=oldAngle+travel*player.dir*t,r=oldRadius+(radius-oldRadius)*t,nx=current.x+Math.cos(a)*r,ny=current.y+Math.sin(a)*r;
-  if(segmentCircle(x,y,nx,ny,{...item,r:padding})!==null){endless.life=true;endless.pickup=false;showToast('ПОПЫТКА ПОДОБРАНА','✦ ОДНО СПАСЕНИЕ В ЗАПАСЕ');tone(520,1040,.22,'sine');syncHUD();saveNow();break;}x=nx;y=ny;
+  if(segmentCircle(x,y,nx,ny,{...item,r:padding})!==null){endless.life=true;endless.pickup=false;showToast('SPARE COLLECTED','✦ ONE RESCUE IN RESERVE');tone(520,1040,.22,'sine');syncHUD();saveNow();break;}x=nx;y=ny;
  }
 }
 function meteorPositions(elapsed){
@@ -636,7 +637,7 @@ function launch(){
  if(mode==='endless'&&endless.pickup){endless.pickup=false;endless.nextLife=current.index+31;}
  player.vx=aim.dx*speed;player.vy=aim.dy*speed;flightTime=0;state='flight';
  current.departed=true;
- if(endless.multiplier===2)showToast('ЗОЛОТОЙ СТАРТ ×2','ПОЙМАЙ ОРБИТУ И УДВОЙ НАГРАДУ');
+ if(endless.multiplier===2)showToast('GOLDEN LAUNCH ×2','CATCH THE ORBIT TO DOUBLE THE REWARD');
  syncEndlessHUD();tone(280,440,.09,'sine');saveNow();
 }
 // Sweep the whole visible ball. A small numeric tolerance keeps exact grazes stable.
@@ -662,9 +663,9 @@ function capture(){
  orbitBoost=Math.max(0,Math.hypot(player.vx,player.vy)/(current.r+orbitOffset)-orbitSpeed());
  // Grazing entries are rewarded; a head-on dive toward the planet earns the base point.
  const tangent=isTangentEntry(rx,ry,player.vx,player.vy);
- if(tangent){combo++;perfects++;maxCombo=Math.max(maxCombo,combo);bonus=2+Math.min(combo-1,4);slow=reduced?0:.52;showToast(combo>1?'КАСАНИЕ ×'+combo:'КАСАНИЕ',`${pointsLabel(bonus)} · ${combo>1?'СЕРИЯ КАСАНИЙ':'ВХОД ПО КАСАТЕЛЬНОЙ'}`);tone(660,990,.23,'sine');}
- else{combo=0;showToast('ОРБИТА ПОЙМАНА','+1 ОЧКО · КАСАНИЕ ДАЁТ ×2');tone(390,580,.12,'sine');}
- if(mode==='endless'&&endless.multiplier===2){bonus*=2;showToast(tangent?'КАСАНИЕ + ЗОЛОТО':'ОРБИТА ПОЙМАНА ×2',`${pointsLabel(bonus)} · ЗОЛОТОЙ СТАРТ`);}
+ if(tangent){combo++;perfects++;maxCombo=Math.max(maxCombo,combo);bonus=2+Math.min(combo-1,4);slow=reduced?0:.52;showToast(combo>1?'GRAZE ×'+combo:'GRAZE',`${pointsLabel(bonus)} · ${combo>1?'GRAZE STREAK':'TANGENT ENTRY'}`);tone(660,990,.23,'sine');}
+ else{combo=0;showToast('ORBIT CAUGHT','+1 POINT · A GRAZE SCORES ×2');tone(390,580,.12,'sine');}
+ if(mode==='endless'&&endless.multiplier===2){bonus*=2;showToast(tangent?'GRAZE + GOLD':'ORBIT CAUGHT ×2',`${pointsLabel(bonus)} · GOLDEN LAUNCH`);}
  if(mode==='expedition')routeHits.push(tangent);
  addScore(bonus);
  rings.push({x:p.x,y:p.y,r:p.r,life:.6,max:.6,color:tangent?'#a4ffce':'#b6d8ff'});
@@ -682,28 +683,28 @@ function die(reason='miss'){
   current.departed=false;current.dead=false;current.r=current.baseR;current.age=current.orbitTravel=current.shrinkAge=0;
   orbitBoost=orbitOffset=flightTime=slow=0;combo=0;perfectPending=false;player.vx=player.vy=0;
   player.a=Math.atan2(target.y-current.y,target.x-current.x)+player.dir*Math.PI*.75;setOrbitPosition();trail=[];state='orbit';
-  showToast('СИГНАЛ ВОССТАНОВЛЕН','✦ ПОПЫТКА ИСПОЛЬЗОВАНА · СЛЕДУЮЩАЯ ЧЕРЕЗ 30 ПЛАНЕТ');tone(330,660,.3,'sine');syncHUD();saveNow();return;
+  showToast('SIGNAL RESTORED','✦ SPARE USED · NEXT ONE IN 30 PLANETS');tone(330,660,.3,'sine');syncHUD();saveNow();return;
  }
  state='dying';deathReason=reason;deathTime=0;savedRun=null;saveNow(false);explode(player.x,player.y,170,35);shake=reduced?0:7;tone(150,35,.4,'sawtooth');
 }
-function finish(){state='dead';closeOverlays();$('end').hidden=false;$('death-reason').textContent=deathReason==='gravity'?'Гравитация взяла своё':'Сигнал потерян';$('final-score').textContent=score;$('jumps').textContent=jumps;$('perfects').textContent=perfects;$('max-combo').textContent='×'+maxCombo;$('new-record').textContent=score>startBest?'НОВЫЙ РЕКОРД ✦':'';$('scoreboard').hidden=true;}
+function finish(){state='dead';closeOverlays();$('end').hidden=false;$('death-reason').textContent=deathReason==='gravity'?'Gravity won':'Signal lost';$('final-score').textContent=score;$('jumps').textContent=jumps;$('perfects').textContent=perfects;$('max-combo').textContent='×'+maxCombo;$('new-record').textContent=score>startBest?'NEW BEST ✦':'';$('scoreboard').hidden=true;}
 function completeLevel(){
  // ★ finish · ★★ a third of captures tangential · ★★★ two thirds.
  const s=currentSystem(),need=[0,Math.ceil(jumps/3),Math.ceil(jumps*2/3)],stars=1+(perfects>=need[1]?1:0)+(perfects>=need[2]?1:0),old=profile.completed[level];
  profile.completed[level]={score:Math.max(score,old?.score||0),stars:Math.max(stars,old?.stars||0)};profile.unlocked=Math.min(CATALOG_LIMIT,Math.max(profile.unlocked,level+1));
  state='won';target=current;savedRun=null;saveNow(false);closeOverlays();$('won').hidden=false;$('scoreboard').hidden=true;
  const reachedCore=localSector(level)===SYSTEMS_PER_GALAXY;
- $('win-title').textContent=reachedCore?'Центр галактики достигнут':s.name+' пройдена';$('win-stars').textContent='★'.repeat(stars)+'☆'.repeat(3-stars);$('win-score').textContent=score;$('win-perfects').textContent=`${perfects} / ${jumps}`;
- $('win-hint').textContent=stars<3?`До ${'★'.repeat(stars+1)} не хватило ${need[stars]-perfects} ${plural(need[stars]-perfects,['касания','касаний','касаний'])}`:'Все звёзды собраны ✦';
- $('next-level').disabled=level>=CATALOG_LIMIT;$('next-level').textContent=reachedCore?'Следующая галактика ↗':'Следующая система ↗';
- $('win-description').textContent=level<CATALOG_LIMIT?reachedCore?`Все 77 систем галактики ${galaxyForLevel(level).name} позади. Открыта галактика ${galaxyForLevel(level+1).name}.`:`Все ${jumps} прыжков позади. Следующая система: ${systemForLevel(level+1).name}. Сектор ${localSector(level+1)} / 77.`:'Последняя звезда экспедиции достигнута. Все системы пройдены!';
+ $('win-title').textContent=reachedCore?'Galactic core reached':s.name+' complete';$('win-stars').textContent='★'.repeat(stars)+'☆'.repeat(3-stars);$('win-score').textContent=score;$('win-perfects').textContent=`${perfects} / ${jumps}`;
+ $('win-hint').textContent=stars<3?`${counted(need[stars]-perfects,'more graze','more grazes')} for ${'★'.repeat(stars+1)}`:'All stars collected ✦';
+ $('next-level').disabled=level>=CATALOG_LIMIT;$('next-level').textContent=reachedCore?'Next galaxy ↗':'Next system ↗';
+ $('win-description').textContent=level<CATALOG_LIMIT?reachedCore?`All 77 systems of ${galaxyForLevel(level).name} are behind you. ${galaxyForLevel(level+1).name} is now open.`:`All ${counted(jumps,'jump')} done. Next system: ${systemForLevel(level+1).name}, sector ${localSector(level+1)} / 77.`:'The expedition’s last star is reached. Every system is complete!';
  $('toast').classList.remove('show');tone(660,1320,.4,'sine');
 }
 function showToast(title,sub){$('toast-title').textContent=title;$('toast-sub').textContent=sub;$('toast').classList.add('show');toastLife=1.5;}
 function togglePause(){if(state==='entering'){finishEntry(true);return;}if(!['orbit','flight','paused'].includes(state))return;if(state==='paused'){state=previousState;$('paused').hidden=true;maybeTutorial();}else{previousState=state;state='paused';$('paused').hidden=false;}lastTime=performance.now();saveNow();}
 function startAudio(){if(!soundOn)return;try{audio=audio||new(window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume().catch(()=>{});}catch(_){}}
 function tone(from,to,duration,type){if(!soundOn)return;startAudio();if(!audio)return;try{const o=audio.createOscillator(),g=audio.createGain();o.type=type;o.frequency.setValueAtTime(from,audio.currentTime);o.frequency.exponentialRampToValueAtTime(Math.max(20,to),audio.currentTime+duration);g.gain.setValueAtTime(.045,audio.currentTime);g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+duration);o.connect(g);g.connect(audio.destination);o.start();o.stop(audio.currentTime+duration);}catch(_){}}
-function syncSoundButton(){$('sound').setAttribute('aria-pressed',String(soundOn));$('sound').setAttribute('aria-label',soundOn?'Выключить звук':'Включить звук');$('sound-wave').setAttribute('d',soundOn?'M17 8q6 4 0 8M16 11q2 1 0 2':'m17 9 5 6m0-6-5 6');}
+function syncSoundButton(){$('sound').setAttribute('aria-pressed',String(soundOn));$('sound').setAttribute('aria-label',soundOn?'Turn sound off':'Turn sound on');$('sound-wave').setAttribute('d',soundOn?'M17 8q6 4 0 8M16 11q2 1 0 2':'m17 9 5 6m0-6-5 6');}
 function toggleSound(){soundOn=!soundOn;syncSoundButton();startAudio();if(soundOn)tone(500,700,.12,'sine');saveNow();}
 function primaryAction(){startAudio();if(state==='menu')startChosen();else if(state==='briefing')completeTutorial();else if(state==='dead')reset(true);else if(state==='won')startLevel(level+1,true);else if(state==='paused')togglePause();else if(state==='orbit')launch();}
 $('retry').addEventListener('click',()=>{startAudio();reset(true);});$('restart').addEventListener('click',()=>reset(true));$('resume').addEventListener('click',togglePause);$('pause').addEventListener('click',togglePause);$('sound').addEventListener('click',toggleSound);
@@ -733,14 +734,14 @@ function importProgress(data){
  const incoming=cleanProfile(data.profile),oldProfile=profile,merged=mergeProfiles(incoming,oldProfile);
  normalizeRun(data.run);profile=merged;if(data.run!==null&&data.run!==undefined&&!validRun(data.run)){profile=oldProfile;throw Error('Invalid run');}
  if(data.run)savedRun=data.run;
- mode=profile.mode;soundOn=profile.sound;best=profile.records[mode];syncSoundButton();saveMessage='Прогресс импортирован. Рекорды и открытия объединены.';saveNow(false);reset(false);
+ mode=profile.mode;soundOn=profile.sound;best=profile.records[mode];syncSoundButton();saveMessage='Progress imported. Records and discoveries were merged.';saveNow(false);reset(false);
 }
 $('levels-prev').addEventListener('click',()=>moveMap(-1));$('levels-next').addEventListener('click',()=>moveMap(1));
  $('levels-current').addEventListener('click',()=>{mapPage=Math.floor((profile.unlocked-1)/PAGE_SIZE);renderLevels();});
  $('level-go').addEventListener('click',jumpMap);$('level-jump').addEventListener('keydown',e=>{if(e.code==='Enter'){e.preventDefault();jumpMap();}});
  $('atlas-prev').addEventListener('click',()=>moveAtlas(-1));$('atlas-next').addEventListener('click',()=>moveAtlas(1));$('atlas-current').addEventListener('click',()=>{atlasCursor=Math.min(profile.unlocked,CATALOG_LIMIT);renderAtlas();});
  $('export-save').addEventListener('click',exportProgress);$('import-save').addEventListener('click',()=>$('save-file').click());
-$('save-file').addEventListener('change',async e=>{try{const file=e.target.files[0];if(!file)return;if(file.size>2e6)throw Error('File too large');importProgress(JSON.parse(await file.text()));}catch(_){saveMessage='Не удалось импортировать файл. Выбери экспорт прогресса ORBIT версии 2.';syncSaveNote();}finally{e.target.value='';}});
+$('save-file').addEventListener('change',async e=>{try{const file=e.target.files[0];if(!file)return;if(file.size>2e6)throw Error('File too large');importProgress(JSON.parse(await file.text()));}catch(_){saveMessage='Could not import the file. Choose an ORBIT version 2 progress export.';syncSaveNote();}finally{e.target.value='';}});
 function desiredCamera(){
  const marginX=W<600?80:155,usableH=Math.max(140,H-(H<580?185:310));
  const z=Math.min(W<600?1.05:1.3,(W-marginX)/(Math.abs(target.x-current.x)+current.r+target.r),(usableH)/(Math.abs(target.y-current.y)+current.r+target.r));
@@ -858,7 +859,7 @@ function drawPlanet(p){
   ctx.lineCap='round';ctx.beginPath();ctx.arc(p.x,p.y,p.r,a-win,a+win);ctx.strokeStyle='#a4ffce55';ctx.lineWidth=4/camera.z;ctx.stroke();ctx.lineCap='butt';
  }
  ctx.textAlign='center';ctx.font=`${9/camera.z}px "Segoe UI",sans-serif`;ctx.fillStyle=isTarget?'#b8d6cc':'#7e94ae';ctx.fillText(`${entry?entry.name:names[p.index%names.length]} / ${String(p.index+1).padStart(3,'0')}`,p.x,p.y+p.r+23/camera.z);
- if(isTarget){ctx.font=`${8/camera.z}px "Segoe UI",sans-serif`;ctx.fillStyle='#8ca69d';ctx.fillText(entry?.kind==='star'?'ЦЕЛЬ · ЗВЕЗДА':'СЛЕДУЮЩАЯ',p.x,p.y-p.r-17/camera.z);}
+ if(isTarget){ctx.font=`${8/camera.z}px "Segoe UI",sans-serif`;ctx.fillStyle='#8ca69d';ctx.fillText(entry?.kind==='star'?'TARGET · STAR':'NEXT',p.x,p.y-p.r-17/camera.z);}
 }
 function drawMeteors(){
  if(mode!=='endless'||!endless.shower)return;

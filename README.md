@@ -1,9 +1,12 @@
 # ORBIT
 
+*Per orbitas ad astra: through orbits to the stars.*
+
 **[Play in your browser →](https://santillio.github.io/orbit/)**
 
 A 2D space arcade game in a single self-contained HTML file, with endless runs,
 an expedition campaign, persistent progress, and a discoverable space atlas.
+The game's interface and catalog texts are in English.
 
 A ball orbits a planet. Time your launch to send it along a tangent and catch
 the next planet's orbit. After one full revolution, gravity shrinks the orbit
