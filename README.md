@@ -148,7 +148,10 @@ Clearing browser data removes local saves; backups remain usable.
 
 **Start from scratch** in Settings resets the expedition, records, discoveries,
 and first-flight briefing. The prior save remains recoverable through **Restore
-the save from before reset**. Reset creates a separate storage epoch so an older
+the save from before reset**. Each reset with any progress replaces that backup
+with the latest save; resetting an already empty profile keeps the existing backup.
+Restoring is a rollback: it replaces the current profile instead of merging into it.
+Reset creates a separate storage epoch so an older
 open tab cannot resurrect cleared progress. Older builds continue writing to their
 old key; current builds adopt the latest epoch. Normal saves do not erase records
 or unlocks from another tab in the same epoch.
